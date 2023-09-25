@@ -53,6 +53,8 @@ To deploy this project run
 ```bash
   npm run build
 ```
+Take the "dist" folder that was created and put it in a web service.
+Remember to add environment variables to the web service to make the application work.
 
 
 ## Environment Variables
