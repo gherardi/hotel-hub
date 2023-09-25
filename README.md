@@ -3,6 +3,7 @@
 
 La nostra soluzione webapp è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offriamo un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
+[Mockup in sviluppo](https://www.figma.com/file/slyF8r5SDTjBo4G6SS82dx/hotel-hub?type=design&node-id=0%3A1&mode=design&t=SeOjyCddjRv602c8-1)
 
 ## Features
 
