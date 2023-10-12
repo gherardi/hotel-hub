@@ -5,6 +5,8 @@ La nostra soluzione webapp è stata progettata per semplificare e ottimizzare il
 
 [Wireframe in sviluppo](https://www.figma.com/file/slyF8r5SDTjBo4G6SS82dx/hotel-hub?type=design&node-id=0%3A1&mode=design&t=SeOjyCddjRv602c8-1)
 
+![Immagine E/R del progetto](https://i.imgur.com/3QlzPFL.jpg)
+
 ## Features
 
 **Cliente:**
