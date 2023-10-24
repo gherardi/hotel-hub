@@ -1,13 +1,13 @@
 
 # HotelHub
 
-La nostra soluzione webapp è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offriamo un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
+L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
 [Wireframe in sviluppo](https://www.figma.com/file/slyF8r5SDTjBo4G6SS82dx/hotel-hub?type=design&node-id=0%3A1&mode=design&t=SeOjyCddjRv602c8-1)
 
-![Immagine E/R del progetto](https://i.imgur.com/3QlzPFL.jpg)
+![Schema E/R del progetto](https://i.imgur.com/3QlzPFL.jpg)
 
-## Features
+## Funzionalità
 
 **Cliente:**
 - [ ] Prenotare camere online tramite sito web
@@ -20,7 +20,7 @@ La nostra soluzione webapp è stata progettata per semplificare e ottimizzare il
 - [ ] Fare check-in/check-out in modo semplice
 - [ ] Tenere soto controllo entrate/uscite mensili dell'albergo
 - [ ] Grafici di rendimento nei vari mesi dell'anno
-- [ ] Grafici prr capire per quante notti sono prenotate
+- [ ] Grafici per avere il tempo di permanenza media
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
 ## Run Locally
 
@@ -48,7 +48,6 @@ Start the server
   npm run dev
 ```
 
-
 ## Deployment
 
 To deploy this project run
@@ -59,7 +58,7 @@ To deploy this project run
 Take the "dist" folder that was created and put it in a web service.
 Remember to add environment variables to the web service to make the application work.
 
-
+<!---
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -67,7 +66,6 @@ To run this project, you will need to add the following environment variables to
 `API_KEY`
 
 `ANOTHER_API_KEY`
-
 
 ## API Reference
 
@@ -95,3 +93,4 @@ To run this project, you will need to add the following environment variables to
 
 Takes two numbers and returns the sum.
 
+--->
