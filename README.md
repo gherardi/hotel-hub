@@ -5,7 +5,7 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 
 [Wireframe in sviluppo](https://www.figma.com/file/slyF8r5SDTjBo4G6SS82dx/hotel-hub?type=design&node-id=0%3A1&mode=design&t=SeOjyCddjRv602c8-1)
 
-![Schema E/R del progetto](https://i.imgur.com/3QlzPFL.jpg)
+[Schema E/R del progetto](https://miro.com/app/board/uXjVNWaYSaU=/?share_link_id=455647320688)
 
 ## Funzionalità
 
