@@ -22,6 +22,8 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 - [ ] Grafici di rendimento nei vari mesi dell'anno
 - [ ] Grafici per avere il tempo di permanenza media
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
+
+<!---
 ## Run Locally
 
 Clone the project
@@ -58,7 +60,7 @@ To deploy this project run
 Take the "dist" folder that was created and put it in a web service.
 Remember to add environment variables to the web service to make the application work.
 
-<!---
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
