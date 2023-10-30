@@ -20,11 +20,13 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 ## Wireframe
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/b6e16b03-ad01-4aec-b7e1-da1d00b815ea)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/3d327dae-cfbd-4396-9b87-12428ad2c4c7)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/b45be0a7-dd84-4d3a-bd8c-3c818bdfa453)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/eeca97dd-302d-4ed6-a0d9-cbe692e13c34)
+
 
 ## Scherma E/R e relazionale
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/84a58158-d912-440b-91e2-d794b53c6d81)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/f5969959-87ba-4ce9-ab48-13e1e002fad6)
-
 
 <!---
 ## Run Locally
