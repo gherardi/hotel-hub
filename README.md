@@ -1,14 +1,8 @@
 
 # HotelHub
-
 L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
-[Wireframe in sviluppo](https://www.figma.com/file/slyF8r5SDTjBo4G6SS82dx/hotel-hub?type=design&node-id=0%3A1&mode=design&t=SeOjyCddjRv602c8-1)
-
-[Schema E/R del progetto](https://miro.com/app/board/uXjVNWaYSaU=/?share_link_id=455647320688)
-
 ## Funzionalità
-
 **Cliente:**
 - [ ] Prenotare camere online tramite sito web
 - [ ] Gestire le proprie prenotazioni online
@@ -22,6 +16,15 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 - [ ] Grafici di rendimento nei vari mesi dell'anno
 - [ ] Grafici per avere il tempo di permanenza media
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
+
+## Wireframe
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/b6e16b03-ad01-4aec-b7e1-da1d00b815ea)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/3d327dae-cfbd-4396-9b87-12428ad2c4c7)
+
+## Scherma E/R
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/84a58158-d912-440b-91e2-d794b53c6d81)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/f5969959-87ba-4ce9-ab48-13e1e002fad6)
+
 
 <!---
 ## Run Locally
