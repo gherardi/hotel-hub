@@ -26,6 +26,8 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/d535375f-867e-4fe8-96dc-520eabfefc31)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/83e3f315-3422-4726-ae52-c310c755899f)
 
+## Modello fisico SQL
+
 
 <!---
 ## Run Locally
