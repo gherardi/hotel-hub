@@ -3,19 +3,16 @@
 L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
 ## Funzionalità
-**Cliente:**
-- [ ] Prenotare camere online tramite sito web
-- [ ] Gestire le proprie prenotazioni online
-- [ ] Spazio privato (username/password) in cui visualizzare le prenotazioni
-- [ ] Possibilità di recuperare la password tramite email
 
 **Gestore:**
 - [ ] Riepilogo delle prenotazioni in arrivo/partenza oggi
 - [ ] Fare check-in/check-out in modo semplice
+- [ ] Gestire le prenotazioni
 - [ ] Tenere soto controllo entrate/uscite mensili dell'albergo
 - [ ] Grafici di rendimento nei vari mesi dell'anno
 - [ ] Grafici per avere il tempo di permanenza media
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
+- [ ] Possibilità di recuperare la password tramite email
 
 ## Wireframe
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/b6e16b03-ad01-4aec-b7e1-da1d00b815ea)
@@ -25,8 +22,9 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/1134fe80-d2d3-4feb-b20a-490c0291aeba)
 
 ## Scherma E/R e relazionale
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/84a58158-d912-440b-91e2-d794b53c6d81)
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/f5969959-87ba-4ce9-ab48-13e1e002fad6)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/f30323a0-eb9c-4f26-b4ab-467c262a5950)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/83e3f315-3422-4726-ae52-c310c755899f)
+
 
 <!---
 ## Run Locally
