@@ -15,6 +15,7 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 - [ ] Possibilità di recuperare la password tramite email
 
 ## Wireframe
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/b6e16b03-ad01-4aec-b7e1-da1d00b815ea)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/3d327dae-cfbd-4396-9b87-12428ad2c4c7)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/b45be0a7-dd84-4d3a-bd8c-3c818bdfa453)
@@ -22,7 +23,8 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/1134fe80-d2d3-4feb-b20a-490c0291aeba)
 
 ## Scherma E/R e relazionale
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/f30323a0-eb9c-4f26-b4ab-467c262a5950)
+
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/d535375f-867e-4fe8-96dc-520eabfefc31)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/83e3f315-3422-4726-ae52-c310c755899f)
 
 
