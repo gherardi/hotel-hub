@@ -20,7 +20,6 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/3d327dae-cfbd-4396-9b87-12428ad2c4c7)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/b45be0a7-dd84-4d3a-bd8c-3c818bdfa453)
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/eeca97dd-302d-4ed6-a0d9-cbe692e13c34)
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/1134fe80-d2d3-4feb-b20a-490c0291aeba)
 
 ## Scherma E/R e relazionale
 
