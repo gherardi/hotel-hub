@@ -24,16 +24,52 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/eeca97dd-302d-4ed6-a0d9-cbe692e13c34)
 
 ## Scherma E/R
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/1ec52ee9-4d5f-4dc5-951f-8741dc5f5ffa)
 
 ## Schema logico
-- **amministratore** (id)
-- **albergatore** (id, nominativo, email. id_amministratoer)
-- **prenotazione** (id, nominativo, email, data_creazione_pernotazione, data_prenotazione, data_check_in, data_check_out, prezzo_totale, id_camera, id_albergatore)
-- **camera** (id, tipologia, prezzo_giornaliero, occupata)
+- **albergatore** (id, nominativo, email)
+- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_totale, id_camera, id_albergatore)
+- **camera** (id, tipologia, prezzo_giornaliero, occupata, id_albergatore)
 
 ## Modello fisico SQL
+```sql
+CREATE DATABASE IF NOT EXISTS hotel_hub;
+USE hotel_hub;
 
+CREATE TABLE IF NOT EXISTS albergatori (
+  id INT AUTO_INCREMENT,
+  nominativo VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS camere (
+  id INT AUTO_INCREMENT,
+  tipologia VARCHAR(255),
+  prezzo_giornaliero DECIMAL(10, 2),
+  occupata BOOLEAN,
+  sconto INT CHECK (sconto BETWEEN 0 AND 100),
+  PRIMARY KEY (id)
+  FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
+);
+
+CREATE TABLE IF NOT EXISTS prenotazioni (
+  id INT AUTO_INCREMENT,
+  nominativo VARCHAR(255),
+  email VARCHAR(255),
+  data_prenotazione DATE,
+  data_check_in DATE,
+  data_check_out DATE,
+  prezzo_totale DECIMAL(10, 2),
+  data_creazione_prenotazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id_camera INT,
+  id_albergatore INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_camera) REFERENCES camere(id),
+  FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
+);
+
+```
 
 ## Run Locally
 Clone the project
