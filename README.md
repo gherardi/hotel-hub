@@ -6,8 +6,12 @@ L'applicazione è stata progettata per semplificare e ottimizzare il processo di
 Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni, camere ecc. in modo semplice e attraverso una piattaforma web intuitiva.
 
 ## Funzionalità
+**Server: (Backend)**
+- [x] Registrazione al servizio tramite email e password
+- [ ] Gestione delle route del programma
+- [ ] Gestire le richieste API a determinate endpoint
 
-**Gestore:**
+**Gestore: (Frontend)**
 - [ ] Riepilogo delle prenotazioni in arrivo/partenza oggi
 - [ ] Fare check-in/check-out in modo semplice
 - [ ] Gestire le prenotazioni
