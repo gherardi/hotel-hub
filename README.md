@@ -24,11 +24,12 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/eeca97dd-302d-4ed6-a0d9-cbe692e13c34)
 
 ## Scherma E/R
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/12b33325-d8e5-4499-8a54-353190eb3887)
 
 ## Schema logico
-- **albergatore** (id, nominativo, email)
-- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_totale, id_camera, id_albergatore)
-- **camera** (id, tipologia, prezzo_giornaliero, occupata, id_albergatore)
+- **albergatore** (id, nominativo, email, password)
+- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, prezzo_totale, id_camera, id_albergatore)
+- **camera** (id, tipologia, occupata, id_albergatore)
 
 ## Modello fisico SQL
 ```sql
