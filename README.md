@@ -21,19 +21,32 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
 - [ ] Possibilità di recuperare la password tramite email
 
-## Wireframe
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/b6e16b03-ad01-4aec-b7e1-da1d00b815ea)
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/3d327dae-cfbd-4396-9b87-12428ad2c4c7)
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/b45be0a7-dd84-4d3a-bd8c-3c818bdfa453)
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/eeca97dd-302d-4ed6-a0d9-cbe692e13c34)
+## Mockup & Wireframe
+```js
+/  landing page del servizio
+/login  accedere al servizio
+/signup  registrarsi servizio
+/dashboard  dashboard del servizio
+/:feature  ogni funzionalità del programma avrà una sua route
+```
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/e9401d78-eddc-4290-920a-1f21904a8035)
+
+---
+
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/a0d08c23-b647-4016-9b33-1c0f2ef0af0b)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/c9740aea-17a5-4004-a0e0-7e1936a9f094)
+
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/2b525988-29a9-423b-915b-136fd63ebf00)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/bd908765-0575-48d8-930a-0a49ed65e753)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/12b33325-d8e5-4499-8a54-353190eb3887)
 
 ## Schema logico
 - **albergatore** (id, nominativo, email, password)
-- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, prezzo_totale, id_camera, id_albergatore)
-- **camera** (id, tipologia, occupata, id_albergatore)
+- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, sconto_percentuale, prezzo_totale, id_camera, id_albergatore)
+- **camera** (id, tipologia, capacita, occupata, prezzo, sconto_percentuale id_albergatore)
 
 ## Modello fisico SQL
 ```sql
