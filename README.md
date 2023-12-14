@@ -41,15 +41,15 @@ CREATE DATABASE IF NOT EXISTS hotel_hub;
 USE hotel_hub;
 
 CREATE TABLE IF NOT EXISTS albergatori (
-  id INT AUTO_INCREMENT,
-  nominativo VARCHAR(255),
-  email VARCHAR(255),
-  password VARCHAR(255),
+  id INT AUTO_INCREMENT UNIQUE,
+  nominativo VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS camere (
-  id INT AUTO_INCREMENT,
+  id INT AUTO_INCREMENT UNIQUE,
   tipologia VARCHAR(255),
   prezzo_giornaliero DECIMAL(10, 2),
   occupata BOOLEAN,
@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS camere (
 );
 
 CREATE TABLE IF NOT EXISTS prenotazioni (
-  id INT AUTO_INCREMENT,
-  nominativo VARCHAR(255),
-  email VARCHAR(255),
+  id INT AUTO_INCREMENT UNIQUE,
+  nominativo VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
   data_prenotazione DATE,
   data_check_in DATE,
   data_check_out DATE,

@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
+import cors from 'cors';
 import path from 'path';
 import * as url from 'url';
 // import dotenv from 'dotenv';
@@ -15,8 +16,10 @@ const app = express();
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+app.options('*', cors());
 
 // global middlewares
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -33,6 +36,7 @@ app.use((req, res, next) => {
 	next();
 });
 
+// routing
 app.use('/', viewRouter);
 app.use('/api/users', userRouter);
 

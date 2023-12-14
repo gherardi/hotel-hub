@@ -3,8 +3,11 @@ extends base
 block content
   main
     div
-      h2 Log into your account
+      h2 Create an account
       form
+        div
+          label(for='name') Full name
+          input(type='text', id="name", name='name', placeholder='John Doe', required, value='Victor Gherardi')
         div
           label(for='email') Email address
           input(type='email', id="email", name='email', placeholder='you@example.com', required, value='gherardivictor@gmail.com')
@@ -12,9 +15,9 @@ block content
           label(for='password') Password
           input(type='password', id="password", name='password', placeholder='••••••••', required, minlength='8', value='adminadmin')
         div
-          input(type="submit", value="Login")
+          input(type="submit", value="Sign up")
 
       br
-      a(href="/signup", rel="noopener noreferrer") signup
-      
-  script(src="js/login.js")
+      a(href="/login", rel="noopener noreferrer") login
+
+  script(src="js/signup.js")
