@@ -1,0 +1,21 @@
+extends base
+
+block content
+  main(class='text-neutral w-2/3 mx-auto pt-12')
+    div.mb-12
+      h1.font-medium Benvenuto victor
+      h4.font-bold.text-4xl Camere
+
+    div.grid.grid-cols-3.gap-8.font-medium.text-lg
+      div.bg-gray-100.rounded ciao
+        
+      div.bg-gray-100.rounded.col-span-2.flex.flex-col#list
+        div.grid.grid-cols-5.text-sm.py-4
+          p id
+          p tipologia
+          p prezzo giornaliero
+          p stato
+          p sconto
+
+  script(src="https://cdn.tailwindcss.com")
+  script(src="js/camere.js") 

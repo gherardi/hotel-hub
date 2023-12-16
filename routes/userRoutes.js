@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
 			if (result.length > 0) {
 				const correctPassword = await bcrypt.compare(password, result[0].password);
 				if (correctPassword) {
-					req.session.user = { fullName: result[0].nominativo, email };
+					req.session.user = { nominativo: result[0].nominativo, email };
 					res.status(201).json({
 						status: 'success',
 						requestedAt: req.requestTime,
@@ -40,11 +40,11 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-	const { fullName, email, password } = req.body;
+	const { nominativo, email, password } = req.body;
 	const hash = await bcrypt.hash(password, 12);
 
 	database.query(
-		`INSERT INTO albergatori (nominativo, email, password) VALUES ('${fullName}', '${email}', '${hash}')`,
+		`INSERT INTO albergatori (nominativo, email, password) VALUES ('${nominativo}', '${email}', '${hash}')`,
 		(err, result) => {
 			if (err) {
 				res.status(500).send({
@@ -53,7 +53,7 @@ router.post('/signup', async (req, res) => {
 					err,
 				});
 			} else {
-				req.session.user = { fullName, email };
+				req.session.user = { nominativo, email };
 				res.status(201).json({
 					status: 'success',
 					requestedAt: req.requestTime,

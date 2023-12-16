@@ -10,6 +10,7 @@ import * as url from 'url';
 
 import viewRouter from './routes/viewRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import camereRouter from './routes/camereRoutes.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -30,7 +31,7 @@ app.use(
 		secret: 'secret',
 		resave: false,
 		saveUninitialized: true,
-		cookie: { secure: false },
+		// cookie: { secure: false },
 	})
 );
 app.use((req, res, next) => {
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 // routing
 app.use('/', viewRouter);
 app.use('/api/users', userRouter);
+app.use('/api/camere', camereRouter);
 
 app.all('*', (req, res) => {
 	res.status(404).json({

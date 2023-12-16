@@ -1,6 +1,6 @@
 document.querySelector('form').addEventListener('submit', async function (e) {
 	e.preventDefault();
-	const fullName = document.querySelector("input[name='name']").value;
+	const nominativo = document.querySelector("input[name='name']").value;
 	const email = document.querySelector("input[name='email']").value;
 	const password = document.querySelector("input[name='password']").value;
 
@@ -9,7 +9,7 @@ document.querySelector('form').addEventListener('submit', async function (e) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ fullName, email, password }),
+		body: JSON.stringify({ nominativo, email, password }),
 	});
 	const data = await res.json();
 	if (data.status === 'success') {
