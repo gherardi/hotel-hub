@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS camere (
   prezzo_giornaliero DECIMAL(10, 2),
   occupata BOOLEAN,
   sconto INT CHECK (sconto BETWEEN 0 AND 100),
-  PRIMARY KEY (id)
+  id_albergatore INT NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
 );
 
@@ -80,8 +81,8 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
   data_check_out DATE,
   prezzo_totale DECIMAL(10, 2),
   data_creazione_prenotazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  id_camera INT,
-  id_albergatore INT,
+  id_camera INT NOT NULL,
+  id_albergatore INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_camera) REFERENCES camere(id),
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
