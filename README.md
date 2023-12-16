@@ -41,12 +41,12 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/12b33325-d8e5-4499-8a54-353190eb3887)
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/da166165-9b8e-4370-beac-d87cb35f7bd2)
 
 ## Schema logico
 - **albergatore** (id, nominativo, email, password)
-- **prenotazione** (id, nominativo, email, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, sconto_percentuale, prezzo_totale, id_camera, id_albergatore)
-- **camera** (id, tipologia, capacita, occupata, prezzo, sconto_percentuale id_albergatore)
+- **prenotazione** (id, nominativo_cliente, email_cliente, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, sconto_percentuale, prezzo_totale, id_camera, id_albergatore)
+- **camera** (id, tipologia, capacita, occupata, prezzo_giornaliero, sconto_percentuale id_albergatore)
 
 ## Modello fisico SQL
 ```sql
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS camere (
 
 CREATE TABLE IF NOT EXISTS prenotazioni (
   id INT AUTO_INCREMENT UNIQUE,
-  nominativo VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  nominativo_cliente VARCHAR(255) NOT NULL,
+  email_cliente VARCHAR(255) NOT NULL,
   data_prenotazione DATE,
   data_check_in DATE,
   data_check_out DATE,
