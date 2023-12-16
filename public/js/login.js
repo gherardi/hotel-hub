@@ -14,6 +14,6 @@ document.querySelector('form').addEventListener('submit', async function (e) {
 	if (data.status === 'success') {
 		window.location.href = '/dashboard';
 	} else {
-		alert(data.err.sqlMessage? data.err.sqlMessage : data.message);
-	};
+		alert(data.err?.sqlMessage ? data.err.sqlMessage : data.message);
+	}
 });

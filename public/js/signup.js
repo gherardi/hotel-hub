@@ -14,5 +14,5 @@ document.querySelector('form').addEventListener('submit', async function (e) {
 	const data = await res.json();
 	if (data.status === 'success') {
 		window.location.href = '/dashboard';
-	} else alert(data.err.sqlMessage? data.err.sqlMessage : data.message);
+	} else alert(data.err?.sqlMessage ? data.err.sqlMessage : data.message);
 });

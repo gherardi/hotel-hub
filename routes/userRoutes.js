@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
 	const { email, password } = req.body;
-
-	console.log(email, password);
+	
 	database.query(`SELECT * FROM albergatori WHERE email = '${email}'`, async (err, result) => {
 		if (err) {
 			res.status(500).send({
