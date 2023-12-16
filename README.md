@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS camere (
   id INT AUTO_INCREMENT UNIQUE,
   tipologia VARCHAR(255),
   prezzo_giornaliero DECIMAL(10, 2),
-  occupata BOOLEAN,
+  occupata BIT,
   sconto INT CHECK (sconto BETWEEN 0 AND 100),
   id_albergatore INT NOT NULL,
   PRIMARY KEY (id),
