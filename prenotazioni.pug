@@ -1,0 +1,15 @@
+extends base
+
+block content
+  main(class='text-neutral w-4/5 mx-auto pt-12')
+    div.mb-12
+      h1.font-medium Benvenuto Victor
+      h4.font-bold.text-4xl Prenotazioni
+
+    div.grid.grid-cols-4.gap-8.font-medium.text-lg
+      div.flex.items-center.justify-center.bg-gray-100.rounded
+        a(href='/route' class='block w-full p-6 text-center') aggiungi
+
+      div.flex.items-center.justify-center.bg-gray-100.rounded.col-span-3
+        a(href='/route' class='block w-full py-6 text-center') lista
+
