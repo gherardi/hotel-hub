@@ -11,6 +11,7 @@ import * as url from 'url';
 import viewRouter from './routes/viewRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import camereRouter from './routes/camereRoutes.js';
+import prenotazioniRouter from './routes/prenotazioniRoutes.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 app.use('/', viewRouter);
 app.use('/api/users', userRouter);
 app.use('/api/camere', camereRouter);
+app.use('/api/prenotazioni', prenotazioniRouter);
 
 app.all('*', (req, res) => {
 	res.status(404).json({
