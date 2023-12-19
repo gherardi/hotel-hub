@@ -32,11 +32,12 @@ app.use(
 		secret: 'secret',
 		resave: false,
 		saveUninitialized: true,
-		// cookie: { secure: false },
+		cookie: { secure: false },
 	})
 );
 app.use((req, res, next) => {
-	req.requestTime = new Date().toISOString();
+	// req.requestTime = new Date().toISOString();
+	req.isLoggedIn = !!req.session.user;
 	next();
 });
 

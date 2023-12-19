@@ -1,9 +1,10 @@
 document.querySelector('form').addEventListener('submit', async function (e) {
 	e.preventDefault();
-	const nominativo = document.querySelector("input[name='name']").value;
-	const email = document.querySelector("input[name='email']").value;
-	const password = document.querySelector("input[name='password']").value;
+	const nominativo = document.querySelector("#name").value;
+	const email = document.querySelector("#email").value;
+	const password = document.querySelector("#password").value;
 
+	console.log(nominativo, email, password);
 	const res = await fetch('/api/users/signup', {
 		method: 'POST',
 		headers: {
@@ -14,5 +15,7 @@ document.querySelector('form').addEventListener('submit', async function (e) {
 	const data = await res.json();
 	if (data.status === 'success') {
 		window.location.href = '/dashboard';
-	} else alert(data.err?.sqlMessage ? data.err.sqlMessage : data.message);
+	} else {
+		alert(data.err?.sqlMessage ? data.err.sqlMessage : data.message);
+	}
 });

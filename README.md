@@ -1,20 +1,23 @@
-
 # HotelHub
+
 L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
 **Target:**
 Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni, camere ecc. in modo semplice e attraverso una piattaforma web intuitiva.
 
 ## Funzionalità
+
 **Server: (Backend)**
+
 - [x] Registrazione al servizio tramite email e password
-- [ ] Gestione delle route del programma
-- [ ] Gestire le richieste API a determinate endpoint
+- [x] Gestione delle route del programma
+- [x] Gestire le richieste API a determinate endpoint
 
 **Gestore: (Frontend)**
-- [ ] Riepilogo delle prenotazioni in arrivo/partenza oggi
+
+- [x] Riepilogo delle prenotazioni
+- [x] Aggiungere le prenotazioni
 - [ ] Fare check-in/check-out in modo semplice
-- [ ] Gestire le prenotazioni
 - [ ] Tenere soto controllo entrate/uscite mensili dell'albergo
 - [ ] Grafici di rendimento nei vari mesi dell'anno
 - [ ] Grafici per avere il tempo di permanenza media
@@ -22,6 +25,7 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - [ ] Possibilità di recuperare la password tramite email
 
 ## Mockup & Wireframe
+
 ```js
 /  landing page del servizio
 /login  accedere al servizio
@@ -29,6 +33,7 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 /dashboard  dashboard del servizio
 /:feature  ogni funzionalità del programma avrà una sua route
 ```
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/e9401d78-eddc-4290-920a-1f21904a8035)
 
 ---
@@ -41,17 +46,20 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/da166165-9b8e-4370-beac-d87cb35f7bd2)
 
 ## Schema logico
+
 - **albergatore** (id, nominativo, email, password)
 - **prenotazione** (id, nominativo_cliente, email_cliente, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, sconto_percentuale, prezzo_totale, id_camera, id_albergatore)
 - **camera** (id, tipologia, capacita, occupata, prezzo_giornaliero, sconto_percentuale id_albergatore)
 
 ## Modello fisico SQL
+
 ```sql
-CREATE DATABASE IF NOT EXISTS hotel-hub;
-USE hotel-hub;
+CREATE DATABASE IF NOT EXISTS hotelhub;
+USE hotelhub;
 
 CREATE TABLE IF NOT EXISTS albergatori (
   id INT AUTO_INCREMENT UNIQUE,
@@ -87,10 +95,14 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
   FOREIGN KEY (id_camera) REFERENCES camere(id),
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
 );
-
 ```
 
+## Prerequisiti
+
+seguire la guida per creare il database su phpmyadmin
+
 ## Run Locally
+
 Clone the project
 
 ```bash

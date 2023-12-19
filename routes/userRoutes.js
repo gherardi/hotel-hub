@@ -6,19 +6,19 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
 	const { email, password } = req.body;
-	
+
 	database.query(`SELECT * FROM albergatori WHERE email = '${email}'`, async (err, result) => {
 		if (err) {
 			res.status(500).send({
 				status: 'error',
 				message: 'Errore nella query SQL',
-				err
+				err,
 			});
 		} else {
 			if (result.length > 0) {
 				const correctPassword = await bcrypt.compare(password, result[0].password);
 				if (correctPassword) {
-					req.session.user = { nominativo: result[0].nominativo, email };
+					req.session.user = { nominativo: result[0].nominativo, email, id: result[0].id };
 					res.status(201).json({
 						status: 'success',
 						requestedAt: req.requestTime,
@@ -53,10 +53,9 @@ router.post('/signup', async (req, res) => {
 					err,
 				});
 			} else {
-				req.session.user = { nominativo, email };
-				res.status(201).json({
+				req.session.user = { nominativo, email, id: result.insertId };
+				res.status(200).json({
 					status: 'success',
-					requestedAt: req.requestTime,
 				});
 			}
 		}

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 	database.query(
-	`
+		`
 		SELECT camere.*
 		FROM camere
 		INNER JOIN albergatori ON camere.id_albergatore = albergatori.id
@@ -22,6 +22,27 @@ router.get('/', (req, res) => {
 					status: 'success',
 					data: { camere: rows },
 				});
+			}
+		}
+	);
+});
+
+router.post('/', (req, res) => {
+	const { tipologia, prezzo_giornaliero, sconto } = req.body;
+
+	database.query(
+		`INSERT INTO camere
+		(tipologia, prezzo_giornaliero, occupata, sconto, id_albergatore)
+		VALUES ('${tipologia}', '${prezzo_giornaliero}', 0,'${sconto}', '${req.session.user.id}')`,
+		(err, result) => {
+			if (err) {
+				res.status(500).send({
+					status: 'error',
+					message: 'Errore nella query SQL',
+					err,
+				});
+			} else {
+				res.status(200).json({ status: 'success' });
 			}
 		}
 	);

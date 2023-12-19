@@ -1,13 +1,37 @@
 extends base
 
 block content
-  main(class='text-neutral w-2/3 mx-auto pt-12')
-    div.mb-12
+  main(class='text-neutral w-4/5 mx-auto pt-12')
+    div.mb-10
       h1.font-medium Benvenuto #{user.nominativo}
       h4.font-bold.text-4xl Prenotazioni
 
-    div.grid.grid-cols-4.gap-8.font-medium.text-lg
-      div.bg-gray-100.rounded azioni
+    div.grid.grid-cols-4.gap-8
+      div.border
+        h4.text-2xl.font-semibold.mb-4 Aggiungi prenotazione
+        form
+          div.flex.justify-between.mb-2
+            label(for="cliente" class="font-medium") cliente
+            select#cliente(name="cliente" class="border")
+              option(value="singola" default) singola
+              option(value="doppia") doppia
+              option(value="suite") suite
+
+          div.flex.justify-between.mb-2
+            label(for="email" class="font-medium") email
+            input#email(type="text", name="email" class="border")
+
+          div.flex.justify-between.mb-2
+            label(for="check-in" class="font-medium") check-in
+            input(type="date", name="check-in" class="border")
+
+          div.flex.justify-between.mb-2
+            label(for="check-out" class="font-medium") check-out
+            input(type="date", name="check-out" class="border")
+
+          div.flex.justify-between.mb-2
+            label(for="prezzo_totale" class="font-medium") prezzo_totale
+            input(type="number", name="prezzo_totale" class="border" min="0")
 
       div.bg-gray-100.rounded.col-span-3
         div.grid.grid-cols-5.text-sm.py-4
