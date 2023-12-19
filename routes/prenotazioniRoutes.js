@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 	const giorni = differenzaInGiorni(checkin, checkout);
 
 	let prezzo_totale = 0;
-	database.query(`SELECT prezzo_giornaliero FROM camere WHERE id = ${camera}`, (err, result) => {
+	database.query(`SELECT prezzo_giornaliero, sconto FROM camere WHERE id = ${camera}`, (err, result) => {
 		if (err) {
 			res.status(500).send({
 				status: 'error',
@@ -42,6 +42,7 @@ router.post('/', (req, res) => {
 			});
 		} else {
 			prezzo_totale = result[0].prezzo_giornaliero * giorni;
+			prezzo_totale = prezzo_totale - (prezzo_totale * result[0].sconto) / 100;
 			database.query(
 				`INSERT INTO prenotazioni
 				(nominativo_cliente, email_cliente, data_check_in, data_check_out, prezzo_totale, data_creazione_prenotazione, id_camera, id_albergatore)

@@ -7,13 +7,13 @@ block content
       form
         div.flex.justify-between.mb-2
           label(for='name' class='font-semibold') Nominativo
-          input#name(type='text', placeholder='John Doe', required, value='Victor Gherardi')
+          input#name(type='text', placeholder='John Doe', required)
         div.flex.justify-between.mb-2
           label(for='email' class='font-semibold') Email
-          input#email(type='email', name='email', placeholder='you@example.com', required, value='gherardivictor@gmail.com')
+          input#email(type='email', name='email', placeholder='you@example.com', required)
         div.flex.justify-between.mb-2
           label(for='password' class='font-semibold') Password
-          input#password(type='password', name='password', placeholder='••••••••', required, minlength='8', value='adminadmin')
+          input#password(type='password', name='password', placeholder='••••••••', required, minlength='8')
         div.mt-4
           input(type="submit", value="Sign up" class="cursor-pointer border w-full py-2")
 
