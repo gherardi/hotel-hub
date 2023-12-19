@@ -7,39 +7,39 @@ block content
       h4.font-bold.text-4xl Prenotazioni
 
     div.grid.grid-cols-4.gap-8
-      div.border
-        h4.text-2xl.font-semibold.mb-4 Aggiungi prenotazione
-        form
-          div.flex.justify-between.mb-2
-            label(for="cliente" class="font-medium") cliente
-            select#cliente(name="cliente" class="border")
-              option(value="singola" default) singola
-              option(value="doppia") doppia
-              option(value="suite") suite
+      form.space-y-3
+        h4.text-xl.font-bold.mb-5 Aggiungi prenotazione
+        div.flex.justify-between
+          label(for="nominativo" class="font-medium") nominativo
+          input#nominativo(type="text", name="nominativo" class="border w-40" required)
 
-          div.flex.justify-between.mb-2
-            label(for="email" class="font-medium") email
-            input#email(type="text", name="email" class="border")
+        div.flex.justify-between
+          label(for="email" class="font-medium") email
+          input#email(type="email", name="email" class="border w-40" required)
 
-          div.flex.justify-between.mb-2
-            label(for="check-in" class="font-medium") check-in
-            input(type="date", name="check-in" class="border")
+        div.flex.justify-between
+          label(for="camera" class="font-medium") camera
+          select#camera(name="camera" class="border w-40" required)
 
-          div.flex.justify-between.mb-2
-            label(for="check-out" class="font-medium") check-out
-            input(type="date", name="check-out" class="border")
+        div.flex.justify-between
+          label(for="checkin" class="font-medium") check-in
+          input#checkin(type="date", name="checkin" class="border w-40" required)
 
-          div.flex.justify-between.mb-2
-            label(for="prezzo_totale" class="font-medium") prezzo_totale
-            input(type="number", name="prezzo_totale" class="border" min="0")
+        div.flex.justify-between
+          label(for="checkout" class="font-medium") check-out
+          input#checkout(type="date", name="checkout" class="border w-40" required)
 
-      div.bg-gray-100.rounded.col-span-3
-        div.grid.grid-cols-5.text-sm.py-4
-          p cliente
+        div.flex.justify-between
+          input(type="submit", value="Aggiungi" class="cursor-pointer font-medium border bg-neutral-800 py-2 pb-3 text-white w-full rounded-md")
+
+      div.border.col-span-3.px-4.rounded
+        div.grid.grid-cols-5.gap-5.py-2.font-medium
+          p nominativo
           p email
           p check-in
           p check-out
-          p prezzo_totale
-        div.grid.py-4#list
+          p prezzo totale
 
-  script(src="js/prenotazioni.js") 
+        div#list
+
+  script(src="js/prenotazioni.js")

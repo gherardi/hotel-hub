@@ -11,12 +11,15 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 
 - [x] Registrazione al servizio tramite email e password
 - [x] Gestione delle route del programma
-- [x] Gestire le richieste API a determinate endpoint
+- [x] Gestire le richieste API a determinati endpoint
+- [x] Calcolo costo totale di una prenotazione
 
 **Gestore: (Frontend)**
 
 - [x] Riepilogo delle prenotazioni
-- [x] Aggiungere le prenotazioni
+- [x] Riepilogo delle camere
+- [x] Creazione delle prenotazioni
+- [x] Creazione di camere
 - [ ] Fare check-in/check-out in modo semplice
 - [ ] Tenere soto controllo entrate/uscite mensili dell'albergo
 - [ ] Grafici di rendimento nei vari mesi dell'anno
@@ -31,7 +34,7 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 /login  accedere al servizio
 /signup  registrarsi servizio
 /dashboard  dashboard del servizio
-/:feature  ogni funzionalità del programma avrà una sua route
+/:feature  ogni funzionalità del programma avrà una sua route (coming soon)
 ```
 
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/e9401d78-eddc-4290-920a-1f21904a8035)
@@ -97,9 +100,12 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
 );
 ```
 
-## Prerequisiti
+## Prerequisites
 
-seguire la guida per creare il database su phpmyadmin
+1. avere xamp installato sul proprio pc (o qualsiasi altro modo per avere un database mysql locale)
+2. copiare il codice che trovi [qui](#modello-fisico-sql) ed eseguirlo
+
+nb: il file di configurazione per le connessioni al database si trova su /config/database.js, modificando quelle impostazioni potrai connettersi ad un tuo database a piacere con username, password e porta
 
 ## Run Locally
 
@@ -124,8 +130,10 @@ Install dependencies
 Start the server
 
 ```bash
-  npm run dev
+  npm start
 ```
+
+a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
 
 <!--
 ## Deployment
