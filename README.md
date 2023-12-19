@@ -50,8 +50,8 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 
 ## Modello fisico SQL
 ```sql
-CREATE DATABASE IF NOT EXISTS hotel_hub;
-USE hotel_hub;
+CREATE DATABASE IF NOT EXISTS hotel-hub;
+USE hotel-hub;
 
 CREATE TABLE IF NOT EXISTS albergatori (
   id INT AUTO_INCREMENT UNIQUE,

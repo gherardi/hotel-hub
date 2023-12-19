@@ -1,0 +1,36 @@
+extends base
+
+block content
+  main(class='text-neutral w-4/5 mx-auto pt-12')
+    div.mb-12
+      h1.font-medium Benvenuto Victor
+      h4.font-bold.text-4xl Camere
+
+    div.grid.grid-cols-4.gap-8
+      div.border.p-4.rounded
+        h4.text-2xl.font-semibold.mb-4 Aggiungi camera
+        form
+          div.flex.justify-between.mb-2
+            label(for="tipologia" class="font-medium") tipologia
+            select#tipologia(name="tipologia" class="border")
+              option(value="singola" default) singola
+              option(value="doppia") doppia
+              option(value="suite") suite
+
+          div.flex.justify-between.mb-2
+            label(for="prezzo" class="font-medium") prezzo/giorno
+            input#przzo(type="number", name="prezzo" class="border" min="0")
+
+          div.flex.justify-between.mb-2
+            label(for="prezzo" class="font-medium") sconto
+            input#przzo(type="number", name="prezzo" class="border" min="0")
+
+      div.bg-gray-100.rounded.col-span-3#list
+        div.grid.grid-cols-5.text-sm.py-4
+          p id
+          p tipologia
+          p prezzo giornaliero
+          p stato
+          p sconto
+
+  script(src="js/camere.js") 
