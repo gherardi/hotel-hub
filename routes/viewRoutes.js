@@ -10,6 +10,35 @@ router.get('/login', (req, res) => {
 	res.status(200).render('login');
 });
 
+router.get('/forgot-password', (req, res) => {
+	res.status(200).render('forgotPassword');
+});
+
+router.get('/reset-password/:token', async (req, res) => {
+	const { token } = req.params;
+
+	res.status(200).send({ message: 'cambiato' });
+
+	// cambia qui la password
+
+	// database.query(
+	// 	`UPDATE albergatori SET password = '${hash}' WHERE token = '${token}'`,
+	// 	(err, result) => {
+	// 		if (err) {
+	// 			res.status(500).send({
+	// 				status: 'error',
+	// 				message: 'Errore nella query SQL',
+	// 				err,
+	// 			});
+	// 		} else {
+	// 			res.status(200).json({
+	// 				status: 'success',
+	// 			});
+	// 		}
+	// 	}
+	// );
+});
+
 router.get('/signup', (req, res) => {
 	res.status(200).render('signup');
 });
