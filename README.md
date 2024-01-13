@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS albergatori (
   id INT AUTO_INCREMENT UNIQUE,
   nominativo VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
+  passwordResetToken VARCHAR(255) UNIQUE,
   password VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );

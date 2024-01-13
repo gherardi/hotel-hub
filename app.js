@@ -5,21 +5,22 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import sendGrid from '@sendgrid/mail';
 import path from 'path';
+import database from './config/database.js';
 import * as url from 'url';
-// import dotenv from 'dotenv';
-// dotenv.config({ path: './config.env' });
+import dotenv from 'dotenv';
 
 import viewRouter from './routes/viewRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import camereRouter from './routes/camereRoutes.js';
 import prenotazioniRouter from './routes/prenotazioniRoutes.js';
-import { send } from 'process';
+
+dotenv.config({ path: './config.env' });
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const app = express();
 
-sendGrid.setApiKey('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');
+sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -56,42 +57,44 @@ app.patch('/api/send-email', async (req, res) => {
 	const resetToken = crypto.randomUUID();
 
 	database.query(
-		`UPDATE alberghieri SET passwordResetToken = '${resetToken}' WHERE email = '${email}'`,
+		`UPDATE albergatori SET passwordResetToken = '${resetToken}' WHERE email = '${email}'`,
 		async (err, result) => {
 			if (err) {
 				res.status(500).send({
-					status: 'error',
+					status: 'fail',
 					message: 'Errore nella query SQL',
 					err,
 				});
+			} else {
+				if (result.affectedRows > 0) {
+					const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
+	
+					const msg = {
+						to: email,
+						from: 'gherardivictor@gmail.com',
+						subject: 'Reset your password here',
+						text: 'to reset your password click on the link below',
+						html: `<strong>to reset your password click <a href=${resetURL}>here</a></strong>
+						<br><br><br>
+						if the link doesn't work copy and paste this url in your browser: ${resetURL}
+						`,
+					};
+					await sendGrid.send(msg);
+					console.log('Email sent');
+					res.status(200).json({
+						status: 'success',
+						message: "Email inviata con successo"
+					});
+				} else {
+					// Nessuna riga è stata modificata, quindi l'utente non è stato trovato
+					res.status(404).json({
+						status: 'fail',
+						message: 'Utente non trovato',
+					});
+				}
 			}
 		}
 	);
-
-	const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
-
-	const msg = {
-		to: email,
-		from: 'gherardivictor@gmail.com',
-		subject: 'Reset your password here',
-		text: 'to reset your password click on the link below',
-		html: `<strong>to reset your password click <a href=${resetURL}>here</a>
-		<br>
-		if the link doesn't work copy and paste this url in your browser: ${resetURL}
-		</strong>`,
-	};
-	try {
-		await sendGrid.send(msg);
-		console.log('Email sent');
-		res.status(200).json({
-			status: 'success',
-		});
-	} catch (err) {
-		console.error(err);
-		res.status(400).json({
-			status: 'fail',
-		});
-	}
 });
 
 app.all('*', (req, res) => {

@@ -1,4 +1,6 @@
 import express from 'express';
+import bcrypt from 'bcryptjs';
+import database from '../config/database.js';
 
 const router = express.Router();
 
@@ -16,27 +18,35 @@ router.get('/forgot-password', (req, res) => {
 
 router.get('/reset-password/:token', async (req, res) => {
 	const { token } = req.params;
+	if (!token) return res.status(400).json({ message: 'token non valido' });
 
-	res.status(200).send({ message: 'cambiato' });
+	res.status(200).render('resetPassword');
+});
 
-	// cambia qui la password
+router.patch('/reset-password/:token', async (req, res) => {
+	console.log('richiesta ricevuta');
+	const { token } = req.params;
+	console.log('TOKEN:' + token);
+	const { password } = req.body;
 
-	// database.query(
-	// 	`UPDATE albergatori SET password = '${hash}' WHERE token = '${token}'`,
-	// 	(err, result) => {
-	// 		if (err) {
-	// 			res.status(500).send({
-	// 				status: 'error',
-	// 				message: 'Errore nella query SQL',
-	// 				err,
-	// 			});
-	// 		} else {
-	// 			res.status(200).json({
-	// 				status: 'success',
-	// 			});
-	// 		}
-	// 	}
-	// );
+	const hash = await bcrypt.hash(password, 12);
+
+	database.query(
+		`UPDATE albergatori SET password = '${hash}', passwordResetToken = null WHERE passwordResetToken = '${token}'`,
+		(err, result) => {
+			if (err) {
+				res.status(500).json({
+					status: 'error',
+					message: 'Errore nella query SQL',
+					err,
+				});
+			} else {
+				res.status(200).json({
+					status: 'success',
+				});
+			}
+		}
+	);
 });
 
 router.get('/signup', (req, res) => {
