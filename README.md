@@ -25,7 +25,7 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - [ ] Grafici di rendimento nei vari mesi dell'anno
 - [ ] Grafici per avere il tempo di permanenza media
 - [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
-- [ ] Possibilità di recuperare la password tramite email
+- [x] Recupero password tramite email con token
 
 ## Mockup & Wireframe
 
@@ -108,6 +108,12 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
 
 nb: il file di configurazione per le connessioni al database si trova su /config/database.js, modificando quelle impostazioni potrai connettersi ad un tuo database a piacere con username, password e porta
 
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your config.env file
+
+`SENDGRID_API_KEY`
+
 ## Run Locally
 
 Clone the project
@@ -146,15 +152,6 @@ To deploy this project run
 ```
 Take the "dist" folder that was created and put it in a web service.
 Remember to add environment variables to the web service to make the application work.
-
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
 
 ## API Reference
 
