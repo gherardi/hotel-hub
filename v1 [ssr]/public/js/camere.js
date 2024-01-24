@@ -1,4 +1,18 @@
+const eliminaCamera = async function (id) {
+	const res = await fetch(`/api/camere/${id}`, {
+		method: 'DELETE',
+	});
+	const data = await res.json();
+	if (data.status === 'success') {
+		fetchCamere();
+		document.querySelectorAll('input').forEach((input) => {
+			input.value = '';
+		});
+	}
+};
+
 const fetchCamere = async function () {
+	document.querySelector('#list').innerHTML = '';
 	const response = await fetch('/api/camere', {
 		method: 'GET',
 	});
@@ -6,11 +20,12 @@ const fetchCamere = async function () {
 	camere.data.camere.forEach((camera) => {
 		const markup = `
       <div class="grid grid-cols-5 gap-5 py-2">
-        <p class="">${camera.id}</p>
+        <p class="">${camera.numero}</p>
         <p class="">${camera.tipologia}</p>
         <p class="">${camera.prezzo_giornaliero}</p>
         <p class="">${camera.sconto}</p>
-        <p class="">${camera.occupata.data[0] === 0 ? 'libera' : 'occupata'}</p>
+				<p class=""><button class="border" onclick="eliminaCamera(${camera.id})">elimina</button></p>
+
       </div>
     `;
 		document.querySelector('#list').insertAdjacentHTML('afterbegin', markup);
@@ -32,6 +47,9 @@ document.querySelector('form').addEventListener('submit', async function (e) {
 	});
 	const data = await response.json();
 	if (data.status === 'success') {
-		window.location.reload();
+		fetchCamere();
+		document.querySelectorAll('input').forEach((input) => {
+			input.value = '';
+		});
 	}
 });

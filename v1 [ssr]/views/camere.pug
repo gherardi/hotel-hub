@@ -10,11 +10,15 @@ block content
       form.space-y-3
         h4.text-xl.font-bold.mb-5 Aggiungi camera
         div.flex.justify-between
+          label(for="numero" class="font-medium") numero
+          input#numero(type="number", name="numero" class="border w-20" min="1" required)
+        div.flex.justify-between
           label(for="tipologia" class="font-medium") tipologia
           select#tipologia(name="tipologia" class="border" required)
             option(value="singola" default) singola
             option(value="doppia") doppia
             option(value="tripla") tripla
+            option(value="quadrupla") quadrupla
 
         div.flex.justify-between
           label(for="prezzo_giornaliero" class="font-medium") prezzo/giorno
@@ -28,12 +32,12 @@ block content
           input(type="submit", value="Aggiungi" class="cursor-pointer font-medium border bg-neutral-800 py-2 pb-3 text-white w-full rounded-md")
 
       div.border.col-span-3.px-4.rounded
-        div.grid.grid-cols-5.gap-5.py-2.font-medium
-          p id
+        div.grid.grid-cols-5.gap-5.py-2.font-medium.border-b
+          p numero
           p tipologia
           p prezzo giornaliero
           p sconto %
-          p stato
+          p 
 
         div#list
 

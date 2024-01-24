@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS albergatori (
 CREATE TABLE IF NOT EXISTS camere (
   id INT AUTO_INCREMENT UNIQUE,
   tipologia VARCHAR(255),
+  numero INT NOT NULL,
   prezzo_giornaliero DECIMAL(10, 2),
   occupata BIT,
   sconto INT CHECK (sconto BETWEEN 0 AND 100),
@@ -33,6 +34,6 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
   id_camera INT NOT NULL,
   id_albergatore INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_camera) REFERENCES camere(id),
+  FOREIGN KEY (id_camera) REFERENCES camere(id) ON DELETE SET NULL,
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
 );

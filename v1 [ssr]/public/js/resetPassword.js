@@ -1,5 +1,3 @@
-// console.log(window.location.pathname.split("/").pop());
-
 document.querySelector('form').addEventListener('submit', async function (e) {
 	e.preventDefault();
 

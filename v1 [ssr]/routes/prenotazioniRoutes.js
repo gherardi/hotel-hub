@@ -7,11 +7,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
 	database.query(
 		`
-		SELECT prenotazioni.*
-		FROM prenotazioni
-		INNER JOIN albergatori ON prenotazioni.id_albergatore = albergatori.id
-		WHERE albergatori.email = '${req.session.user.email}';
-	`,
+			SELECT prenotazioni.*
+			FROM prenotazioni
+			INNER JOIN albergatori ON prenotazioni.id_albergatore = albergatori.id
+			WHERE albergatori.email = '${req.session.user.email}';
+		`,
 		(err, rows, fields) => {
 			if (err) {
 				res.status(500).json({
@@ -61,6 +61,20 @@ router.post('/', (req, res) => {
 					}
 				}
 			);
+		}
+	});
+});
+
+router.delete('/:id', (req, res) => {
+	database.query(`DELETE FROM prenotazioni WHERE id = ${req.params.id}`, (err, result) => {
+		if (err) {
+			res.status(500).send({
+				status: 'error',
+				message: 'Errore nella query SQL',
+				err,
+			});
+		} else {
+			res.status(200).json({ status: 'success' });
 		}
 	});
 });

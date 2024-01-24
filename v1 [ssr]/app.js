@@ -68,7 +68,7 @@ app.patch('/api/send-email', async (req, res) => {
 			} else {
 				if (result.affectedRows > 0) {
 					const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
-	
+
 					const msg = {
 						to: email,
 						from: 'gherardivictor@gmail.com',
@@ -83,7 +83,7 @@ app.patch('/api/send-email', async (req, res) => {
 					console.log('Email sent');
 					res.status(200).json({
 						status: 'success',
-						message: "Email inviata con successo"
+						message: 'Email inviata con successo',
 					});
 				} else {
 					// Nessuna riga è stata modificata, quindi l'utente non è stato trovato

@@ -28,12 +28,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	const { tipologia, prezzo_giornaliero, sconto } = req.body;
+	const { tipologia, numero, prezzo_giornaliero, sconto } = req.body;
 
 	database.query(
 		`INSERT INTO camere
-		(tipologia, prezzo_giornaliero, occupata, sconto, id_albergatore)
-		VALUES ('${tipologia}', '${prezzo_giornaliero}', 0,'${sconto}', '${req.session.user.id}')`,
+		(tipologia, numero, prezzo_giornaliero, occupata, sconto, id_albergatore)
+		VALUES ('${tipologia}', '${numero}', '${prezzo_giornaliero}', 0,'${sconto}', '${req.session.user.id}')`,
 		(err, result) => {
 			if (err) {
 				res.status(500).send({
@@ -46,6 +46,20 @@ router.post('/', (req, res) => {
 			}
 		}
 	);
+});
+
+router.delete('/:id', (req, res) => {
+	database.query(`DELETE FROM camere WHERE id = ${req.params.id}`, (err, result) => {
+		if (err) {
+			res.status(500).send({
+				status: 'error',
+				message: 'Errore nella query SQL',
+				err,
+			});
+		} else {
+			res.status(200).json({ status: 'success' });
+		}
+	});
 });
 
 export default router;
