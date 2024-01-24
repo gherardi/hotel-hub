@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
   id_camera INT NOT NULL,
   id_albergatore INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_camera) REFERENCES camere(id) ON DELETE SET NULL,
+  FOREIGN KEY (id_camera) REFERENCES camere(id),
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
 );
