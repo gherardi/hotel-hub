@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import validator from 'validator';
 
 import supabase from './../utils/supabase.js';
 import AppError from './../utils/appError.js';
 // import Email from './../utils/sendEmail.js';
 
 dotenv.config();
+
+const validNameRegex = /^[^@#$%^]+(?:\s[^@#$%^]+)+$/;
 
 const signToken = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -35,9 +38,57 @@ const createSendToken = (user, statusCode, req, res) => {
 	});
 };
 
+export const validateSignupInput = (req, res, next) => {
+	console.log('passato per il middleware signup');
+
+	const { name, email, password } = req.body;
+
+	req.body.name = name.trim();
+	req.body.email = email.trim();
+	req.body.email = email.toLowerCase();
+
+	if (!name || !email || !password) {
+		return next(new AppError('Please provide your name, email and password!', 400));
+	}
+
+	if (!validator.isEmail(email)) {
+		return next(new AppError('Please provide a valid email!', 400));
+	}
+
+	if (!validator.isStrongPassword(password)) {
+		return next(new AppError('Please provide a strong password!', 400));
+	}
+
+	if (!validNameRegex.test(name)) {
+		return next(new AppError('Please provide a valid name!', 400));
+	}
+
+	next();
+};
+
+export const validateLoginInput = (req, res, next) => {
+	console.log('passato per il middleware login');
+
+	const { email, password } = req.body;
+
+	req.body.email = email.trim();
+	req.body.email = email.toLowerCase();
+
+	if (!email || !password) {
+		return next(new AppError('Please provide email and password!', 400));
+	}
+
+	if (!validator.isEmail(email)) {
+		return next(new AppError('Please provide a valid email!', 400));
+	}
+
+	next();
+};
+
 export const signup = async (req, res, next) => {
 	try {
 		const { name, email, password } = req.body;
+
 		const hash = await bcrypt.hash(password, 12);
 
 		const { data, error } = await supabase
@@ -65,11 +116,6 @@ export const signup = async (req, res, next) => {
 export const login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
-
-		// 1) Check if email and password exist
-		if (!email || !password) {
-			return next(new AppError('Please provide email and password!', 400));
-		}
 
 		let { data, error } = await supabase.from('albergatori').select('*').eq('email', email);
 
@@ -100,12 +146,29 @@ export const logout = (req, res, next) => {
 
 export const forgotPassword = (req, res, next) => {
 	try {
-		// res.status(501).json({ status: 'error', message: 'This route is not yet defined!' });
 		next(new AppError('This route is not yet defined!', 501));
 	} catch (err) {}
 };
+
 export const resetPassword = (req, res, next) => {
 	try {
 		next(new AppError('This route is not yet defined!', 501));
 	} catch (err) {}
+};
+
+export const existingEmails = async (req, res, next) => {
+	try {
+		const { email } = req.params;
+
+		const { data, error } = await supabase
+			.from('albergatori')
+			.select('email')
+			.like('email', `${email}%`);
+
+		if (error) return next(new AppError(error.message));
+
+		res.status(200).json({ status: 'success', data });
+	} catch (err) {
+		next(new AppError(err.message ? err.message : err));
+	}
 };

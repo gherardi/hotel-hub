@@ -6,12 +6,11 @@ import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 
 import userRouter from './routes/userRoutes.js';
-// import camereRouter from './routes/camereRoutes';
+import camereRouter from './routes/camereRoutes.js';
 // import prenotazioniRouter from './routes/prenotazioniRoutes';
 
 import AppError from './utils/appError.js';
 import globalErrorHandler from './controllers/errorController.js';
-import supabase from './utils/supabase.js';
 
 dotenv.config();
 
@@ -36,8 +35,7 @@ app.use('/api', limiter); // Limit requests from same API
 
 // API ROUTING
 app.use('/api/users', userRouter);
-// app.use('/api/users', 'camereRouter');
-// app.use('/api/camere', 'camereRouter');
+app.use('/api/camere', camereRouter);
 // app.use('/api/prenotazioni', 'prenotazioniRouter');
 
 // ERROR HANDLING

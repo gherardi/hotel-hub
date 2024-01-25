@@ -29,23 +29,14 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 
 ## Mockup & Wireframe
 
-```js
-/  landing page del servizio
-/login  accedere al servizio
-/signup  registrarsi servizio
-/dashboard  dashboard del servizio
-/:feature  ogni funzionalità del programma avrà una sua route (coming soon)
-```
-
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/e9401d78-eddc-4290-920a-1f21904a8035)
-
----
-
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/a0d08c23-b647-4016-9b33-1c0f2ef0af0b)
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/c9740aea-17a5-4004-a0e0-7e1936a9f094)
 
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2b525988-29a9-423b-915b-136fd63ebf00)
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/bd908765-0575-48d8-930a-0a49ed65e753)
+
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
@@ -61,6 +52,7 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ## Modello fisico SQL
 
 ```sql
+-- scrivere bene le query, scrivere anche le query presenti nel sito
 CREATE DATABASE IF NOT EXISTS hotelhub;
 USE hotelhub;
 
@@ -103,20 +95,23 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
 
 ## Prerequisites
 
-1. avere xamp installato sul proprio pc (o qualsiasi altro modo per avere un database mysql locale)
-2. copiare il codice che trovi [qui](#modello-fisico-sql) ed eseguirlo
+v2 in progress...
+<!-- 1. avere xamp installato sul proprio pc (o qualsiasi altro modo per avere un database mysql locale)
+2. copiare il codice che trovi [qui](#modello-fisico-sql) ed eseguirlo -->
 
-nb: il file di configurazione per le connessioni al database si trova su /config/database.js, modificando quelle impostazioni potrai connettersi ad un tuo database a piacere con username, password e porta
+<!-- nb: il file di configurazione per le connessioni al database si trova su /config/database.js, modificando quelle impostazioni potrai connettersi ad un tuo database a piacere con username, password e porta -->
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your config.env file
+v2 in progress...
+<!-- To run this project, you will need to add the following environment variables to your config.env file
 
-`SENDGRID_API_KEY`
+`SENDGRID_API_KEY` -->
 
 ## Run Locally
 
-Clone the project
+v2 in progress...
+<!-- Clone the project
 
 ```bash
   git clone https://github.com/gherardi/hotel-hub
@@ -140,7 +135,7 @@ Start the server
   npm start
 ```
 
-a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
+a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma -->
 
 <!--
 ## Deployment
