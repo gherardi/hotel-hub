@@ -6,21 +6,18 @@ dotenv.config();
 sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default class Email {
-	constructor(user, resetURL) {
+	constructor(email, resetURL) {
 		this.from = `Hotel Hub <${process.env.EMAIL_FROM}>`;
-		this.to = user.email;
+		this.to = email;
 		this.resetURL = resetURL;
 	}
 
 	async sendPasswordReset() {
 		try {
-			const resetToken = crypto.randomUUID();
-			const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
-
-			const mailOptions = {
+			const msg = {
 				from: this.from,
 				to: this.to,
-				subject: 'Your password reset token (valid for only 10 minutes)',
+				subject: `Your password reset token (valid for only ${process.env.PASSWORD_RESET_TOKEN_EXPIRES_IN} minutes)`,
 				text: 'Reset your password here',
 				html: `<strong>to reset your password click <a href=${this.resetURL}>here</a></strong>
           <br><br><br>
@@ -30,7 +27,9 @@ export default class Email {
         `,
 			};
 
-			await sendGrid.send(msg);
+			const [ret] = await sendGrid.send(msg);
+			if (ret.statusCode !== 202)
+				throw new Error('There was an error sending the email. Try again later!');
 		} catch (err) {
 			throw err;
 		}

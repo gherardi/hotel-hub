@@ -5,7 +5,7 @@ import validator from 'validator';
 
 import supabase from './../utils/supabase.js';
 import AppError from './../utils/appError.js';
-// import Email from './../utils/sendEmail.js';
+import Email from './../utils/sendEmail.js';
 
 dotenv.config();
 
@@ -16,6 +16,8 @@ const signToken = (id) => {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
 };
+
+// todo: quando faccio il login, imposto il password_reset_token a null e password_reset_token_expires a null
 
 const createSendToken = (user, statusCode, req, res) => {
 	const token = signToken(user.id);
@@ -102,7 +104,11 @@ export const signup = async (req, res, next) => {
 			])
 			.select();
 
-		if (error) return next(new AppError(error.message));
+		if (error) {
+			if (error.code === '23505')
+				return next(new AppError('Email already taken, try another one', 409));
+			return next(new AppError(error.message));
+		}
 
 		if (data.length === 0) return next(new AppError('Errore durante la registrazione', 400));
 
@@ -144,16 +150,86 @@ export const logout = (req, res, next) => {
 	res.status(200).json({ status: 'success' });
 };
 
-export const forgotPassword = (req, res, next) => {
+export const forgotPassword = async (req, res, next) => {
 	try {
-		next(new AppError('This route is not yet defined!', 501));
-	} catch (err) {}
+		const { email } = req.body;
+
+		req.body.email = email.trim();
+		req.body.email = email.toLowerCase();
+
+		if (!email) {
+			return next(new AppError('Please provide your email!', 400));
+		}
+
+		if (!validator.isEmail(email)) {
+			return next(new AppError('Please provide a valid email!', 400));
+		}
+
+		const token = crypto.randomUUID();
+
+		const expires = new Date();
+		expires.setMinutes(expires.getMinutes() + process.env.PASSWORD_RESET_EXPIRES_IN);
+
+		const { data, error } = await supabase
+			.from('albergatori')
+			.update({
+				password_reset_token: token,
+				password_reset_token_expires: expires.toISOString(),
+			})
+			.eq('email', email)
+			.select('email');
+
+		if (error) return next(new AppError(error.message));
+
+		if (data.length === 0) return next(new AppError('No account found with that email', 401));
+
+		const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
+
+		await new Email(email, resetURL).sendPasswordReset();
+
+		res.status(200).json({
+			status: 'success',
+			message: 'ResetURL sent to email!',
+		});
+	} catch (err) {
+		return next(new AppError('There was an error sending the email. Try again later!'), 500);
+	}
 };
 
-export const resetPassword = (req, res, next) => {
+export const resetPassword = async (req, res, next) => {
 	try {
-		next(new AppError('This route is not yet defined!', 501));
-	} catch (err) {}
+		const { token } = req.params;
+		const { password } = req.body;
+
+		if (!token) return next(new AppError('Please provide a token', 400));
+		if (!password) return next(new AppError('Please provide a valid password', 400));
+		if (!validator.isStrongPassword(password)) {
+			return next(new AppError('Please provide a strong password!', 400));
+		}
+
+		const hash = await bcrypt.hash(password, 12);
+
+		let { data, error } = await supabase
+			.from('albergatori')
+			.select('*')
+			.eq('password_reset_token', token)
+			.gt('password_reset_token_expires', new Date().toISOString());
+
+		if (error) return next(new AppError(error.message));
+
+		if (data.length === 0) return next(new AppError('Token is invalid or has expired', 400));
+
+		const { error1 } = await supabase
+			.from('albergatori')
+			.update({ password: hash, password_reset_token: null, password_reset_token_expires: null })
+			.eq('id', data[0].id);
+
+		if (error) return next(new AppError(error.message));
+
+		createSendToken(data[0], 200, req, res);
+	} catch (err) {
+		next(new AppError(err.message ? err.message : err));
+	}
 };
 
 export const existingEmails = async (req, res, next) => {
