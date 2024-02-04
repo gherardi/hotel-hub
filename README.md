@@ -174,3 +174,7 @@ Remember to add environment variables to the web service to make the application
 
 Takes two numbers and returns the sum.
 -->
+
+
+## Commit convention
+[commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#what-is-commitlint)
