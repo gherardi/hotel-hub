@@ -23,7 +23,7 @@
 	/* @media (prefers-color-scheme: light) */
 	/* @media (prefers-color-scheme: dark) */
 
-	body{
+	body {
 		@apply font-inter;
 	}
 
@@ -44,5 +44,12 @@
 	textarea,
 	select {
 		@apply w-full;
+	}
+
+	a {
+		@apply block text-blue-500 underline;
+	}
+	h1 {
+		@apply text-4xl font-bold;
 	}
 }
