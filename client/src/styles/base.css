@@ -1,0 +1,30 @@
+@layer base {
+  :root {
+    line-height: 1.5;
+    font-weight: 400;
+
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme */
+    color-scheme: light dark;
+    /* :global(.dark) body {
+			background: #f8c8a8;
+		} */
+    /* console.log(document.documentElement);
+		console.log(window.matchMedia('(prefers-color-scheme: dark)').matches); */
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* @media (prefers-color-scheme: light) */
+  @media (prefers-color-scheme: dark) {
+    body{
+      @apply bg-neutral-800;
+    }
+  }
+  
+  body {
+    @apply font-inter;
+  }
+}
+

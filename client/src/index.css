@@ -1,55 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import './styles/base.css';
 
-@layer base {
-	:root {
-		line-height: 1.5;
-		font-weight: 400;
+@import "tailwindcss/components";
+@import './styles/components.css';
 
-		/* https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme */
-		color-scheme: light dark;
-		/* :global(.dark) body {
-			background: #f8c8a8;
-		} */
-		/* console.log(document.documentElement);
-		console.log(window.matchMedia('(prefers-color-scheme: dark)').matches); */
-
-		font-synthesis: none;
-		text-rendering: optimizeLegibility;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-	/* @media (prefers-color-scheme: light) */
-	/* @media (prefers-color-scheme: dark) */
-
-	body {
-		@apply font-inter;
-	}
-
-	[type='text'],
-	input:where(:not([type])),
-	[type='email'],
-	[type='url'],
-	[type='password'],
-	[type='number'],
-	[type='date'],
-	[type='datetime-local'],
-	[type='month'],
-	[type='search'],
-	[type='tel'],
-	[type='time'],
-	[type='week'],
-	[multiple],
-	textarea,
-	select {
-		@apply w-full;
-	}
-
-	a {
-		@apply block text-blue-500 underline;
-	}
-	h1 {
-		@apply text-4xl font-bold;
-	}
-}
+@import "tailwindcss/utilities";
+@import './styles/utilities.css';
