@@ -1,5 +1,4 @@
 # HotelHub
-
 L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
 
 **Target:**
@@ -12,7 +11,6 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - [x] Registrazione al servizio tramite email e password
 - [x] Gestione delle route del programma
 - [x] Gestire le richieste API a determinati endpoint
-- [x] Calcolo costo totale di una prenotazione
 
 **Gestore: (Frontend)**
 
@@ -109,9 +107,7 @@ v2 in progress...
 `SENDGRID_API_KEY` -->
 
 ## Run Locally
-
-v2 in progress...
-<!-- Clone the project
+Clone the project
 
 ```bash
   git clone https://github.com/gherardi/hotel-hub
@@ -126,7 +122,8 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install
+  # install both dependencies (client and server)
+  npm run dependencies
 ```
 
 Start the server
@@ -135,11 +132,10 @@ Start the server
   npm start
 ```
 
-a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma -->
+a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
 
 <!--
 ## Deployment
-
 To deploy this project run
 
 ```bash
@@ -147,34 +143,7 @@ To deploy this project run
 ```
 Take the "dist" folder that was created and put it in a web service.
 Remember to add environment variables to the web service to make the application work.
-
-## API Reference
-
-#### Get all items
-
-```http
-  GET /api/items
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
-
-#### Get item
-
-```http
-  GET /api/items/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-
-#### add(num1, num2)
-
-Takes two numbers and returns the sum.
 -->
 
-
-## Commit convention
-[commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#what-is-commitlint)
+## Convenzioni dei commit
+In questo progetto utilizzo le convenzioni di [commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#what-is-commitlint) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.

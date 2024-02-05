@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "dependencies": "cd ./client && npm install && cd ../server && npm i"
+  }
+}
