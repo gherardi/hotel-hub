@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import useApi from '../hooks/useApi.jsx';
 import ServerErrorPage from '../pages/ServerErrorPage.jsx';
+import LoadingPage from '../pages/LoadingPage.jsx';
 
 const AuthContext = createContext(null);
 
@@ -12,7 +13,7 @@ export default function AuthProvider({ children, isSignedIn }) {
 
 	if (error) return <ServerErrorPage error={error} />;
 
-	if (isLoading) return <div>Loading page...</div>;
+	if (isLoading) return <LoadingPage />;
 
 	return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 }
