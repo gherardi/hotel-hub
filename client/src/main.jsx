@@ -16,14 +16,12 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 // import { lazy } from "react";
 // const ReportedPost = lazy(() => import("./pages/ReportedPost"));
 
-
 // complete react router tutorial by cosden solutions
 // https://youtu.be/oTIJunBa6MA?feature=shared
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <HomePage />,
-		errorElement: <NotFoundPage />,
 	},
 	{
 		path: '/login',
@@ -40,6 +38,10 @@ const router = createBrowserRouter([
 				<ProtectedPage />
 			</ProtectedRoute>
 		),
+	},
+	{
+		path: '*',
+		element: <NotFoundPage />,
 	},
 ]);
 
