@@ -38,8 +38,13 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
-
+<!--
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/da166165-9b8e-4370-beac-d87cb35f7bd2)
+-->
+
+v2 in progress...
+
+[schema](https://app.eraser.io/workspace/DPMmFcnNEUQWkDtrU404?origin=share)
 
 ## Schema logico
 
@@ -48,7 +53,8 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - **camera** (id, tipologia, capacita, occupata, prezzo_giornaliero, sconto_percentuale id_albergatore)
 
 ## Modello fisico SQL
-
+v2 in progress...
+<!--
 ```sql
 -- scrivere bene le query, scrivere anche le query presenti nel sito
 CREATE DATABASE IF NOT EXISTS hotelhub;
@@ -90,6 +96,7 @@ CREATE TABLE IF NOT EXISTS prenotazioni (
   FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
 );
 ```
+-->
 
 ## Prerequisites
 
