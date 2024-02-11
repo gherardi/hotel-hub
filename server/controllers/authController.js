@@ -9,11 +9,10 @@ import Email from './../utils/sendEmail.js';
 
 dotenv.config();
 
-const validNameRegex = /^[^@#$%^]+(?:\s[^@#$%^]+)+$/;
-
 const signToken = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRES_IN,
+		// expiresIn: process.env.JWT_EXPIRES_IN,
+		expiresIn: '120s',
 	});
 };
 
@@ -22,11 +21,11 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, req, res) => {
 	const token = signToken(user.id);
 
-	// res.cookie('jwt', token, {
-	// 	expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-	// 	httpOnly: true,
-	// 	secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-	// });
+	res.cookie('jwt', token, {
+		httpOnly: true,
+		// secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+		// expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+	});
 
 	// Remove password from output
 	user.password = null;
@@ -38,53 +37,6 @@ const createSendToken = (user, statusCode, req, res) => {
 			user,
 		},
 	});
-};
-
-export const validateSignupInput = (req, res, next) => {
-	console.log('passato per il middleware signup');
-
-	const { name, email, password } = req.body;
-
-	req.body.name = name.trim();
-	req.body.email = email.trim();
-	req.body.email = email.toLowerCase();
-
-	if (!name || !email || !password) {
-		return next(new AppError('Please provide your name, email and password!', 400));
-	}
-
-	if (!validator.isEmail(email)) {
-		return next(new AppError('Please provide a valid email!', 400));
-	}
-
-	if (!validator.isStrongPassword(password)) {
-		return next(new AppError('Please provide a strong password!', 400));
-	}
-
-	if (!validNameRegex.test(name)) {
-		return next(new AppError('Please provide a valid name!', 400));
-	}
-
-	next();
-};
-
-export const validateLoginInput = (req, res, next) => {
-	console.log('passato per il middleware login');
-
-	const { email, password } = req.body;
-
-	req.body.email = email.trim();
-	req.body.email = email.toLowerCase();
-
-	if (!email || !password) {
-		return next(new AppError('Please provide email and password!', 400));
-	}
-
-	if (!validator.isEmail(email)) {
-		return next(new AppError('Please provide a valid email!', 400));
-	}
-
-	next();
 };
 
 export const signup = async (req, res, next) => {
