@@ -1,30 +1,75 @@
 @layer base {
-  :root {
-    line-height: 1.5;
-    font-weight: 400;
+	:root {
+		line-height: 1.5;
+		font-weight: 400;
 
-    /* https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme */
-    color-scheme: light dark;
-    /* :global(.dark) body {
+		/* https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme */
+		/* color-scheme: light dark; */
+		color-scheme: dark;
+		/* :global(.dark) body {
 			background: #f8c8a8;
 		} */
-    /* console.log(document.documentElement);
+		/* console.log(document.documentElement);
 		console.log(window.matchMedia('(prefers-color-scheme: dark)').matches); */
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  /* @media (prefers-color-scheme: light) */
-  @media (prefers-color-scheme: dark) {
-    body{
-      @apply bg-neutral-800;
-    }
-  }
-  
-  body {
-    @apply font-inter;
-  }
-}
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
 
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-thin.woff2') format('woff2');
+		font-weight: 100;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-ultra-light.woff2') format('woff2');
+		font-weight: 200;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-light.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-regular.woff2') format('woff2');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-medium.woff2') format('woff2');
+		font-weight: 500;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-semibold.woff2') format('woff2');
+		font-weight: 600;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-bold.woff2') format('woff2');
+		font-weight: 700;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-black.woff2') format('woff2');
+		font-weight: 800;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: "Geist";
+		src: url('/fonts/geist-ultra-black.woff2') format('woff2');
+		font-weight: 900;
+		font-style: normal;
+	}
+}

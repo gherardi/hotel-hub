@@ -1,11 +1,14 @@
 @layer components {
-  a {
-    @apply block text-blue-500 underline;
+  body {
+    @apply text-gallery font-geist;
   }
-  h1 {
-    @apply text-4xl font-bold;
+
+  @media (prefers-color-scheme: dark) {
+    body{
+      @apply bg-cold-gray;
+    }
   }
-  
+
   [type='text'],
   input:where(:not([type])),
   [type='email'],
@@ -22,6 +25,26 @@
   [multiple],
   textarea,
   select {
-    @apply w-full;
+    @apply rounded;
+  }
+  @media (prefers-color-scheme: dark) {
+    [type='text'],
+  input:where(:not([type])),
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply text-gray-800 disabled:bg-gray-900;
+  }
   }
 }
