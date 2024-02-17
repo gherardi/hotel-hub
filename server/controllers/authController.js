@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import { promisify } from 'util';
 import validator from 'validator';
 
 import supabase from './../utils/supabase.js';
@@ -11,8 +12,7 @@ dotenv.config();
 
 const signToken = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, {
-		// expiresIn: process.env.JWT_EXPIRES_IN,
-		expiresIn: '120s',
+		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
 };
 
@@ -198,5 +198,53 @@ export const existingEmails = async (req, res, next) => {
 		res.status(200).json({ status: 'success', data });
 	} catch (err) {
 		next(new AppError(err.message ? err.message : err));
+	}
+};
+
+export const protect = async (req, res, next) => {
+	try {
+		let token;
+		// 1) Getting token and check of it's there
+		if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+			token = req.headers.authorization.split(' ')[1];
+		}
+
+		if (!token) {
+			return next(new AppError('You are not logged in! Please log in to get access', 401));
+		}
+
+		// 2) Verification token
+
+		const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+		console.log(decoded);
+
+		// 3) Check if user still exists
+		// const currentUser = await User.findById(decoded.id);
+		// if (!currentUser) {
+		// 	return next(
+		// 		new AppError(
+		// 			'The user belonging to this token does no longer exist.',
+		// 			401
+		// 		)
+		// 	);
+		// }
+
+		// 4) Check if user changed password after the token was issued
+		// if (currentUser.changedPasswordAfter(decoded.iat)) {
+		// 	return next(
+		// 		new AppError('User recently changed password! Please log in again.', 401)
+		// 	);
+		// }
+
+		// GRANT ACCESS TO PROTECTED ROUTE
+		// req.user = currentUser;
+		// res.locals.user = currentUser;
+		next();
+	} catch (err) {
+		if (err.name === 'JsonWebTokenError') {
+			return next(new AppError('Your JsonWebToken is malformed'), 400);
+		}
+		return next(new AppError(err.message), 400);
 	}
 };
