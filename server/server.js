@@ -1,6 +1,8 @@
 import app from './app.js';
 import dotenv from 'dotenv';
 
+console.clear();
+
 process.on('uncaughtException', (err) => {
 	console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
 	console.log(err.name, err.message);
@@ -29,5 +31,3 @@ process.on('SIGTERM', () => {
 		console.log('💥 Process terminated!');
 	});
 });
-
-console.clear();
