@@ -9,7 +9,6 @@ export default function ProtectedRoute({ children }) {
 	useEffect(() => {
 		if (user === null || user === undefined) {
 			navigate('/', { replace: true });
-			// replace the current location in the history stack, so the user can't go back to the previous page
 		}
 	}, [navigate, user]);
 

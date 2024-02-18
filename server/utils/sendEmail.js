@@ -17,7 +17,7 @@ export default class Email {
 			const msg = {
 				from: this.from,
 				to: this.to,
-				subject: `Your password reset token (valid for only ${process.env.PASSWORD_RESET_TOKEN_EXPIRES_IN} minutes)`,
+				subject: `Your password reset token (valid for only ${process.env.PASSWORD_RESET_EXPIRES_IN} minutes)`,
 				text: 'Reset your password here',
 				html: `<strong>to reset your password click <a href=${this.resetURL}>here</a></strong>
           <br><br><br>

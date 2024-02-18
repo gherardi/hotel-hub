@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import { promisify } from 'util';
-import validator from 'validator';
 
 import supabase from './../utils/supabase.js';
 import AppError from './../utils/appError.js';
@@ -21,22 +20,26 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, req, res) => {
 	const token = signToken(user.id);
 
+	console.log('dovrebbe settare i cookie');
 	res.cookie('jwt', token, {
 		httpOnly: true,
-		// secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-		// expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-	});
+		// secure: req.secure || req.headers['x-forwarded-proto'] === 'http'
+    expiresIn: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+  });
 
 	// Remove password from output
-	user.password = null;
+	// user.password = null;
 
 	res.status(statusCode).json({
 		status: 'success',
 		token,
-		data: {
-			user,
-		},
+		// data: {
+		// 	user,
+		// },
 	});
+
 };
 
 export const signup = async (req, res, next) => {
@@ -61,7 +64,6 @@ export const signup = async (req, res, next) => {
 				return next(new AppError('Email already taken, try another one', 409));
 			return next(new AppError(error.message));
 		}
-
 		if (data.length === 0) return next(new AppError('Errore durante la registrazione', 400));
 
 		// crea token e invialo al client
@@ -75,11 +77,10 @@ export const login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
 
-		let { data, error } = await supabase.from('albergatori').select('*').eq('email', email);
+		const { data, error } = await supabase.from('albergatori').select('*').eq('email', email);
 
 		// Check if query has returned an error
 		if (error) return next(new AppError(error.message));
-
 		// Check if query has returned a user
 		if (data.length === 0) return next(new AppError('Incorrect email or password', 401));
 
@@ -106,17 +107,6 @@ export const forgotPassword = async (req, res, next) => {
 	try {
 		const { email } = req.body;
 
-		req.body.email = email.trim();
-		req.body.email = email.toLowerCase();
-
-		if (!email) {
-			return next(new AppError('Please provide your email!', 400));
-		}
-
-		if (!validator.isEmail(email)) {
-			return next(new AppError('Please provide a valid email!', 400));
-		}
-
 		const token = crypto.randomUUID();
 
 		const expires = new Date();
@@ -132,7 +122,6 @@ export const forgotPassword = async (req, res, next) => {
 			.select('email');
 
 		if (error) return next(new AppError(error.message));
-
 		if (data.length === 0) return next(new AppError('No account found with that email', 401));
 
 		const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
@@ -153,49 +142,29 @@ export const resetPassword = async (req, res, next) => {
 		const { token } = req.params;
 		const { password } = req.body;
 
+		// check if token is passed and valid
 		if (!token) return next(new AppError('Please provide a token', 400));
-		if (!password) return next(new AppError('Please provide a valid password', 400));
-		if (!validator.isStrongPassword(password)) {
-			return next(new AppError('Please provide a strong password!', 400));
-		}
 
+		// hash the new password
 		const hash = await bcrypt.hash(password, 12);
 
-		let { data, error } = await supabase
+		// update the user password and reset token stuff
+		const { data, error } = await supabase
 			.from('albergatori')
+			.update({
+				password: hash,
+				password_reset_token: null,
+				password_reset_token_expires: null,
+				password_changed_at: new Date().toISOString(),
+			})
 			.select('*')
 			.eq('password_reset_token', token)
 			.gt('password_reset_token_expires', new Date().toISOString());
 
 		if (error) return next(new AppError(error.message));
-
 		if (data.length === 0) return next(new AppError('Token is invalid or has expired', 400));
 
-		const { error1 } = await supabase
-			.from('albergatori')
-			.update({ password: hash, password_reset_token: null, password_reset_token_expires: null })
-			.eq('id', data[0].id);
-
-		if (error) return next(new AppError(error.message));
-
 		createSendToken(data[0], 200, req, res);
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
-	}
-};
-
-export const existingEmails = async (req, res, next) => {
-	try {
-		const { email } = req.params;
-
-		const { data, error } = await supabase
-			.from('albergatori')
-			.select('email')
-			.like('email', `${email}%`);
-
-		if (error) return next(new AppError(error.message));
-
-		res.status(200).json({ status: 'success', data });
 	} catch (err) {
 		next(new AppError(err.message ? err.message : err));
 	}
@@ -214,7 +183,6 @@ export const protect = async (req, res, next) => {
 		}
 
 		// 2) Verification token
-
 		const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
 		console.log(decoded);

@@ -14,15 +14,15 @@ export default function useApi(url, method = 'get', initialData = null) {
 				const response = await axios({
 					method,
 					url,
-					signal: AbortSignal.timeout(REQUEST_TIMEOUT)
+					signal: AbortSignal.timeout(REQUEST_TIMEOUT),
 				});
 				setData(response.data);
 			} catch (error) {
 				// Se l'errore è causato dalla cancellazione, non impostare lo stato di errore
 				if (error.name === 'CanceledError' || error.name === 'AbortError') {
-					setError("Request took too long to complete. Please try again.");
+					setError('Request took too long to complete. Please try again.');
 				}
-        setError(error.message);
+				setError(error.message);
 			} finally {
 				setIsLoading(false);
 			}
