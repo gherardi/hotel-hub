@@ -1,4 +1,4 @@
-export const useLocalStorage = (key) => {
+export default function useLocalStorage(key) {
 	const setItem = (value) => {
 		try {
 			window.localStorage.setItem(key, JSON.stringify(value));
@@ -10,7 +10,7 @@ export const useLocalStorage = (key) => {
 	const getItem = () => {
 		try {
 			const item = window.localStorage.getItem(key);
-			return value ? JSON.parse(value) : undefined;
+			return item ? JSON.parse(item) : undefined;
 		} catch (err) {
 			console.log(err);
 		}
@@ -25,4 +25,4 @@ export const useLocalStorage = (key) => {
 	};
 
 	return { setItem, getItem, removeItem };
-};
+}
