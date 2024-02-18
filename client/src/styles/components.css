@@ -1,50 +1,30 @@
 @layer components {
-  body {
-    @apply text-gallery font-geist;
-  }
+	body {
+		@apply bg-cold-gray text-gallery font-geist;
+	}
 
-  @media (prefers-color-scheme: dark) {
+	/* @media (prefers-color-scheme: dark) {
     body{
-      @apply bg-cold-gray;
+      @apply bg-cold-gray text-gallery;
     }
-  }
+  } */
 
-  [type='text'],
-  input:where(:not([type])),
-  [type='email'],
-  [type='url'],
-  [type='password'],
-  [type='number'],
-  [type='date'],
-  [type='datetime-local'],
-  [type='month'],
-  [type='search'],
-  [type='tel'],
-  [type='time'],
-  [type='week'],
-  [multiple],
-  textarea,
-  select {
-    @apply rounded;
-  }
-  @media (prefers-color-scheme: dark) {
-    [type='text'],
-  input:where(:not([type])),
-  [type='email'],
-  [type='url'],
-  [type='password'],
-  [type='number'],
-  [type='date'],
-  [type='datetime-local'],
-  [type='month'],
-  [type='search'],
-  [type='tel'],
-  [type='time'],
-  [type='week'],
-  [multiple],
-  textarea,
-  select {
-    @apply text-gray-800 disabled:bg-gray-900;
-  }
-  }
+	[type='text'],
+	input:where(:not([type])),
+	[type='email'],
+	[type='url'],
+	[type='password'],
+	[type='number'],
+	[type='date'],
+	[type='datetime-local'],
+	[type='month'],
+	[type='search'],
+	[type='tel'],
+	[type='time'],
+	[type='week'],
+	[multiple],
+	textarea,
+	select {
+		@apply rounded text-gallery disabled:text-dove-gray disabled:bg-gallery/5 bg-cold-gray;
+	}
 }
