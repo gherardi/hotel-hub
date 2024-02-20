@@ -1,16 +1,14 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
+import useLocaleStorage from '../hooks/useLocalStorage.jsx';
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-	// const [user] = useState(isSignedIn ? { id: 1, username: 'user' } : null);
+	const { getItem } = useLocaleStorage('token');
 
-	// const user = { uuid: crypto.randomUUID() };
-	const [user] = useState({ uuid: '1234' });
+	const token = getItem('token');
 
-	useEffect(() => {}, []);
-
-	return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={token}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
