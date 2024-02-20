@@ -1,13 +1,17 @@
-import { useAuth } from '../components/AuthProvider';
+import Sidebar from '../components/ui/Sidebar.jsx';
+// import { useAuth } from '../components/AuthProvider';
 
 export default function DashboardPage() {
-	const user = useAuth();
+	// const token = useAuth();
+
+	// console.log(token);
 
 	return (
-		<div>
-			<h1 className='text-4xl text-red-400'>protected Page</h1>
-			<p>This is a protected page route</p>
-			<code>user uuid: {user?.uuid}</code>
-		</div>
+		<>
+			<div className='grid grid-cols-5'>
+				<Sidebar />
+				<div className='col-span-4 bg-red-400'>ciao</div>
+			</div>
+		</>
 	);
 }

@@ -58,10 +58,8 @@ export default function LoginPage() {
 			setItem(token);
 			document.cookie = `jwt=${token}`;
 
-			navigate('/dashboard');
+			navigate('/dashboard', { replace: true, state: { from: '/' } });
 		} catch (err) {
-			console.log(err);
-			// setError('email', {
 			setError('root', {
 				message: err.response.data.message,
 			});
@@ -69,37 +67,52 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className='h-svh' onSubmit={handleSubmit(onSubmit)}>
-			<h1>Login</h1>
-			<p>This is the login page.</p>
-			<form>
-				<div>
-					<input
-						{...register('email')}
-						type='text'
-						placeholder='Email'
-						autoComplete='email'
-						disabled={isSubmitting}
-					/>
-					{errors.email && <p className='text-red-400'>{errors.email.message}</p>}
-				</div>
+		<div className='flex items-center justify-center w-full h-full'>
+			<div className='w-1/4 p-8 rounded-xl bg-neutral-800'>
+				<h4 className='mb-5 text-2xl font-semibold'>Login</h4>
+				<form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
+					<div>
+						<label htmlFor='email' className='block mb-1 text-sm font-medium'>
+							Email
+						</label>
+						<input
+							{...register('email')}
+							type='text'
+							id='email'
+							placeholder='email@example.com'
+							autoComplete='email'
+							disabled={isSubmitting}
+						/>
+						<div className='h-4 mt-1 text-xs text-red-400'>{errors.email?.message}</div>
+					</div>
 
-				{/* todo: creare un componente wrapper password che abbia un toggle per vedere la password */}
-				<div>
-					<input
-						{...register('password')}
-						type='password'
-						placeholder='Password'
-						autoComplete='off'
-						disabled={isSubmitting}
-					/>
-					{errors.password && <p className='text-red-400'>{errors.password.message}</p>}
-				</div>
-				<button disabled={isSubmitting} type='submit'>
-					{isSubmitting ? 'Loading...' : 'Submit'}
-				</button>
-				{errors.root && <p className='text-red-400'>{errors.root.message}</p>}
-			</form>
+					<div>
+						<label htmlFor='password' className='block mb-1 text-sm font-medium'>
+							Password
+						</label>
+						<input
+							{...register('password')}
+							type='password'
+							id='password'
+							placeholder='••••••••'
+							autoComplete='off'
+							disabled={isSubmitting}
+						/>
+						<div className='h-4 mt-1 text-xs text-red-400'>{errors.password?.message}</div>
+					</div>
+
+					<div className='pt-2'>
+						<button
+							type='submit'
+							disabled={isSubmitting}
+							className='block w-full py-2 font-medium text-center transition bg-indigo-600 rounded disabled:opacity-75 hover:bg-indigo-700'
+						>
+							{isSubmitting ? 'Loading...' : 'Submit'}
+						</button>
+						<div className='h-4 mt-1 text-xs text-red-400'>{errors.root?.message}</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }
