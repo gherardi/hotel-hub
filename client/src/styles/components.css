@@ -1,14 +1,7 @@
 @layer components {
 	body {
-		@apply bg-cold-gray text-gallery font-geist;
+		@apply bg-neutral-900;
 	}
-
-	/* @media (prefers-color-scheme: dark) {
-    body{
-      @apply bg-cold-gray text-gallery;
-    }
-  } */
-
 	[type='text'],
 	input:where(:not([type])),
 	[type='email'],
@@ -25,6 +18,6 @@
 	[multiple],
 	textarea,
 	select {
-		@apply rounded text-gallery disabled:text-dove-gray disabled:bg-gallery/5 bg-cold-gray;
+		@apply w-full text-gray-200 rounded bg-neutral-800 disabled:text-gray-400 disabled:bg-neutral-700 placeholder:font-medium;
 	}
 }

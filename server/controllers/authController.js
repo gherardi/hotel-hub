@@ -20,7 +20,6 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, req, res) => {
 	const token = signToken(user.id);
 
-	console.log('dovrebbe settare i cookie');
 	res.cookie('jwt', token, {
 		httpOnly: true,
 		// secure: req.secure || req.headers['x-forwarded-proto'] === 'http'
@@ -35,6 +34,7 @@ const createSendToken = (user, statusCode, req, res) => {
 	res.status(statusCode).json({
 		status: 'success',
 		token,
+		isAdmin: user.is_admin,
 		// data: {
 		// 	user,
 		// },
