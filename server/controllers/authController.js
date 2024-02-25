@@ -23,10 +23,8 @@ const createSendToken = (user, statusCode, req, res) => {
 	res.cookie('jwt', token, {
 		httpOnly: true,
 		// secure: req.secure || req.headers['x-forwarded-proto'] === 'http'
-    expiresIn: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-  });
+		expiresIn: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+	});
 
 	// Remove password from output
 	// user.password = null;
@@ -39,7 +37,6 @@ const createSendToken = (user, statusCode, req, res) => {
 		// 	user,
 		// },
 	});
-
 };
 
 export const signup = async (req, res, next) => {
@@ -174,8 +171,13 @@ export const protect = async (req, res, next) => {
 	try {
 		let token;
 		// 1) Getting token and check of it's there
-		if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+		if (
+			req.headers.authorization && //
+			req.headers.authorization.startsWith('Bearer')
+		) {
 			token = req.headers.authorization.split(' ')[1];
+		} else if (req.cookies.jwt) {
+			token = req.cookies.jwt;
 		}
 
 		if (!token) {
@@ -185,7 +187,9 @@ export const protect = async (req, res, next) => {
 		// 2) Verification token
 		const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-		console.log(decoded);
+		const { data, error } = await supabase.from('albergatori').select('*').eq('id', decoded.id);
+
+		if (error) return next(new AppError(error.message));
 
 		// 3) Check if user still exists
 		// const currentUser = await User.findById(decoded.id);
@@ -204,10 +208,11 @@ export const protect = async (req, res, next) => {
 		// 		new AppError('User recently changed password! Please log in again.', 401)
 		// 	);
 		// }
+		data[0].password = null;
 
 		// GRANT ACCESS TO PROTECTED ROUTE
-		// req.user = currentUser;
-		// res.locals.user = currentUser;
+		req.user = data[0];
+		res.locals.user = data[0];
 		next();
 	} catch (err) {
 		if (err.name === 'JsonWebTokenError') {
@@ -215,4 +220,11 @@ export const protect = async (req, res, next) => {
 		}
 		return next(new AppError(err.message), 400);
 	}
+};
+
+export const restrictToAdmin = (req, res, next) => {
+	if (!req.user.is_admin) {
+		return next(new AppError('You do not have permission to perform this action', 403));
+	}
+	next();
 };

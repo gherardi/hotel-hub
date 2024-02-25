@@ -17,3 +17,15 @@ export const existingEmails = async (req, res, next) => {
 		next(new AppError(err.message ? err.message : err));
 	}
 };
+
+export const getMe = async (req, res, next) => {
+	res.status(200).json({ status: 'success', data: req.user });
+};
+
+export const getUser = async (req, res, next) => {
+	res.status(200).json({ status: 'success', data: req.user });
+};
+
+export const getAllUsers = async (req, res, next) => {};
+
+export const deleteUser = async (req, res, next) => {};

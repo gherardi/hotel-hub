@@ -7,11 +7,9 @@ export default function DashboardPage() {
 	// console.log(token);
 
 	return (
-		<>
-			<div className='grid grid-cols-5'>
-				<Sidebar />
-				<div className='col-span-4 bg-red-400'>ciao</div>
-			</div>
-		</>
+		<div className='grid h-full grid-cols-5'>
+			<Sidebar />
+			<div className='col-span-4'>ciao</div>
+		</div>
 	);
 }

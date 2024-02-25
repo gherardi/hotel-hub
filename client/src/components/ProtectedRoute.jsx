@@ -2,21 +2,31 @@
 // import { useNavigate } from 'react-router-dom';
 // import { useAuth } from './AuthProvider.jsx';
 
+import LoadingPage from '../pages/Loading.page.jsx';
+import AdminPage from '../pages/Admin.page.jsx';
+import { useEffect, useState } from 'react';
+import API from '../utils/api.js';
+
 export default function ProtectedRoute({ children }) {
-	// const token = useAuth();
-	// const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(true);
+	const [isAdmin, setIsAdmin] = useState(false);
 
-	// useEffect(() => {
-	// 	if (token === null || token === undefined) {
-	// 		navigate('/', { replace: true });
-	// 	}
-	// }, [navigate, token]);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const { data: response } = await API.get('/api/albergatori/me', {
+					headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}` },
+				});
 
-	// todo:
-	// fare richiesta al backend per verificare il token sia di un account valido
-	// se il token è valido, allora restituire la pagina richiesta, altrimenti reindirizzare alla pagina di login
-	// se utente è admin fare return di adminpage
-	// usare isLoading per mostrare Loading.page nel mentre
+				if (response.data.is_admin) setIsAdmin(true);
+				setIsLoading(false);
+			} catch (err) {
+				console.log('Error in API request:', err.response.data.message);
+			}
+		};
 
-	return children;
+		fetchData();
+	}, []);
+
+	return isLoading ? <LoadingPage /> : isAdmin ? <AdminPage /> : children;
 }

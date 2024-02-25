@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import useApi from '../hooks/useApi';
 
 export default function HomePage() {
-	const { data, isLoading, error } = useApi('http://localhost:3000/api/status');
+	const { data, isLoading, error } = useApi({ url: '/api/status' });
 
 	return (
 		<div className='px-3 pt-20 mx-auto sm:w-4/5'>
@@ -14,6 +14,8 @@ export default function HomePage() {
 				est faucibus est. Mauris facilisis consectetur etiam at faucibus et erat ut. Aliquam quam
 				est nisi vitae et non. Nulla ultrices varius tincidunt leo risus.
 			</p>
+			<code className='block mt-5 text-center'>user@gmail.com | qwerty123.</code>
+			<code className='block mt-5 text-center'>admin@gmail.com | qwerty123.</code>
 			<div className='flex items-center justify-center gap-8 mt-12'>
 				<Link to='/login' className='px-6 py-2 font-medium bg-indigo-500 rounded-md'>
 					login
