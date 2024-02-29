@@ -68,9 +68,12 @@ export default function SignupPage() {
 	};
 
 	return (
-		<div className='flex items-center justify-center w-full h-full'>
-			<div className='w-1/4 p-8 rounded-xl bg-neutral-800'>
-				<h4 className='mb-5 text-2xl font-semibold'>Signup</h4>
+		// <div className='flex items-center justify-center w-full h-full'>
+		<div className=''>
+			{/* <div className='w-1/4 p-8 rounded-xl bg-neutral-800'> */}
+			<div className=''>
+				{/* <h4 className='mb-5 text-2xl font-semibold'>Signup</h4> */}
+				<h4 className=''>Signup</h4>
 				<form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
 					<div>
 						<label htmlFor='name' className='block mb-1 text-sm font-medium'>
@@ -121,7 +124,7 @@ export default function SignupPage() {
 						<button
 							type='submit'
 							disabled={isSubmitting}
-							className='block w-full py-2 font-medium text-center transition bg-indigo-600 rounded disabled:opacity-75 hover:bg-indigo-700'
+							// className='block w-full py-2 font-medium text-center transition bg-indigo-600 rounded disabled:opacity-75 hover:bg-indigo-700'
 						>
 							{isSubmitting ? 'Loading...' : 'Submit'}
 						</button>

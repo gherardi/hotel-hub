@@ -1,24 +1,24 @@
 @layer base {
 	:root {
-		line-height: 1.5;
-		font-weight: 400;
+		/* line-height: 1.5;
+		font-weight: 400; */
 
 		/* https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme */
 		/* color-scheme: light dark; */
-		color-scheme: dark;
+		color-scheme: light;
 		/* :global(.dark) body {
 			background: #f8c8a8;
 		} */
 		/* console.log(document.documentElement);
 		console.log(window.matchMedia('(prefers-color-scheme: dark)').matches); */
-
+		/*
 		font-synthesis: none;
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
+		-moz-osx-font-smoothing: grayscale; */
 	}
 
-	@font-face {
+	/* @font-face {
 		font-family: "Geist";
 		src: url('/fonts/geist-thin.woff2') format('woff2');
 		font-weight: 100;
@@ -71,5 +71,5 @@
 		src: url('/fonts/geist-ultra-black.woff2') format('woff2');
 		font-weight: 900;
 		font-style: normal;
-	}
+	} */
 }

@@ -8,7 +8,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				geist: ['"Geist"', ...defaultTheme.fontFamily.sans],
+				// geist: ['"Geist"', ...defaultTheme.fontFamily.sans],
 				// inter: ['Inter', ...defaultTheme.fontFamily.sans],
 			},
 			// colors: {

@@ -1,3 +1,7 @@
+import AdminTable from '../components/ui/AdminTable';
+
 export default function AdminPage() {
-	return <div>adminpage</div>;
+	return <div className='relative w-full h-full overflow-auto'>
+		<AdminTable />
+	</div>;
 }
