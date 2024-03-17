@@ -100,6 +100,7 @@ export const logout = (req, res, next) => {
 	res.status(200).json({ status: 'success' });
 };
 
+// send email with token for resetting password
 export const forgotPassword = async (req, res, next) => {
 	try {
 		const { email } = req.body;
@@ -134,6 +135,7 @@ export const forgotPassword = async (req, res, next) => {
 	}
 };
 
+// change the password from the body, unique token are from url
 export const resetPassword = async (req, res, next) => {
 	try {
 		const { token } = req.params;
@@ -167,6 +169,7 @@ export const resetPassword = async (req, res, next) => {
 	}
 };
 
+// limitate access to only logged in users
 export const protect = async (req, res, next) => {
 	try {
 		let token;
@@ -176,9 +179,9 @@ export const protect = async (req, res, next) => {
 			req.headers.authorization.startsWith('Bearer')
 		) {
 			token = req.headers.authorization.split(' ')[1];
-		} else if (req.cookies.jwt) {
-			token = req.cookies.jwt;
-		}
+		} // else if (req.cookies.jwt) {
+		// 	token = req.cookies.jwt;
+		// }
 
 		if (!token) {
 			return next(new AppError('You are not logged in! Please log in to get access', 401));
@@ -190,24 +193,8 @@ export const protect = async (req, res, next) => {
 		const { data, error } = await supabase.from('albergatori').select('*').eq('id', decoded.id);
 
 		if (error) return next(new AppError(error.message));
+		if (data.length === 0) return next(new AppError('There are no user with this jwt', 403));
 
-		// 3) Check if user still exists
-		// const currentUser = await User.findById(decoded.id);
-		// if (!currentUser) {
-		// 	return next(
-		// 		new AppError(
-		// 			'The user belonging to this token does no longer exist.',
-		// 			401
-		// 		)
-		// 	);
-		// }
-
-		// 4) Check if user changed password after the token was issued
-		// if (currentUser.changedPasswordAfter(decoded.iat)) {
-		// 	return next(
-		// 		new AppError('User recently changed password! Please log in again.', 401)
-		// 	);
-		// }
 		data[0].password = null;
 
 		// GRANT ACCESS TO PROTECTED ROUTE
