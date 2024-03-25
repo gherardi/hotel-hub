@@ -120,12 +120,28 @@ v2 in progress...
 
 ## Environment Variables
 
-v2 in progress...
-<!-- To run this project, you will need to add the following environment variables to your config.env file
+To run this project, you will need to add the following environment variables to your .env file in the server side code
 
-`SENDGRID_API_KEY` -->
+`NODE_ENV`
+
+`PORT`
+
+`JWT_SECRET`
+
+`JWT_EXPIRES_IN`
+
+`PASSWORD_RESET_EXPIRES`
+
+`SENDGRID_API_KEY`
+
+`EMAIL_FROM`
+
+`SUPABASE_URL`
+
+`SUPABASE_KEY`
 
 ## Run Locally
+
 Clone the project
 
 ```bash
@@ -135,34 +151,31 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd hotel-hub
+  cd hote-hub
 ```
 
 Install dependencies
 
 ```bash
-  # install both dependencies (client and server)
-  npm run dependencies
+  cd client && npm install
+```
+
+```bash
+  cd server && npm install
 ```
 
 Start the server
 
 ```bash
-  npm start
+  cd server && npm start
 ```
-
-a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
-
-<!--
-## Deployment
-To deploy this project run
 
 ```bash
-  npm run build
+  cd client && npm start
 ```
-Take the "dist" folder that was created and put it in a web service.
-Remember to add environment variables to the web service to make the application work.
--->
+
+
+a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
 
 ## Convenzioni dei commit
 In questo progetto utilizzo le convenzioni di [commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#what-is-commitlint) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.
