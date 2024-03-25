@@ -112,11 +112,7 @@ create table
 
 ## Prerequisites
 
-v2 in progress...
-<!-- 1. avere xamp installato sul proprio pc (o qualsiasi altro modo per avere un database mysql locale)
-2. copiare il codice che trovi [qui](#modello-fisico-sql) ed eseguirlo -->
-
-<!-- nb: il file di configurazione per le connessioni al database si trova su /config/database.js, modificando quelle impostazioni potrai connettersi ad un tuo database a piacere con username, password e porta -->
+avere nodejs > v18.0 e npm installato localmente
 
 ## Environment Variables
 
