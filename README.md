@@ -38,65 +38,77 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 ![image](https://github.com/gherardi/hotel-hub/assets/81379878/2bdd14e5-c444-4d9a-bb5e-e58934923fae)
 
 ## Scherma E/R
-<!--
-![image](https://github.com/gherardi/hotel-hub/assets/81379878/da166165-9b8e-4370-beac-d87cb35f7bd2)
--->
 
-v2 in progress...
+![image](https://github.com/gherardi/hotel-hub/assets/81379878/86f4417b-f24b-4361-a6c6-76b599bc10da)
 
 [schema](https://app.eraser.io/workspace/DPMmFcnNEUQWkDtrU404?origin=share)
 
 ## Schema logico
 
-- **albergatore** (id, nominativo, email, password)
-- **prenotazione** (id, nominativo_cliente, email_cliente, data_creazione_prenotazione, data_prenotazione, data_check_in, data_check_out, prezzo_giornaliero, sconto_percentuale, prezzo_totale, id_camera, id_albergatore)
-- **camera** (id, tipologia, capacita, occupata, prezzo_giornaliero, sconto_percentuale id_albergatore)
+- **hotel** (id, created_at, name)
+- **users (albergatori)** (id, created_at, name, email, password, password_reset_token, id_admin, hotel_id)
+- **bookings** (id, created_at, customer_name, start, nights, total, room_id, hotel_id ,user_id)
+- **rooms** (id, created_at, type, price, number, hotel_id)
 
 ## Modello fisico SQL
-v2 in progress...
-<!--
+
 ```sql
--- scrivere bene le query, scrivere anche le query presenti nel sito
-CREATE DATABASE IF NOT EXISTS hotelhub;
-USE hotelhub;
+create table
+  public.hotel (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    name text not null,
+    constraint hotel_pkey primary key (id),
+    constraint hotel_name_check check ((length(name) <> 0))
+  ) tablespace pg_default;
 
-CREATE TABLE IF NOT EXISTS albergatori (
-  id INT AUTO_INCREMENT UNIQUE,
-  nominativo VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  passwordResetToken VARCHAR(255) UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
-);
+create table
+  public.users (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    name text not null,
+    email text not null,
+    password text not null,
+    password_reset_token text null,
+    is_admin boolean not null default false,
+    hotel_id uuid not null,
+    constraint users_pkey primary key (id),
+    constraint users_email_key unique (email),
+    constraint users_password_reset_token_key unique (password_reset_token),
+    constraint public_users_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade
+  ) tablespace pg_default;
 
-CREATE TABLE IF NOT EXISTS camere (
-  id INT AUTO_INCREMENT UNIQUE,
-  tipologia VARCHAR(255),
-  prezzo_giornaliero DECIMAL(10, 2),
-  occupata BIT,
-  sconto INT CHECK (sconto BETWEEN 0 AND 100),
-  id_albergatore INT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
-);
+create table
+  public.bookings (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    customer_name text not null,
+    start timestamp with time zone not null,
+    "end" timestamp with time zone not null,
+    nights numeric not null,
+    total numeric not null,
+    user_id uuid not null,
+    hotel_id uuid not null,
+    room_id uuid not null,
+    constraint bookings_pkey primary key (id),
+    constraint public_bookings_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade,
+    constraint public_bookings_room_id_fkey foreign key (room_id) references rooms (id) on update cascade on delete cascade,
+    constraint public_bookings_user_id_fkey foreign key (user_id) references users (id) on update cascade on delete cascade
+  ) tablespace pg_default;
 
-CREATE TABLE IF NOT EXISTS prenotazioni (
-  id INT AUTO_INCREMENT UNIQUE,
-  nominativo_cliente VARCHAR(255) NOT NULL,
-  email_cliente VARCHAR(255) NOT NULL,
-  data_prenotazione DATE,
-  data_check_in DATE,
-  data_check_out DATE,
-  prezzo_totale DECIMAL(10, 2),
-  data_creazione_prenotazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  id_camera INT NOT NULL,
-  id_albergatore INT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (id_camera) REFERENCES camere(id),
-  FOREIGN KEY (id_albergatore) REFERENCES albergatori(id)
-);
+create table
+  public.rooms (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    type public.room_type not null,
+    price numeric not null,
+    number numeric not null,
+    hotel_id uuid not null,
+    constraint rooms_pkey primary key (id),
+    constraint rooms_number_key unique (number),
+    constraint public_rooms_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade
+  ) tablespace pg_default;
 ```
--->
 
 ## Prerequisites
 
