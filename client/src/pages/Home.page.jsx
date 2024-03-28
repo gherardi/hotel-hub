@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-import useApi from '../hooks/useApi';
 
 export default function HomePage() {
-	const { data, isLoading, error } = useApi({ url: '/api/status' });
-
 	return (
 		<div className='px-3 pt-20 mx-auto sm:w-4/5'>
 			{/* <h1 className='text-6xl font-extrabold sm:text-center text-balance'> */}
@@ -29,16 +26,6 @@ export default function HomePage() {
 				<Link to='/signup' className='underline'>
 					signup
 				</Link>
-			</div>
-			{/* <div className='mt-10 text-center'> */}
-			<div className=''>
-				{isLoading
-					? 'Server status: Checking'
-					: data
-					? '🟢 Server status: OK!'
-					: error
-					? '🔴 Server status: Not ready!'
-					: null}
 			</div>
 		</div>
 	);

@@ -15,13 +15,11 @@ const signToken = (id) => {
 	});
 };
 
-// todo: quando faccio il login, imposto il password_reset_token a null e password_reset_token_expires a null
-
 const createSendToken = (user, statusCode, req, res) => {
 	const token = signToken(user.id);
 
 	res.cookie('jwt', token, {
-		httpOnly: true,
+		httpOnly: false,
 		// secure: req.secure || req.headers['x-forwarded-proto'] === 'http'
 		expiresIn: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
 	});
@@ -41,17 +39,18 @@ const createSendToken = (user, statusCode, req, res) => {
 
 export const signup = async (req, res, next) => {
 	try {
-		const { name, email, password } = req.body;
+		const { name, email, password, hotel_id } = req.body;
 
 		const hash = await bcrypt.hash(password, 12);
 
 		const { data, error } = await supabase
-			.from('albergatori')
+			.from('users')
 			.insert([
 				{
 					name,
 					email,
 					password: hash,
+					hotel_id,
 				},
 			])
 			.select();
@@ -70,11 +69,25 @@ export const signup = async (req, res, next) => {
 	}
 };
 
+export const hotels = async (req, res, next) => {
+	try {
+		const { data, error } = await supabase.from('hotel').select('*');
+
+		if (error) {
+			return next(new AppError(error.message));
+		}
+
+		res.status(200).json({ data });
+	} catch (err) {
+		next(new AppError(err.message ? err.message : err));
+	}
+};
+
 export const login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
 
-		const { data, error } = await supabase.from('albergatori').select('*').eq('email', email);
+		const { data, error } = await supabase.from('users').select('*').eq('email', email);
 
 		// Check if query has returned an error
 		if (error) return next(new AppError(error.message));
@@ -190,7 +203,7 @@ export const protect = async (req, res, next) => {
 		// 2) Verification token
 		const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-		const { data, error } = await supabase.from('albergatori').select('*').eq('id', decoded.id);
+		const { data, error } = await supabase.from('users').select('*').eq('id', decoded.id);
 
 		if (error) return next(new AppError(error.message));
 		if (data.length === 0) return next(new AppError('There are no user with this jwt', 403));

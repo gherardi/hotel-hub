@@ -19,7 +19,7 @@ import AppError from '../utils/appError.js';
 // };
 
 export const getMe = async (req, res, next) => {
-	const { data, error } = await supabase.from('albergatori').select('*').eq('id', req.user.id);
+	const { data, error } = await supabase.from('users').select('*').eq('id', req.user.id);
 
 	if (error) return next(new AppError(error.message));
 
@@ -27,9 +27,16 @@ export const getMe = async (req, res, next) => {
 };
 
 export const updateMe = async (req, res, next) => {
-	console.log('hi');
-	// const { name, email, password } = req.body;
-	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
+	const { name, email } = req.body;
+
+	const { data, error } = await supabase
+		.from('users')
+		.update({ name, email })
+		.eq('id', req.user.id);
+
+	if (error) return next(new AppError(error.message));
+
+	res.status(200).json({ status: 'success', message: 'credentials changed' });
 };
 
 export const getUser = async (req, res, next) => {

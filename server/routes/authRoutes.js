@@ -4,6 +4,8 @@ import { validateName, validateEmail, validatePassword } from '../middlewares/va
 
 const router = express.Router();
 
+router.get('/hotels', authController.hotels);
+
 router.post('/signup', validateName, validateEmail, validatePassword, authController.signup);
 router.post('/login', validateEmail, validatePassword, authController.login);
 

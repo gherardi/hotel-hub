@@ -1,43 +1,46 @@
-import { Link } from 'react-router-dom';
 import { Home, CalendarDays, Church } from 'lucide-react';
 
 const navItems = [
 	{
 		name: 'Home',
-		path: '/dashboard',
-		icon: <Home size={24} />,
+		path: 'dashboard',
+		icon: <Home />,
 	},
 	{
 		name: 'Prenotazioni',
-		path: '/bookins',
+		path: 'bookings',
 		icon: <CalendarDays />,
 	},
 	{
 		name: 'Camere',
-		path: '/rooms',
+		path: 'rooms',
 		icon: <Church />,
 	},
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ view, setView }) {
 	return (
-		<aside className='px-4 h-svh bg-gray-100 min-w-fit w-[20vw]'>
+		<aside className='px-4 bg-gray-100 h-svh min-w-fit'>
 			{/* [&>*]:transition [&>*]:rounded-lg [&>*]:gap-3 [&>*]:cursor-pointer [&>*]:py-4 [&>*]:px-6 */}
 			{/* block px-6 py-3 text-lg font-light transition rounded */}
-			<nav className='grid gap-3 mt-5 text-lg [&>*]:px-6 [&>*]:py-3 [&>*]:transition [&>*]:block [&>*]:rounded-md'>
+			<nav className='grid gap-3 mt-5 text-lg [&>*]:px-8 [&>*]:py-3 [&>*]:transition [&>*]:block [&>*]:rounded-md'>
 				{navItems.map((item, index) => (
-					<Link
+					<a
 						key={index}
-						to={item.path}
-						className={`${
-							location.pathname.startsWith(item.path) ? 'bg-gray-200' : 'hover:bg-gray-200/50'
-						}`}
+						className={`${view === item.path ? 'bg-gray-200' : 'hover:bg-gray-200/50'}`}
+						href='#'
+						onClick={(e) => {
+							e.preventDefault();
+							setView(item.path);
+						}}
 					>
 						<div className='flex gap-3'>
 							{item.icon} {item.name}
 						</div>
-					</Link>
+					</a>
 				))}
+				<a href='#'>Profilo</a>
+				<a href='#'>Log out</a>
 			</nav>
 		</aside>
 	);

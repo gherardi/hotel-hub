@@ -5,6 +5,8 @@ import { z } from 'zod';
 import axios from 'axios';
 import validator from 'validator';
 import useLocalStorage from '../hooks/useLocalStorage.jsx';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const schema = z.object({
 	name: z.string(),
@@ -16,7 +18,6 @@ const schema = z.object({
 		.refine((value) => validator.isEmail(value), {
 			message: 'Please provide a valid email!',
 		}),
-
 	password: z
 		.string()
 		.min(8, {
@@ -34,6 +35,7 @@ const schema = z.object({
 				message: 'Password should contains at leats one symbol',
 			}
 		),
+	hotel_id: z.string(),
 });
 
 export default function SignupPage() {
@@ -67,6 +69,17 @@ export default function SignupPage() {
 		}
 	};
 
+	const [hotels, setHotels] = useState([]);
+
+	useEffect(() => {
+		const getHotels = async () => {
+			const res = await fetch('http://localhost:3000/api/auth/hotels');
+			const { data } = await res.json();
+			setHotels(data);
+		};
+		getHotels();
+	}, []);
+
 	return (
 		// <div className='flex items-center justify-center w-full h-full'>
 		<div className=''>
@@ -88,6 +101,20 @@ export default function SignupPage() {
 							disabled={isSubmitting}
 						/>
 						<div className='h-4 mt-1 text-xs text-red-400'>{errors.name?.message}</div>
+					</div>
+
+					<div>
+						<label htmlFor='email' className='block mb-1 text-sm font-medium'>
+							Hotel ID
+						</label>
+						<select {...register('hotel_id')} id='hotel_id' disabled={isSubmitting}>
+							{hotels.map((hotel) => (
+								<option key={hotel.id} value={hotel.id}>
+									{hotel.name}
+								</option>
+							))}
+						</select>
+						<div className='h-4 mt-1 text-xs text-red-400'>{errors.email?.message}</div>
 					</div>
 
 					<div>
