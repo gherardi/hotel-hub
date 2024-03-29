@@ -1,46 +1,60 @@
-import { Home, CalendarDays, Church } from 'lucide-react';
+import { Home, CalendarDays, Church, CircleUserRound, LogOut } from 'lucide-react';
 
 const navItems = [
 	{
-		name: 'Home',
+		name: 'Dashboard',
 		path: 'dashboard',
-		icon: <Home />,
+		icon: <Home size={20} />,
 	},
 	{
 		name: 'Prenotazioni',
 		path: 'bookings',
-		icon: <CalendarDays />,
+		icon: <CalendarDays size={20} />,
 	},
 	{
 		name: 'Camere',
 		path: 'rooms',
-		icon: <Church />,
+		icon: <Church size={20} />,
+	},
+	{
+		name: 'Profilo',
+		path: 'profile',
+		classNames: 'mt-auto',
+		icon: <CircleUserRound size={20} />,
 	},
 ];
 
 export default function Sidebar({ view, setView }) {
+	const handleLogOut = (e) => {
+		e.preventDefault();
+		console.log('log out');
+	};
 	return (
-		<aside className='px-4 bg-gray-100 h-svh min-w-fit'>
-			{/* [&>*]:transition [&>*]:rounded-lg [&>*]:gap-3 [&>*]:cursor-pointer [&>*]:py-4 [&>*]:px-6 */}
-			{/* block px-6 py-3 text-lg font-light transition rounded */}
-			<nav className='grid gap-3 mt-5 text-lg [&>*]:px-8 [&>*]:py-3 [&>*]:transition [&>*]:block [&>*]:rounded-md'>
+		<aside className='px-4 bg-neutral-800 h-svh min-w-fit w-[20vw] text-neutral-50'>
+			<nav className='flex py-5 flex-col h-full gap-2 [&>*]:px-4 [&>*]:py-3 [&>*]:rounded [&>*]:block [&>*]:transition'>
 				{navItems.map((item, index) => (
 					<a
 						key={index}
-						className={`${view === item.path ? 'bg-gray-200' : 'hover:bg-gray-200/50'}`}
+						className={`${view === item.path ? 'bg-neutral-600/50' : 'hover:bg-neutral-700/50'} ${
+							item.classNames
+						}`}
 						href='#'
 						onClick={(e) => {
 							e.preventDefault();
 							setView(item.path);
 						}}
 					>
-						<div className='flex gap-3'>
+						<div className='flex items-center gap-3'>
 							{item.icon} {item.name}
 						</div>
 					</a>
 				))}
-				<a href='#'>Profilo</a>
-				<a href='#'>Log out</a>
+				<a href='#' onClick={handleLogOut}>
+					<div className='flex items-center gap-3'>
+						<LogOut />
+						Log out
+					</div>
+				</a>
 			</nav>
 		</aside>
 	);

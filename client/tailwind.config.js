@@ -1,5 +1,5 @@
 import formsPlugin from '@tailwindcss/forms';
-import defaultTheme from 'tailwindcss/defaultTheme';
+// import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {

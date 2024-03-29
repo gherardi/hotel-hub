@@ -2,30 +2,60 @@ import { Link } from 'react-router-dom';
 
 export default function HomePage() {
 	return (
-		<div className='px-3 pt-20 mx-auto sm:w-4/5'>
-			{/* <h1 className='text-6xl font-extrabold sm:text-center text-balance'> */}
-			<h1 className='font-semibold'>
-				Welcome to Hotel <span className='text-indigo-500'>Hub</span>
-			</h1>
-			{/* <p className='mx-auto mt-4 text-gray-400 sm:w-5/6 sm:text-center text-balance'> */}
-			<p className=''>
-				Lorem ipsum dolor sit amet consectetur. Massa etiam faucibus sit imperdiet turpis blandit
-				est faucibus est. Mauris facilisis consectetur etiam at faucibus et erat ut. Aliquam quam
-				est nisi vitae et non. Nulla ultrices varius tincidunt leo risus.
-			</p>
-			{/* <code className='block mt-5 text-center'>user@gmail.com | qwerty123.</code> */}
-			<code className=''>user@gmail.com | qwerty123.</code>
-			{/* <code className='block mt-5 text-center'>admin@gmail.com | qwerty123.</code> */}
-			<code className=''>admin@gmail.com | qwerty123.</code>
-			{/* <div className='flex items-center justify-center gap-8 mt-12'> */}
-			<div className='gap-4 space-x-5'>
-				{/* <Link to='/login' className='px-6 py-2 font-medium bg-indigo-500 rounded-md'> */}
-				<Link to='/login' className='underline bg-indigo-500'>
-					login
-				</Link>
-				<Link to='/signup' className='underline'>
-					signup
-				</Link>
+		<div className='flex items-center justify-center h-screen overflow-hidden bg-white'>
+			<div className='w-full py-24 mx-auto max-w-7xl sm:px-6 sm:py-32 lg:px-8'>
+				<div className='relative px-6 pt-16 overflow-hidden bg-gray-900 shadow-2xl isolate sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0'>
+					<svg
+						viewBox='0 0 1024 1024'
+						className='absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0'
+						aria-hidden='true'
+					>
+						<circle
+							cx={512}
+							cy={512}
+							r={512}
+							fill='url(#759c1415-0410-454c-8f7c-9a820de03641)'
+							fillOpacity='0.7'
+						/>
+						<defs>
+							<radialGradient id='759c1415-0410-454c-8f7c-9a820de03641'>
+								<stop stopColor='#7775D6' />
+								<stop offset={1} stopColor='#E935C1' />
+							</radialGradient>
+						</defs>
+					</svg>
+					<div className='max-w-md mx-auto text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left'>
+						<h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
+							Migliora il tuo albergo.
+							<br />
+							Inizia ad usare Hotel Hub oggi.
+						</h2>
+						<p className='mt-6 text-lg leading-8 text-gray-300'>
+							Hotel Hub nasce con l&apos;obiettivo di migliorare la gestione del tuo albergo. Con
+							Hotel Hub puoi gestire le prenotazioni, i clienti e le stanze in modo semplice.
+						</p>
+						<div className='flex items-center justify-center mt-10 gap-x-6 lg:justify-start'>
+							<Link
+								to='/login'
+								className='rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+							>
+								Sign in
+							</Link>
+							<Link to='/signup' className='text-sm font-semibold leading-6 text-white'>
+								Sign up <span aria-hidden='true'>→</span>
+							</Link>
+						</div>
+					</div>
+					<div className='relative mt-16 h-80 lg:mt-8'>
+						<img
+							className='absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10'
+							src='https://tailwindui.com/img/component-images/dark-project-app-screenshot.png'
+							alt='App screenshot'
+							width={1824}
+							height={1080}
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

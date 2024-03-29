@@ -39,18 +39,37 @@ export const updateMe = async (req, res, next) => {
 	res.status(200).json({ status: 'success', message: 'credentials changed' });
 };
 
-export const getUser = async (req, res, next) => {
+export const dashboard = async (req, res) => {
+	const { hotel_id } = req.user;
+	const { data: prenotazioni } = await supabase
+		.from('bookings')
+		.select('*')
+		.eq('hotel_id', hotel_id);
+
+	const vendite = prenotazioni.reduce((acc, curr) => acc + curr.total, 0);
+
+	const { data: stanze } = await supabase
+		.from('rooms')
+		.select('*')
+		.eq('hotel_id', hotel_id);
+
+	const tassoOccupazione = ((prenotazioni.length / stanze.length) * 100);
+
+	res.status(200).json({ status: 'success', prenotazioni, vendite, tassoOccupazione });
+};
+
+export const getUser = async (req, res) => {
 	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
 };
 
-export const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res) => {
 	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
 };
 
-export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res) => {
 	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
 };
 
-export const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res) => {
 	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
 };

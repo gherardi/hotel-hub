@@ -12,6 +12,8 @@ router.use(authController.protect);
 router.get('/me', albergatoriController.getMe);
 router.patch('/updateMe', validateName, validateEmail, albergatoriController.updateMe);
 
+router.get('/dashboard', albergatoriController.dashboard);
+
 // restricted access to only admin
 router.use(authController.restrictToAdmin);
 
