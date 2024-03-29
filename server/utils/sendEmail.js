@@ -20,9 +20,9 @@ export default class Email {
 				subject: `Your password reset token (valid for only ${process.env.PASSWORD_RESET_EXPIRES_IN} minutes)`,
 				text: 'Reset your password here',
 				html: `<strong>to reset your password click <a href=${this.resetURL}>here</a></strong>
-          <br><br><br>
+          <br><br>
           if the link doesn't work copy and paste this url in your browser: ${this.resetURL}
-          <br><br><br>
+          <br><br>
           If you didn't forget your password, please ignore this email!
         `,
 			};

@@ -100,14 +100,14 @@ export default function SignupPage() {
 		<>
 			<div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-					<h2 className='text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 text-'>
+					<h2 className='text-2xl font-bold leading-9 tracking-tight text-center text-'>
 						Sign up to our service
 					</h2>
 				</div>
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
 					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
 						<div>
-							<label htmlFor='name' className='block text-sm font-medium leading-6 text-gray-900'>
+							<label htmlFor='name' className='block text-sm font-medium leading-6'>
 								Full name
 							</label>
 							<div className='mt-2'>
@@ -119,7 +119,7 @@ export default function SignupPage() {
 									autoComplete='name'
 									placeholder='John Doe'
 									disabled={isSubmitting}
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
 									{errors.name?.message}
@@ -128,7 +128,7 @@ export default function SignupPage() {
 						</div>
 
 						<div>
-							<label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
+							<label htmlFor='email' className='block text-sm font-medium leading-6'>
 								Email address
 							</label>
 							<div className='mt-2'>
@@ -140,7 +140,7 @@ export default function SignupPage() {
 									autoComplete='email'
 									placeholder='email@example.com'
 									disabled={isSubmitting}
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								{/* disabled:opacity-60 - guardare video degli input su tailwindlabs YT */}
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -153,7 +153,7 @@ export default function SignupPage() {
 							<div className='flex items-center justify-between'>
 								<label
 									htmlFor='password'
-									className='block text-sm font-medium leading-6 text-gray-900'
+									className='block text-sm font-medium leading-6'
 								>
 									Password
 								</label>
@@ -167,7 +167,7 @@ export default function SignupPage() {
 									autoComplete='current-password'
 									placeholder='••••••••'
 									disabled={isSubmitting}
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
 									{errors.password?.message}
@@ -178,7 +178,7 @@ export default function SignupPage() {
 						<div>
 							<label
 								htmlFor='hotel_id'
-								className='block text-sm font-medium leading-6 text-gray-900'
+								className='block text-sm font-medium leading-6'
 							>
 								Hotel
 							</label>
@@ -188,7 +188,7 @@ export default function SignupPage() {
 									id='hotel_id'
 									name='hotel_id'
 									disabled={isSubmitting}
-									className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								>
 									<option value=''>Choose an option</option>
 									{hotels.map((hotel) => (
@@ -207,7 +207,7 @@ export default function SignupPage() {
 							<button
 								type='submit'
 								disabled={isSubmitting}
-								className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+								className='flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
 							>
 								{isSubmitting ? 'Loading...' : 'Sign up'}
 							</button>

@@ -14,6 +14,8 @@ const HomePage = lazy(() => import('./pages/Home.page.jsx'));
 const SignupPage = lazy(() => import('./pages/Signup.page.jsx'));
 const DashboardPage = lazy(() => import('./pages/Dashboard.page.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFound.page.jsx'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPassword.page.jsx'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPassword.page.jsx'));
 
 // complete react router tutorial by cosden solutions
 // https://youtu.be/oTIJunBa6MA?feature=shared
@@ -22,6 +24,8 @@ const routeConfigurations = [
 	{ path: '/', element: <HomePage /> },
 	{ path: '/login', element: <LoginPage /> },
 	{ path: '/signup', element: <SignupPage /> },
+	{ path: '/forgot-password', element: <ForgotPasswordPage /> },
+	{ path: '/reset-password/:token', element: <ResetPasswordPage /> },
 
 	{ path: '/dashboard', element: <DashboardPage />, protected: true },
 
@@ -48,9 +52,7 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<Wrapper>
-			{/* <AuthProvider> */}
 			<RouterProvider router={router} />
-			{/* </AuthProvider> */}
 		</Wrapper>
 	</React.StrictMode>
 );

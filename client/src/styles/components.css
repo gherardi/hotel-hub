@@ -1,23 +1,2 @@
 @layer components {
-	/* body {
-		@apply bg-neutral-900;
-	}
-	[type='text'],
-	input:where(:not([type])),
-	[type='email'],
-	[type='url'],
-	[type='password'],
-	[type='number'],
-	[type='date'],
-	[type='datetime-local'],
-	[type='month'],
-	[type='search'],
-	[type='tel'],
-	[type='time'],
-	[type='week'],
-	[multiple],
-	textarea,
-	select {
-		@apply w-full text-gray-200 rounded bg-neutral-800 disabled:text-gray-400 disabled:bg-neutral-700 placeholder:font-medium;
-	} */
 }

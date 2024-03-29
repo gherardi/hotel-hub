@@ -120,14 +120,10 @@ export const forgotPassword = async (req, res, next) => {
 
 		const token = crypto.randomUUID();
 
-		const expires = new Date();
-		expires.setMinutes(expires.getMinutes() + process.env.PASSWORD_RESET_EXPIRES_IN);
-
 		const { data, error } = await supabase
-			.from('albergatori')
+			.from('users')
 			.update({
 				password_reset_token: token,
-				password_reset_token_expires: expires.toISOString(),
 			})
 			.eq('email', email)
 			.select('email');
@@ -135,7 +131,8 @@ export const forgotPassword = async (req, res, next) => {
 		if (error) return next(new AppError(error.message));
 		if (data.length === 0) return next(new AppError('No account found with that email', 401));
 
-		const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
+		// const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
+		const resetURL = `${req.protocol}://localhost:5173/reset-password/${token}`;
 
 		await new Email(email, resetURL).sendPasswordReset();
 
@@ -162,19 +159,16 @@ export const resetPassword = async (req, res, next) => {
 
 		// update the user password and reset token stuff
 		const { data, error } = await supabase
-			.from('albergatori')
+			.from('users')
 			.update({
 				password: hash,
 				password_reset_token: null,
-				password_reset_token_expires: null,
-				password_changed_at: new Date().toISOString(),
 			})
 			.select('*')
-			.eq('password_reset_token', token)
-			.gt('password_reset_token_expires', new Date().toISOString());
+			.eq('password_reset_token', token);
 
 		if (error) return next(new AppError(error.message));
-		if (data.length === 0) return next(new AppError('Token is invalid or has expired', 400));
+		if (data.length === 0) return next(new AppError('Invalid Token', 400));
 
 		createSendToken(data[0], 200, req, res);
 	} catch (err) {

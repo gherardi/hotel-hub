@@ -11,12 +11,12 @@ export default {
 				// geist: ['"Geist"', ...defaultTheme.fontFamily.sans],
 				// inter: ['Inter', ...defaultTheme.fontFamily.sans],
 			},
-			// colors: {
-			// 	'cold-gray': '#1C1C1C', // sfondo
-			// 	'mine-shaft': '#232323', // sfondo scuro
-			// 	'gallery': '#ededed', // primario
-			// 	'dove-gray': '#7e7e7e', // secondario
-			// },
+			colors: {
+				background: 'hsl(var(--color-background) / 1)',
+				'background-hover': 'hsl(var(--color-background-hover) / 1)',
+				content: 'hsl(var(--color-content) / 1)',
+				accent: 'hsl(var(--color-accent) / 1)',
+			},
 		},
 	},
 	plugins: [formsPlugin],
