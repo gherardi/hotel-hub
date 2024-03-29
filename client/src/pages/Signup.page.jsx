@@ -101,7 +101,7 @@ export default function SignupPage() {
 			<div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
 					<h2 className='text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 text-'>
-						Sign up to to our service
+						Sign up to our service
 					</h2>
 				</div>
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
