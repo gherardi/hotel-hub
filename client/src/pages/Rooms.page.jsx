@@ -1,7 +1,7 @@
 export default function RoomsPage() {
 	return (
-		<div className='flex h-full'>
-			rooms
-		</div>
+		<>
+			<h2>Rooms</h2>
+		</>
 	);
 }

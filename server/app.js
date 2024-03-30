@@ -25,18 +25,23 @@ app.options('*', cors());
 // GLOBAL MIDDLEWARES
 app.use(morgan('dev')); // Development logging
 
-app.use(express.json({ limit: '10kb' })); // Body parser, reading data from body into req.body
+app.use(express.json()); // Body parser, reading data from body into req.body
 app.use(helmet()); // Set security HTTP headers
 app.use(cookieParser()); // Parse cookies
 
-/*const limiter = rateLimit({
-	max: 100,
-	windowMs: 60 * 60 * 1000,
-	message: 'Too many requests from this IP, please try again in an hour!',
-});*/
+// const limiter = rateLimit({
+// 	max: 100,
+// 	windowMs: 60 * 60 * 1000,
+// 	message: 'Too many requests from this IP, please try again in an hour!',
+// });
 // app.use('/api', limiter); // Limit requests from same API
 
 // API ROUTING
+app.use((req, res, next) => {
+	console.log('Middleware');
+	console.log(req.body);
+	next();
+});
 app.use('/api/auth', authRouter);
 app.use('/api/albergatori', albergatoriRouter);
 // app.use('/api/camere', camereRouter);

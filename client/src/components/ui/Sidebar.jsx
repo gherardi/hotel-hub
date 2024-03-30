@@ -2,10 +2,10 @@ import { Home, CalendarDays, Church, CircleUserRound, LogOut } from 'lucide-reac
 
 export default function NewSidebar({ setView }) {
 	return (
-		<aside className='w-[16vw] px-3 py-6 border-r min-w-fit h-svh'>
+		<aside className='w-[16vw] px-3 py-6 border-r min-w-fit h-svh bg-background-hover/50 text-content/70'>
 			<nav className='flex flex-col h-full'>
 				<div className='space-y-2'>
-					<label className='block px-3 text-xs uppercase text-content/70'>navigations</label>
+					<p className='block px-3 text-xs uppercase'>navigations</p>
 					<Link icon={<Home size={16} />} text={'Dashboard'} setView={setView} to={'dashboard'} />
 
 					<Link
@@ -35,7 +35,7 @@ export default function NewSidebar({ setView }) {
 function Link({ icon, text, to, setView }) {
 	return (
 		<a
-			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg text-content/70 hover:bg-accent/5 hover:text-accent/90'
+			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-accent/5 hover:text-accent/90'
 			href={'#' + to}
 			onClick={(e) => {
 				e.preventDefault();

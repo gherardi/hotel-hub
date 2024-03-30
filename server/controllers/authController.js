@@ -98,6 +98,8 @@ export const login = async (req, res, next) => {
 		const correctPassword = await bcrypt.compare(password, data[0].password);
 		if (!correctPassword) return next(new AppError('Incorrect password', 401));
 
+		await supabase.from('users').update({ password_reset_token: null }).eq('email', email);
+
 		// create and send token to client
 		createSendToken(data[0], 200, req, res);
 	} catch (err) {

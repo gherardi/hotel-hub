@@ -23,15 +23,17 @@ export const getMe = async (req, res, next) => {
 
 	if (error) return next(new AppError(error.message));
 
+	data[0].password = '';
+
 	res.status(200).json({ status: 'success', data: data[0] });
 };
 
 export const updateMe = async (req, res, next) => {
-	const { name, email } = req.body;
+	const { name, email, password } = req.body;
 
-	const { data, error } = await supabase
+	const { error } = await supabase
 		.from('users')
-		.update({ name, email })
+		.update({ name, email, password })
 		.eq('id', req.user.id);
 
 	if (error) return next(new AppError(error.message));
@@ -48,12 +50,9 @@ export const dashboard = async (req, res) => {
 
 	const vendite = prenotazioni.reduce((acc, curr) => acc + curr.total, 0);
 
-	const { data: stanze } = await supabase
-		.from('rooms')
-		.select('*')
-		.eq('hotel_id', hotel_id);
+	const { data: stanze } = await supabase.from('rooms').select('*').eq('hotel_id', hotel_id);
 
-	const tassoOccupazione = ((prenotazioni.length / stanze.length) * 100);
+	const tassoOccupazione = (prenotazioni.length / stanze.length) * 100;
 
 	res.status(200).json({ status: 'success', prenotazioni, vendite, tassoOccupazione });
 };

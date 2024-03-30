@@ -10,7 +10,13 @@ const router = express.Router();
 
 router.use(authController.protect);
 router.get('/me', albergatoriController.getMe);
-router.patch('/updateMe', validateName, validateEmail, albergatoriController.updateMe);
+router.patch(
+	'/updateMe',
+	validateName,
+	validateEmail,
+	validatePassword,
+	albergatoriController.updateMe
+);
 
 router.get('/dashboard', albergatoriController.dashboard);
 
