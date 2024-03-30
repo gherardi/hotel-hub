@@ -10,7 +10,7 @@ export default function DashboardPage() {
 
 	return (
 		<div className='flex h-full'>
-			<Sidebar view={view} setView={setView} />
+			<Sidebar setView={setView} />
 
 			<div className='w-[80vw]'>
 				{view === 'dashboard' && <Dashboard />}
