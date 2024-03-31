@@ -1,5 +1,6 @@
 import supabase from '../utils/supabase.js';
 import AppError from '../utils/appError.js';
+import bcrypt from 'bcryptjs';
 
 // export const existingEmails = async (req, res, next) => {
 // 	try {
@@ -31,9 +32,11 @@ export const getMe = async (req, res, next) => {
 export const updateMe = async (req, res, next) => {
 	const { name, email, password } = req.body;
 
+	const hash = await bcrypt.hash(password, 12);
+
 	const { error } = await supabase
 		.from('users')
-		.update({ name, email, password })
+		.update({ name, email, password: hash })
 		.eq('id', req.user.id);
 
 	if (error) return next(new AppError(error.message));

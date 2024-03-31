@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import authRouter from './routes/authRoutes.js';
 import albergatoriRouter from './routes/albergatoriRoutes.js';
 // import camereRouter from './routes/camereRoutes.js';
-// import prenotazioniRouter from './routes/prenotazioniRoutes';
+import prenotazioniRouter from './routes/prenotazioniRoutes.js';
 
 import AppError from './utils/appError.js';
 import globalErrorHandler from './controllers/errorController.js';
@@ -37,15 +37,10 @@ app.use(cookieParser()); // Parse cookies
 // app.use('/api', limiter); // Limit requests from same API
 
 // API ROUTING
-app.use((req, res, next) => {
-	console.log('Middleware');
-	console.log(req.body);
-	next();
-});
 app.use('/api/auth', authRouter);
 app.use('/api/albergatori', albergatoriRouter);
 // app.use('/api/camere', camereRouter);
-// app.use('/api/prenotazioni', 'prenotazioniRouter');
+app.use('/api/prenotazioni', prenotazioniRouter);
 
 // app.get('/api/status', (req, res) => {
 // 	res.status(200).json({ status: 'success' });
