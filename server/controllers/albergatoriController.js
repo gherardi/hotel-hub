@@ -68,8 +68,37 @@ export const updateUser = async (req, res) => {
 	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
 };
 
-export const getAllUsers = async (req, res) => {
-	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
+export const getAllUsers = async (req, res, next) => {
+	try {
+		const { data, error } = await supabase
+			.from('users')
+			.select('*, hotel(name)')
+			.neq('id', req.user.id);
+
+		if (error) return next(new AppError(error.message));
+
+		res.status(200).json({ status: 'success', data });
+	} catch (err) {
+		if (err.name === 'JsonWebTokenError') {
+			return next(new AppError('Your JsonWebToken is malformed'), 400);
+		}
+		return next(new AppError(err.message), 400);
+	}
+};
+
+export const getAllHotels = async (req, res, next) => {
+	try {
+		const { data, error } = await supabase.from('hotel').select('*, users(id)');
+
+		if (error) return next(new AppError(error.message));
+
+		res.status(200).json({ status: 'success', data });
+	} catch (err) {
+		if (err.name === 'JsonWebTokenError') {
+			return next(new AppError('Your JsonWebToken is malformed'), 400);
+		}
+		next(new AppError(err.message ? err.message : err));
+	}
 };
 
 export const deleteUser = async (req, res) => {

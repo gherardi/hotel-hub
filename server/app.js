@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 
 import authRouter from './routes/authRoutes.js';
 import albergatoriRouter from './routes/albergatoriRoutes.js';
-// import camereRouter from './routes/camereRoutes.js';
+import camereRouter from './routes/camereRoutes.js';
 import prenotazioniRouter from './routes/prenotazioniRoutes.js';
 
 import AppError from './utils/appError.js';
@@ -39,7 +39,7 @@ app.use(cookieParser()); // Parse cookies
 // API ROUTING
 app.use('/api/auth', authRouter);
 app.use('/api/albergatori', albergatoriRouter);
-// app.use('/api/camere', camereRouter);
+app.use('/api/camere', camereRouter);
 app.use('/api/prenotazioni', prenotazioniRouter);
 
 // app.get('/api/status', (req, res) => {

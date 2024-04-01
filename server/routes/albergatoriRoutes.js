@@ -24,6 +24,7 @@ router.get('/dashboard', albergatoriController.dashboard);
 router.use(authController.restrictToAdmin);
 
 router.get('/', albergatoriController.getAllUsers);
+router.get('/hotels', albergatoriController.getAllHotels);
 
 router
 	.route('/:id')

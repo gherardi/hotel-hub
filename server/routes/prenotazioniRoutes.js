@@ -8,4 +8,7 @@ router.use(authController.protect);
 router.get('/', prenotazioniController.prenotazioni);
 // router.post('/', middeleware);
 
+router.use(authController.restrictToAdmin);
+router.get('/all', prenotazioniController.getAllPrenotazioni);
+
 export default router;
