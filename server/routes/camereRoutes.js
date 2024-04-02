@@ -6,10 +6,15 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-// router.post('/', middeleware);
+router.get('/', camereController.getMyRooms);
+router.post('/', camereController.createRoom);
 
 router.use(authController.restrictToAdmin);
 
 router.get('/all', camereController.getAllRooms);
+
+router
+	.route('/:id')
+	.delete(camereController.deleteRoom);
 
 export default router;

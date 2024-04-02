@@ -22,7 +22,7 @@ export default function ProtectedRoute({ children }) {
 				setIsLoading(false);
 			} catch (err) {
 				console.log('Error in API request:', err.response.data.message);
-				window.location.href = '/login';
+				window.location.href = '/';
 			}
 		};
 

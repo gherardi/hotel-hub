@@ -5,7 +5,7 @@ export default function AdminSidebar({ setView }) {
 		<aside className='w-[16vw] px-3 py-6 border-r min-w-fit h-svh bg-background-hover/50 text-content/70'>
 			<nav className='flex flex-col h-full'>
 				<div className='space-y-2'>
-					<p className='block px-3 text-xs uppercase'>admin navigations</p>
+					<p className='block px-3 text-xs uppercase'>ruolo: amministratore</p>
 					<Link icon={<UsersRound size={16} />} text={'Utenti'} setView={setView} to={'users'} />
 
 					<Link

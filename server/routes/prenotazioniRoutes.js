@@ -6,7 +6,11 @@ const router = express.Router();
 
 router.use(authController.protect);
 router.get('/', prenotazioniController.prenotazioni);
-// router.post('/', middeleware);
+router.post('/', prenotazioniController.creaPrenotazione);
+
+router
+	.route('/:id')
+	.delete(prenotazioniController.deleteBooking);
 
 router.use(authController.restrictToAdmin);
 router.get('/all', prenotazioniController.getAllPrenotazioni);

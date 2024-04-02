@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../components/AuthProvider.jsx';
+import { Trash2 } from 'lucide-react';
+
+import CreateBookingsButton from '../components/ui/CreateBookingsButton.jsx';
 
 export default function BookingsPage() {
 	const [bookings, setBookings] = useState([]);
@@ -13,6 +16,7 @@ export default function BookingsPage() {
 				},
 			});
 			const { data } = await resp.json();
+			data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 			setBookings(data);
 		};
 		getData();
@@ -21,6 +25,7 @@ export default function BookingsPage() {
 	return (
 		<>
 			<h2>Bookings</h2>
+			<CreateBookingsButton />
 
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500'>
@@ -33,6 +38,7 @@ export default function BookingsPage() {
 							<th scope='col'>notti</th>
 							<th scope='col'>totale</th>
 							<th scope='col'>n. camera</th>
+							<th scope='col'>Elimina</th>
 						</tr>
 					</thead>
 					<tbody className='divide-y-2 empty:hidden'>
@@ -47,6 +53,29 @@ export default function BookingsPage() {
 										<td>{booking.nights}</td>
 										<td>{booking.total}€</td>
 										<td>{booking.rooms.number}</td>
+										<td>
+											<button
+												type='button'
+												className='px-3 py-3 bg-gray-100 rounded-lg hover:bg-gray-200'
+												onClick={async () => {
+													const resp = await fetch(
+														`http://localhost:3000/api/prenotazioni/${booking.id}`,
+														{
+															method: 'DELETE',
+															headers: {
+																Authorization: `Bearer ${jwt}`,
+															},
+														}
+													);
+													const data = await resp.json();
+													if (data.status === 'success') {
+														setBookings((prev) => prev.filter((u) => u.id !== booking.id));
+													}
+												}}
+											>
+												<Trash2 size={16} />
+											</button>
+										</td>
 									</tr>
 								);
 							})}

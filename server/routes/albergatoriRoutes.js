@@ -25,11 +25,12 @@ router.use(authController.restrictToAdmin);
 
 router.get('/', albergatoriController.getAllUsers);
 router.get('/hotels', albergatoriController.getAllHotels);
+router.delete('/hotels/:id', albergatoriController.deleteHotel);
 
 router
 	.route('/:id')
-	.get(albergatoriController.getUser)
-	// 	// .patch(albergatoriController.updateUser)
+	// .get(albergatoriController.getUser)
+	// .patch(albergatoriController.updateUser)
 	.delete(albergatoriController.deleteUser);
 
 export default router;

@@ -28,7 +28,7 @@ export default function AdminRooms() {
 						<tr className='[&>*]:px-6 [&>*]:py-3'>
 							<th scope='col'>Created at</th>
 							<th scope='col'>tipo</th>
-							<th scope='col'>prezzo</th>
+							<th scope='col'>prezzo a notte</th>
 							<th scope='col'>numero</th>
 							<th scope='col'>hotel</th>
 						</tr>
