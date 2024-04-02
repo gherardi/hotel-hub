@@ -174,4 +174,4 @@ Start the server
 a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
 
 ## Convenzioni dei commit
-In questo progetto utilizzo le convenzioni di [commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#what-is-commitlint) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.
+In questo progetto utilizzo le convenzioni di [commitlint](https://commitlint.js.org/) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.
