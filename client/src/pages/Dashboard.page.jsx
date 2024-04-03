@@ -8,7 +8,7 @@ import ProfilePage from './Profile.page.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
 
 export default function DashboardPage() {
-	const [view, setView] = useState('dashboard');
+	const [view, setView] = useState('rooms');
 
 	return (
 		<div className='flex h-full'>

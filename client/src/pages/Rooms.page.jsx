@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../components/AuthProvider.jsx';
 import { Trash2 } from 'lucide-react';
 
-// import CreateRoomsButton from '../components/ui/CreateRoomsButton.jsx';
+import CreateRoomsButton from '../components/ui/CreateRoomsButton.jsx';
 
 export default function RoomsPage() {
 	const [rooms, setRooms] = useState([]);
@@ -25,7 +25,7 @@ export default function RoomsPage() {
 	return (
 		<>
 			<h2>Rooms</h2>
-			{/* <CreateRoomsButton /> */}
+			<CreateRoomsButton />
 
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500'>
@@ -54,15 +54,12 @@ export default function RoomsPage() {
 												type='button'
 												className='px-3 py-3 bg-gray-100 rounded-lg hover:bg-gray-200'
 												onClick={async () => {
-													const resp = await fetch(
-														`http://localhost:3000/api/camere/${room.id}`,
-														{
-															method: 'DELETE',
-															headers: {
-																Authorization: `Bearer ${jwt}`,
-															},
-														}
-													);
+													const resp = await fetch(`http://localhost:3000/api/camere/${room.id}`, {
+														method: 'DELETE',
+														headers: {
+															Authorization: `Bearer ${jwt}`,
+														},
+													});
 													const data = await resp.json();
 													if (data.status === 'success') {
 														setRooms((prev) => prev.filter((u) => u.id !== room.id));

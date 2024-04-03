@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useAuth } from '../AuthProvider.jsx';
 
-export default function CreateBookingsButton() {
-	let [isOpen, setIsOpen] = useState(false);
+export default function CreateRoomsButton() {
+	let [isOpen, setIsOpen] = useState(true);
 	const jwt = useAuth();
 
 	const {
@@ -18,7 +18,7 @@ export default function CreateBookingsButton() {
 			console.log(data);
 			console.log('jwt:', jwt);
 			// return;
-			const res = await fetch('http://localhost:3000/api/prenotazioni', {
+			const res = await fetch('http://localhost:3000/api/camere', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -45,25 +45,6 @@ export default function CreateBookingsButton() {
 		setIsOpen(true);
 	}
 
-	const [rooms, setRooms] = useState([]);
-
-	useEffect(() => {
-		const getRooms = async () => {
-			try {
-				const res = await fetch('http://localhost:3000/api/camere', {
-					headers: {
-						Authorization: `Bearer ${jwt}`,
-					},
-				});
-				const { data } = await res.json();
-				setRooms(data);
-			} catch (err) {
-				console.error(err);
-			}
-		};
-		getRooms();
-	}, [jwt]);
-
 	return (
 		<>
 			<button
@@ -71,7 +52,7 @@ export default function CreateBookingsButton() {
 				onClick={openModal}
 				className='rounded-md mb-6 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 			>
-				Crea prenotazione
+				Crea stanza
 			</button>
 
 			<Transition appear show={isOpen} as={Fragment}>
@@ -109,93 +90,66 @@ export default function CreateBookingsButton() {
 
 									<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
 										<div>
-											<label
-												htmlFor='customer_name'
-												className='block text-sm font-medium leading-6 '
-											>
-												Nome cliente
+											<label htmlFor='type' className='block text-sm font-medium leading-6 '>
+												Tipo di camera
 											</label>
 											<div className='mt-2'>
-												<input
-													{...register('customer_name')}
-													id='customer_name'
-													name='customer_name'
-													type='text'
-													required
-													disabled={isSubmitting}
-													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-												/>
-											</div>
-										</div>
-
-										<div>
-											<div className='flex items-center justify-between'>
-												<label htmlFor='start' className='block text-sm font-medium leading-6 '>
-													Data arrivo
-												</label>
-											</div>
-											<div className='mt-2'>
-												<input
-													{...register('start')}
-													id='start'
-													name='start'
-													type='date'
-													required
-													disabled={isSubmitting}
-													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-												/>
-											</div>
-										</div>
-
-										<div>
-											<div className='flex items-center justify-between'>
-												<label htmlFor='end' className='block text-sm font-medium leading-6 '>
-													Data partenza
-												</label>
-											</div>
-											<div className='mt-2'>
-												<input
-													{...register('end')}
-													id='end'
-													name='end'
-													type='date'
-													// min='2024-04-01'
-													// max='2024-04-30'
-													autoComplete='end'
-													required
-													disabled={isSubmitting}
-													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-												/>
-											</div>
-										</div>
-
-										<div>
-											<div className='flex items-center justify-between'>
-												<label htmlFor='room' className='block text-sm font-medium leading-6 '>
-													Camera
-												</label>
-											</div>
-											<div className='mt-2'>
 												<select
-													{...register('room_id')}
-													id='room_id'
-													name='room_id'
+													{...register('type')}
+													id='type'
+													name='type'
 													disabled={isSubmitting}
 													required
 													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 												>
 													<option value=''>Choose an option</option>
-													{rooms &&
-														rooms.map((room) => (
-															<option key={room.id} value={room.id}>
-																{room.number} - {room.type} ({room.price}€ a notte)
-															</option>
-														))}
+													<option value='Single'>Camera singola</option>
+													<option value='Double'>Camera doppia</option>
+													<option value='Triple'>Camera tripla</option>
+													<option value='Quadruple'>Camera quadrupla</option>
+													<option value='Superior'>Camera superior</option>
+													<option value='Deluxe'>Camera deluxe</option>
 												</select>
 											</div>
 										</div>
 
 										<div>
+											<label htmlFor='price' className='block text-sm font-medium leading-6 '>
+												Prezzo a notte
+											</label>
+											<div className='mt-2'>
+												<input
+													{...register('price')}
+													id='price'
+													name='price'
+													type='number'
+													min={0}
+													required
+													disabled={isSubmitting}
+													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+												/>
+											</div>
+										</div>
+
+										<div>
+											<label htmlFor='number' className='block text-sm font-medium leading-6 '>
+												Numbero di camera
+											</label>
+											<div className='mt-2'>
+												<input
+													{...register('number')}
+													id='number'
+													name='number'
+													type='number'
+													min={1}
+													required
+													disabled={isSubmitting}
+													className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+												/>
+											</div>
+										</div>
+
+										<div className='pt-4'>
 											<button
 												type='submit'
 												disabled={isSubmitting}
