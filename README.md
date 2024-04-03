@@ -8,22 +8,22 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 
 **Server: (Backend)**
 
-- [x] Registrazione al servizio tramite email e password
-- [x] Gestione delle route del programma
-- [x] Gestire le richieste API a determinati endpoint
+- [x]  Registrazione e Login al servizio tramite email e password
+- [x]  Middleware di controllo e sanitizzazione del body di ogni richiesta
+- [x]  Limitazione di richieste alle api per evitare spam
+- [x]  Esposizione API tramite protocollo REST
+- [x]  Autenticazione e Autorizzazione tramite jwt
+- [x]  Invio email di recupero password con token univoco temporaneo
 
 **Gestore: (Frontend)**
 
-- [x] Riepilogo delle prenotazioni
-- [x] Riepilogo delle camere
-- [x] Creazione delle prenotazioni
-- [x] Creazione di camere
-- [ ] Fare check-in/check-out in modo semplice
-- [ ] Tenere soto controllo entrate/uscite mensili dell'albergo
-- [ ] Grafici di rendimento nei vari mesi dell'anno
-- [ ] Grafici per avere il tempo di permanenza media
-- [ ] Grafici per capire quali camere sono più richieste (singole, matrimoniali, altro)
-- [x] Recupero password tramite email con token
+- [x]  Client Side Routing
+- [x]  Registrazione con validazione degli input e messaggi di errori custom
+- [x]  Accesso con validazione degli input e messaggi di errori custom
+- [x]  Dashboard con riepilogo delle prenotazioni, vendite e occupazione albergo
+- [x]  Pagina camere con gestione completa
+- [x]  Pagina prenotazioni con gestione completa
+- [x]  Recupero password tramite email con token
 
 ## Mockup & Wireframe
 
