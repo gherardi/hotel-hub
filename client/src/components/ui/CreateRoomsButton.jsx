@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react';
 import { useAuth } from '../AuthProvider.jsx';
 
 export default function CreateRoomsButton() {
-	let [isOpen, setIsOpen] = useState(true);
+	let [isOpen, setIsOpen] = useState(false);
 	const jwt = useAuth();
 
 	const {
