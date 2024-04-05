@@ -135,11 +135,11 @@ To run this project, you will need to add the following environment variables to
 
 `JWT_EXPIRES_IN`
 
+`SALT`
+
 `PASSWORD_RESET_EXPIRES`
 
-`SENDGRID_API_KEY`
-
-`EMAIL_FROM`
+`RESEND_API_KEY`
 
 `SUPABASE_URL`
 

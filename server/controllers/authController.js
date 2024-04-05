@@ -6,6 +6,7 @@ import { promisify } from 'util';
 import supabase from './../utils/supabase.js';
 import AppError from './../utils/appError.js';
 import Email from './../utils/sendEmail.js';
+import { sendPasswordResetEmail } from './../utils/resend.js';
 
 dotenv.config();
 
@@ -126,7 +127,7 @@ export const forgotPassword = async (req, res, next) => {
 		// const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
 		const resetURL = `${req.protocol}://localhost:5173/reset-password/${token}`;
 
-		await new Email(account, resetURL).sendPasswordReset();
+		await sendPasswordResetEmail(account, resetURL);
 
 		res.status(200).json({
 			status: 'success',
