@@ -20,7 +20,10 @@ import bcrypt from 'bcryptjs';
 // };
 
 export const getMe = async (req, res, next) => {
-	const { data, error } = await supabase.from('users').select('*').eq('id', req.user.id);
+	const { data, error } = await supabase
+		.from('users')
+		.select('*')
+		.eq('id', req.user.id);
 
 	if (error) return next(new AppError(error.message));
 
@@ -53,19 +56,16 @@ export const dashboard = async (req, res) => {
 
 	const vendite = prenotazioni.reduce((acc, curr) => acc + curr.total, 0);
 
-	const { data: stanze } = await supabase.from('rooms').select('*').eq('hotel_id', hotel_id);
+	const { data: stanze } = await supabase
+		.from('rooms')
+		.select('*')
+		.eq('hotel_id', hotel_id);
 
 	const tassoOccupazione = (prenotazioni.length / stanze.length) * 100;
 
-	res.status(200).json({ status: 'success', prenotazioni, vendite, tassoOccupazione });
-};
-
-export const getUser = async (req, res) => {
-	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
-};
-
-export const updateUser = async (req, res) => {
-	res.status(501).json({ status: 'error', message: 'Route not implemented yet' });
+	res
+		.status(200)
+		.json({ status: 'success', prenotazioni, vendite, tassoOccupazione });
 };
 
 export const getAllUsers = async (req, res, next) => {
@@ -79,26 +79,26 @@ export const getAllUsers = async (req, res, next) => {
 
 		res.status(200).json({ status: 'success', data });
 	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
-		return next(new AppError(err.message), 400);
+		next(new AppError(err.message ? err.message : err));
 	}
 };
 
-export const getAllHotels = async (req, res, next) => {
-	try {
-		const { data, error } = await supabase.from('hotel').select('*, users(id)');
+export const getUser = async (req, res) => {
+	res
+		.status(501)
+		.json({ status: 'error', message: 'Route not implemented yet' });
+};
 
-		if (error) return next(new AppError(error.message));
+export const createUser = async (req, res, next) => {
+	res
+		.status(501)
+		.json({ status: 'error', message: 'Route not implemented yet' });
+};
 
-		res.status(200).json({ status: 'success', data });
-	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
-		next(new AppError(err.message ? err.message : err));
-	}
+export const updateUser = async (req, res) => {
+	res
+		.status(501)
+		.json({ status: 'error', message: 'Route not implemented yet' });
 };
 
 export const deleteUser = async (req, res) => {
@@ -110,25 +110,6 @@ export const deleteUser = async (req, res) => {
 
 		res.status(200).json({ status: 'success', message: 'User deleted' });
 	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
-		next(new AppError(err.message ? err.message : err));
-	}
-};
-
-export const deleteHotel = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const { error } = await supabase.from('hotel').delete().eq('id', id);
-
-		if (error) return next(new AppError(error.message));
-
-		res.status(200).json({ status: 'success', message: 'Hotel deleted' });
-	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
 		next(new AppError(err.message ? err.message : err));
 	}
 };

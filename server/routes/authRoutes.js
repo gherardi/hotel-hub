@@ -1,17 +1,13 @@
 import express from 'express';
 import * as authController from '../controllers/authController.js';
-import { validateName, validateEmail, validatePassword } from '../middlewares/validateInput.js';
+import * as v from '../middlewares/validation.js';
 
 const router = express.Router();
 
-router.get('/hotels', authController.hotels);
-
-router.post('/signup', validateName, validateEmail, validatePassword, authController.signup);
-router.post('/login', validateEmail, validatePassword, authController.login);
-
+router.post('/signup', v.name, v.email, v.password, authController.signup);
+router.post('/login', v.email, v.password, authController.login);
+router.post('/forgotPassword', v.email, authController.forgotPassword);
+router.patch('/resetPassword/:token', v.password, authController.resetPassword);
 router.get('/logout', authController.logout);
-
-router.post('/forgotPassword', validateEmail, authController.forgotPassword);
-router.patch('/resetPassword/:token', validatePassword, authController.resetPassword);
 
 export default router;

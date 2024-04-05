@@ -1,9 +1,9 @@
-import AppError from './../utils/appError.js';
+import AppError from '../utils/appError.js';
 import validator from 'validator';
 
 const validNameRegex = /^[^0-9@#$%^]+(?:\s[^0-9@#$%^]+)+$/;
 
-export const validateName = function (req, res, next) {
+export const name = function (req, res, next) {
 	req.body.name = req.body.name.trim();
 	const { name } = req.body;
 
@@ -17,7 +17,7 @@ export const validateName = function (req, res, next) {
 	next();
 };
 
-export const validateEmail = function (req, res, next) {
+export const email = function (req, res, next) {
 	req.body.email = req.body.email.trim();
 	req.body.email = req.body.email.toLowerCase();
 	const { email } = req.body;
@@ -32,7 +32,7 @@ export const validateEmail = function (req, res, next) {
 	next();
 };
 
-export const validatePassword = function (req, res, next) {
+export const password = function (req, res, next) {
 	req.body.password = req.body.password.trim();
 	const { password } = req.body;
 
