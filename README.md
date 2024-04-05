@@ -74,11 +74,24 @@ create table
     password text not null,
     password_reset_token text null,
     is_admin boolean not null default false,
-    hotel_id uuid not null,
+    hotel_id uuid null,
     constraint users_pkey primary key (id),
     constraint users_email_key unique (email),
     constraint users_password_reset_token_key unique (password_reset_token),
     constraint public_users_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade
+  ) tablespace pg_default;
+
+create table
+  public.rooms (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    type public.room_type not null,
+    price numeric not null,
+    number numeric not null,
+    hotel_id uuid not null,
+    constraint rooms_pkey primary key (id),
+    constraint rooms_number_key unique (number),
+    constraint public_rooms_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade
   ) tablespace pg_default;
 
 create table
@@ -99,18 +112,11 @@ create table
     constraint public_bookings_user_id_fkey foreign key (user_id) references users (id) on update cascade on delete cascade
   ) tablespace pg_default;
 
-create table
-  public.rooms (
-    id uuid not null default gen_random_uuid (),
-    created_at timestamp with time zone not null default now(),
-    type public.room_type not null,
-    price numeric not null,
-    number numeric not null,
-    hotel_id uuid not null,
-    constraint rooms_pkey primary key (id),
-    constraint rooms_number_key unique (number),
-    constraint public_rooms_hotel_id_fkey foreign key (hotel_id) references hotel (id) on update cascade on delete cascade
-  ) tablespace pg_default;
+insert into
+  users (name, email, password, is_admin)
+values
+  ('Amministratore', 'amministratore@gmail.com', '$2a$12$B/H27IxlpiulOh/MRxiZ9ej4YiU70VdGIBQpn2q71Gj6/ERbf3yPS', true);
+
 ```
 
 ## Prerequisites
@@ -150,7 +156,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd hote-hub
+  cd hotel-hub
 ```
 
 Install dependencies
@@ -173,8 +179,7 @@ Start the server
   cd client && npm start
 ```
 
-
-a questo punto recarsi all'indirizzo http://localhost:3000 e iniziare ad utilizzare il programma
+a questo punto recarsi all'indirizzo http://localhost:5173 e iniziare ad utilizzare il programma
 
 ## Convenzioni dei commit
 In questo progetto utilizzo le convenzioni di [commitlint](https://commitlint.js.org/) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.
