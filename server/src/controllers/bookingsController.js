@@ -1,5 +1,5 @@
-import supabase from '../utils/supabase.js';
-import AppError from '../utils/appError.js';
+import supabase from '../src/utils/supabase.js';
+import AppError from '../src/utils/appError.js';
 
 export const getOurbookings = async (req, res, next) => {
 	try {

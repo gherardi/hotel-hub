@@ -5,19 +5,19 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import compression from 'compression';
+
 import limiter from './utils/limiter.js';
 import apiRouter from './routes/index.js';
-import AppError from './utils/appError.js';
+import ApplicationError from './utils/applicationError.js';
 import globalErrorHandler from './controllers/errorController.js';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // IMPLEMENT CORS
 app.use(cors());
-// app.options('*', cors());
 
 // GLOBAL MIDDLEWARES
 app.use(morgan('dev'));
@@ -29,13 +29,15 @@ app.use('/api', limiter);
 
 // ROUTES
 app.use('/api', apiRouter);
+
 app.all('*', (req, res, next) => {
-	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+	next(new ApplicationError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
 app.use(globalErrorHandler);
 
+// APP LISTENING
 const server = app.listen(PORT, () => {
 	console.log(`server running on PORT http://localhost:${PORT}`);
 });
