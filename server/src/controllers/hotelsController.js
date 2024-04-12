@@ -24,7 +24,7 @@ export const getHotel = handleAsyncError(async (req, res, next) => {
 	res.status(200).json({ status: 'success', data });
 });
 
-export const createHotel = async (req, res, next) => {
+export const createHotel = handleAsyncError(async (req, res, next) => {
 	// name are required
 	const { name } = req.body;
 
@@ -41,9 +41,9 @@ export const createHotel = async (req, res, next) => {
 	if (error) return next(new ApplicationError(error.message));
 
 	res.status(201).json({ status: 'success', data });
-};
+});
 
-export const updateHotel = async (req, res, next) => {
+export const updateHotel = handleAsyncError(async (req, res, next) => {
 	const id = req.params.id;
 
 	const { name } = req.body;
@@ -63,9 +63,9 @@ export const updateHotel = async (req, res, next) => {
 	if (!data) return next(new ApplicationError('Hotel not found', 404));
 
 	res.status(200).json({ status: 'success', data });
-};
+});
 
-export const deleteHotel = async (req, res, next) => {
+export const deleteHotel = handleAsyncError(async (req, res, next) => {
 	const id = req.params.id;
 
 	const { data, error } = await supabase
@@ -79,4 +79,4 @@ export const deleteHotel = async (req, res, next) => {
 	if (!data) return next(new ApplicationError('Hotel not found', 404));
 
 	res.status(204).json({ status: 'success' });
-};
+});

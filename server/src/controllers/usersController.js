@@ -1,6 +1,11 @@
+import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
+
 import supabase from '../utils/supabase.js';
 import ApplicationError from '../utils/applicationError.js';
-import bcrypt from 'bcryptjs';
+import handleAsyncError from '../utils/handleAsyncError.js';
+
+dotenv.config();
 
 // export const existingEmails = async (req, res, next) => {
 // 	try {
@@ -19,36 +24,40 @@ import bcrypt from 'bcryptjs';
 // 	}
 // };
 
-export const getMe = async (req, res, next) => {
+export const getMe = handleAsyncError(async (req, res, next) => {
 	const { data, error } = await supabase
 		.from('users')
 		.select('*')
-		.eq('id', req.user.id);
+		.eq('id', req.user.id)
+		.maybeSingle();
 
 	if (error) return next(new ApplicationError(error.message));
 
-	data[0].password = '';
+	delete data.password;
 
-	res.status(200).json({ status: 'success', data: data[0] });
-};
+	res.status(200).json({ status: 'success', data });
+});
 
-export const updateMe = async (req, res, next) => {
-	const { name, email, password } = req.body;
+export const updateMe = handleAsyncError(async (req, res, next) => {
+	const { first_name, last_name, email, password } = req.body;
 
 	const hash = await bcrypt.hash(password, 12);
 
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from('users')
-		.update({ name, email, password: hash })
-		.eq('id', req.user.id);
+		.update({ first_name, last_name, email, password: hash })
+		.eq('id', req.user.id)
+		.select('*')
+		.maybeSingle();
 
 	if (error) return next(new ApplicationError(error.message));
 
-	res.status(200).json({ status: 'success', message: 'credentials changed' });
-};
+	res.status(200).json({ status: 'success', data });
+});
 
-export const dashboard = async (req, res) => {
+export const dashboard = handleAsyncError(async (req, res, next) => {
 	const { hotel_id } = req.user;
+
 	const { data: prenotazioni } = await supabase
 		.from('bookings')
 		.select('*')
@@ -66,50 +75,82 @@ export const dashboard = async (req, res) => {
 	res
 		.status(200)
 		.json({ status: 'success', prenotazioni, vendite, tassoOccupazione });
-};
+});
 
-export const getAllUsers = async (req, res, next) => {
-	try {
-		const { data, error } = await supabase
-			.from('users')
-			.select('*, hotel(name)')
-			.neq('id', req.user.id);
+// nel frontend fare un get a /me ed escludere l'utente con lo stesso id
+export const getAllUsers = handleAsyncError(async (req, res, next) => {
+	const { data, error } = await supabase.from('users').select('*');
 
-		if (error) return next(new ApplicationError(error.message));
+	if (error) return next(new ApplicationError(error.message));
 
-		res.status(200).json({ status: 'success', data });
-	} catch (err) {
-		next(new ApplicationError(err.message ? err.message : err));
-	}
-};
+	data.forEach((user) => delete user.password);
 
-export const getUser = async (req, res) => {
-	res
-		.status(501)
-		.json({ status: 'error', message: 'Route not implemented yet' });
-};
+	res.status(200).json({ status: 'success', data });
+});
 
-export const createUser = async (req, res, next) => {
-	res
-		.status(501)
-		.json({ status: 'error', message: 'Route not implemented yet' });
-};
+export const getUser = handleAsyncError(async (req, res, next) => {
+	const id = req.params.id;
 
-export const updateUser = async (req, res) => {
-	res
-		.status(501)
-		.json({ status: 'error', message: 'Route not implemented yet' });
-};
+	const { data, error } = await supabase
+		.from('users')
+		.select('*')
+		.eq('id', id)
+		.maybeSingle();
 
-export const deleteUser = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const { error } = await supabase.from('users').delete().eq('id', id);
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('User not found', 404));
 
-		if (error) return next(new ApplicationError(error.message));
+	res.status(200).json({ status: 'success', data });
+});
 
-		res.status(200).json({ status: 'success', message: 'User deleted' });
-	} catch (err) {
-		next(new ApplicationError(err.message ? err.message : err));
-	}
-};
+export const createUser = handleAsyncError(async (req, res, next) => {
+	const { first_name, last_name, email, password } = req.body;
+
+	const hash = await bcrypt.hash(password, process.env.SALT);
+
+	const { data, error } = await supabase
+		.from('users')
+		.insert({ first_name, last_name, email, password: hash })
+		.select()
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+
+	res.status(201).json({ status: 'success', data });
+});
+
+export const updateUser = handleAsyncError(async (req, res, next) => {
+	const id = req.params.id;
+
+	const { first_name, last_name, email, password } = req.body;
+
+	const hash = await bcrypt.hash(password, process.env.SALT);
+
+	const { data, error } = await supabase
+		.from('users')
+		.update({ first_name, last_name, email, password: hash })
+		.eq('id', id)
+		.select()
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('User not found', 404));
+
+	res.status(200).json({ status: 'success', data });
+});
+
+export const deleteUser = handleAsyncError(async (req, res, next) => {
+	const id = req.params.id;
+
+	const { data, error } = await supabase
+		.from('users')
+		.delete()
+		.eq('id', id)
+		.select()
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('User not found', 404));
+
+	res.status(204).json({ status: 'success' });
+});
