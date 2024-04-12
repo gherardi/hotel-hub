@@ -1,44 +1,82 @@
-import supabase from '../src/utils/supabase.js';
-import AppError from '../src/utils/appError.js';
+import supabase from '../utils/supabase.js';
+import handleAsyncError from '../utils/handleAsyncError.js';
+import ApplicationError from '../utils/applicationError.js';
 
-export const getAllHotels = async (req, res, next) => {
-	try {
-		const { data, error } = await supabase.from('hotels').select('*');
+export const getAllHotels = handleAsyncError(async (req, res, next) => {
+	const { data, error } = await supabase.from('hotels').select('*');
 
-		if (error) {
-			return next(new AppError(error.message));
-		}
+	if (error) return next(new ApplicationError(error.message));
 
-		res.status(200).json({ status: 'success', data });
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
-	}
-};
+	res.status(200).json({ status: 'success', data });
+});
+
+export const getHotel = handleAsyncError(async (req, res, next) => {
+	const id = req.params.id;
+
+	const { data, error } = await supabase
+		.from('hotels')
+		.select('*')
+		.eq('id', id)
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+
+	res.status(200).json({ status: 'success', data });
+});
 
 export const createHotel = async (req, res, next) => {
-	try {
-		// create the hotel
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
+	// name are required
+	const { name } = req.body;
+
+	if (!name) {
+		return next(new ApplicationError('Name is required', 400));
 	}
+
+	const { data, error } = await supabase
+		.from('hotels')
+		.insert({ name })
+		.select('*')
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+
+	res.status(201).json({ status: 'success', data });
 };
 
 export const updateHotel = async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		// update the hotel
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
+	const id = req.params.id;
+
+	const { name } = req.body;
+
+	if (!name) {
+		return next(new ApplicationError('Name is required', 400));
 	}
+
+	const { data, error } = await supabase
+		.from('hotels')
+		.update({ name })
+		.eq('id', id)
+		.select('*')
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('Hotel not found', 404));
+
+	res.status(200).json({ status: 'success', data });
 };
 
 export const deleteHotel = async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const { error } = await supabase.from('hotels').delete().eq('id', id);
-		if (error) return next(new AppError(error.message));
-		res.status(200).json({ status: 'success', message: 'Hotel deleted' });
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
-	}
+	const id = req.params.id;
+
+	const { data, error } = await supabase
+		.from('hotels')
+		.delete()
+		.eq('id', id)
+		.select()
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('Hotel not found', 404));
+
+	res.status(204).json({ status: 'success' });
 };

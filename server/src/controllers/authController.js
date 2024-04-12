@@ -188,7 +188,8 @@ export const protect = handleAsyncError(async (req, res, next) => {
 	const { data: user, error } = await supabase
 		.from('users')
 		.select('*')
-		.eq('id', decoded.id);
+		.eq('id', decoded.id)
+		.maybeSingle();
 
 	if (error) return next(new ApplicationError(error.message));
 	if (!user)
