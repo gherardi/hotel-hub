@@ -11,6 +11,6 @@ router.use('/auth', authRouter);
 router.use('/hotels', hotelsRouter);
 router.use('/users', usersRouter);
 router.use('/bookings', bookingsRouter); // da finire [capire quali proprietà mettere nel bookings table]
-router.use('/rooms', roomsRouter);
+router.use('/rooms', roomsRouter); // finito
 
 export default router;
