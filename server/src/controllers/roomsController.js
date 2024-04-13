@@ -1,73 +1,68 @@
-import supabase from '../src/utils/supabase.js';
-import AppError from '../src/utils/appError.js';
+import supabase from '../utils/supabase.js';
+import ApplicationError from '../utils/applicationError.js';
+import handleAsyncError from '../utils/handleAsyncError.js';
 
-export const getOurRooms = async (req, res, next) => {
-	try {
-		const { data, error } = await supabase
-			.from('rooms')
-			.select('*, hotel(name)')
-			.eq('hotel_id', req.user.hotel_id);
+export const getOurRooms = handleAsyncError(async (req, res, next) => {
+	const { hotel_id } = req.user;
 
-		if (error) return next(new AppError(error.message));
+	const { data, error } = await supabase
+		.from('rooms')
+		.select('*, hotels(*)')
+		.eq('hotel_id', hotel_id);
 
-		res.status(200).json({ status: 'success', data });
-	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
-		next(new AppError(err.message ? err.message : err));
-	}
-};
+	if (error) return next(new ApplicationError(error.message));
 
-export const createRoom = async (req, res, next) => {
-	try {
-		const { type, price, number } = req.body;
-		const { hotel_id } = req.user;
-		const { data, error } = await supabase.from('rooms').insert({
+	res.status(200).json({ status: 'success', data });
+});
+
+export const createRoom = handleAsyncError(async (req, res, next) => {
+	const { type, price, number } = req.body;
+	const { hotel_id, id: created_by } = req.user;
+
+	const { data, error } = await supabase
+		.from('rooms')
+		.insert({
 			type,
 			price,
 			number,
 			hotel_id,
-		});
+			created_by,
+		})
+		.select()
+		.maybeSingle();
 
-		if (error) return next(new AppError(error.message));
+	if (error) return next(new ApplicationError(error.message));
 
-		res.status(201).json({ status: 'success', data });
-	} catch (err) {
-		if (err.name === 'JsonWebTokenError') {
-			return next(new AppError('Your JsonWebToken is malformed'), 400);
-		}
-		next(new AppError(err.message ? err.message : err));
-	}
-};
+	res.status(201).json({ status: 'success', data });
+});
 
-export const updateRoom = async (req, res, next) => {
-	try {
-		const { type, price, number } = req.body;
-		const { error } = await supabase
-			.from('rooms')
-			.update({ type, price, number })
-			.eq('id', req.params.id);
+export const updateRoom = handleAsyncError(async (req, res, next) => {
+	const { id } = req.params;
+	const { type, price, number } = req.body;
 
-		if (error) return next(new AppError(error.message));
+	const { data, error } = await supabase
+		.from('rooms')
+		.update({ type, price, number })
+		.eq('id', id)
+		.select()
+		.maybeSingle();
 
-		res.status(200).json({ status: 'success' });
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
-	}
-};
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('Room not found', 404));
 
-export const deleteRoom = async (req, res, next) => {
-	try {
-		const { error } = await supabase
-			.from('rooms')
-			.delete()
-			.eq('id', req.params.id);
+	res.status(200).json({ status: 'success', data });
+});
 
-		if (error) return next(new AppError(error.message));
+export const deleteRoom = handleAsyncError(async (req, res, next) => {
+	const { data, error } = await supabase
+		.from('rooms')
+		.delete()
+		.eq('id', req.params.id)
+		.select()
+		.maybeSingle();
 
-		res.status(200).json({ status: 'success' });
-	} catch (err) {
-		next(new AppError(err.message ? err.message : err));
-	}
-};
+	if (error) return next(new AppError(error.message));
+	if (!data) return next(new AppError('Room not found', 404));
+
+	res.status(200).json({ status: 'success', data });
+});

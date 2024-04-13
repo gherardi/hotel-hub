@@ -7,10 +7,7 @@ const router = express.Router();
 router.use(authController.protect);
 router.get('/', bookingsController.getOurbookings);
 router.post('/', bookingsController.createBooking);
-router.patch('/:id', bookingsController.updateBooking); // da sistemare, creato da copilot
+router.patch('/:id', bookingsController.updateBooking);
 router.delete('/:id', bookingsController.deleteBooking);
-
-// router.use(authController.restrictToAdmin); // da togliere, non so se rimpiazzare con altro
-// router.get('/all', prenotazioniController.getAllPrenotazioni);
 
 export default router;

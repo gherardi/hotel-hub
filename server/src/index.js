@@ -5,11 +5,12 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 
-import limiter from './utils/limiter.js';
 import apiRouter from './routes/index.js';
 import ApplicationError from './utils/applicationError.js';
 import globalErrorHandler from './controllers/errorController.js';
+import { rateLimitOptions } from './utils/consts.js';
 
 dotenv.config();
 
@@ -25,13 +26,15 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(helmet());
 app.use(compression());
-app.use('/api', limiter);
+app.use('/api', rateLimit(rateLimitOptions));
 
 // ROUTES
 app.use('/api', apiRouter);
 
 app.all('*', (req, res, next) => {
-	next(new ApplicationError(`Can't find ${req.originalUrl} on this server!`, 404));
+	next(
+		new ApplicationError(`Can't find ${req.originalUrl} on this server!`, 404)
+	);
 });
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
