@@ -1,135 +1,134 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import axios from 'axios';
-import validator from 'validator';
-import useLocalStorage from '../hooks/useLocalStorage.jsx';
-import { useEffect } from 'react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+// import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import useLocalStorage from '../hooks/useLocalStorage.jsx';
 
-const schema = z.object({
-	name: z.string().refine((value) => !!value, {
-		message: 'Please provide your name!',
-	}),
-	email: z
-		.string()
-		.refine((value) => !!value, {
-			message: 'Please provide your email!',
-		})
-		.refine((value) => validator.isEmail(value), {
-			message: 'Please provide a valid email!',
-		}),
-	password: z
-		.string()
-		.min(8, {
-			message: 'Password must be at least 8 characters long!',
-		})
-		.refine(
-			(value) =>
-				validator.isStrongPassword(value, {
-					minUppercase: 0,
-					minNumbers: 0,
-					minLength: 8,
-					minSymbols: 1,
-				}),
-			{
-				message: 'Password should contains at leats one symbol',
-			}
-		),
-	hotel_id: z.string().refine((value) => !!value, {
-		message: 'Please select an hotel!',
-	}),
-});
+import { signupSchema } from '../utils/schemas.js';
 
 export default function SignupPage() {
 	const {
 		register,
 		handleSubmit,
-		setError,
+		// setError,
 		formState: { errors, isSubmitting },
 	} = useForm({
-		resolver: zodResolver(schema),
+		resolver: zodResolver(signupSchema),
 	});
 
-	const { setItem } = useLocalStorage('token');
+	// const { setItem } = useLocalStorage('token');
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const onSubmit = async function (data) {
-		try {
-			const res = await axios.post('http://localhost:3000/api/auth/signup', data);
-
-			const { token } = res.data;
-
-			setItem(token);
-			document.cookie = `jwt=${token}`;
-
-			navigate('/dashboard', { replace: true, state: { from: '/' } });
-		} catch (err) {
-			if (err.code === 'ERR_NETWORK') {
-				setError('root', {
-					message: 'Failed to connect to the server, try again later!',
-				});
-				return;
-			}
-			setError('root', {
-				message: err.response.data.message,
-			});
-		}
+		console.log('RECEIVED DATA: ', data);
+		// 	try {
+		// 		const res = await axios.post(
+		// 			'http://localhost:3000/api/auth/signup',
+		// 			data
+		// 		);
+		// 		const { token } = res.data;
+		// 		setItem(token);
+		// 		document.cookie = `jwt=${token}`;
+		// 		navigate('/dashboard', { replace: true, state: { from: '/' } });
+		// 	} catch (err) {
+		// 		if (err.code === 'ERR_NETWORK') {
+		// 			setError('root', {
+		// 				message: 'Failed to connect to the server, try again later!',
+		// 			});
+		// 			return;
+		// 		}
+		// 		setError('root', {
+		// 			message: err.response.data.message,
+		// 		});
+		// 	}
 	};
 
-	const [hotels, setHotels] = useState([]);
+	// const [hotels, setHotels] = useState([]);
+	const [hotels] = useState([]);
 
-	useEffect(() => {
-		const getHotels = async () => {
-			try {
-				const res = await fetch('http://localhost:3000/api/auth/hotels');
-				const { data } = await res.json();
-				setHotels(data);
-			} catch (err) {
-				setError('root', {
-					message: 'Failed to fetch hotels from the server, try again later!',
-				});
-			}
-		};
-		getHotels();
-	}, [setError]);
+	// useEffect(() => {
+	// 	const getHotels = async () => {
+	// 		try {
+	// 			const res = await fetch('http://localhost:3000/api/auth/hotels');
+	// 			const { data } = await res.json();
+	// 			setHotels(data);
+	// 		} catch (err) {
+	// 			setError('root', {
+	// 				message: 'Failed to fetch hotels from the server, try again later!',
+	// 			});
+	// 		}
+	// 	};
+	// 	getHotels();
+	// }, [setError]);
 
 	return (
 		<>
 			<div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
-				<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-					<h2 className='text-2xl font-bold leading-9 tracking-tight text-center text-'>
-						Sign up to our service
+				<div className='sm:mx-auto sm:w-full sm:max-w-md'>
+					<h2 className='text-2xl font-bold leading-9 tracking-tight'>
+						Registrazione
 					</h2>
 				</div>
-				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
 					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
-						<div>
-							<label htmlFor='name' className='block text-sm font-medium leading-6'>
-								Full name
-							</label>
-							<div className='mt-2'>
-								<input
-									{...register('name')}
-									id='name'
-									name='name'
-									type='text'
-									autoComplete='name'
-									placeholder='John Doe'
-									disabled={isSubmitting}
-									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-								/>
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.name?.message}
+						<div className='grid gap-4 sm:grid-cols-2'>
+							<div>
+								<label
+									htmlFor='first_name'
+									className='block text-sm font-medium leading-6'
+								>
+									Nome
+								</label>
+								<div className='mt-2'>
+									<input
+										{...register('first_name')}
+										type='text'
+										name='first_name'
+										id='first_name'
+										placeholder='John Doe'
+										autoComplete='given-name'
+										disabled={isSubmitting}
+										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+									/>
+									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
+										{errors.first_name?.message}
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<label
+									htmlFor='last_name'
+									className='block text-sm font-medium leading-6'
+								>
+									Cognome
+								</label>
+								<div className='mt-2'>
+									<input
+										{...register('last_name')}
+										type='text'
+										name='last_name'
+										id='last_name'
+										placeholder='John Doe'
+										autoComplete='given-name'
+										disabled={isSubmitting}
+										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+									/>
+									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
+										{errors.last_name?.message}
+									</div>
 								</div>
 							</div>
 						</div>
 
 						<div>
-							<label htmlFor='email' className='block text-sm font-medium leading-6'>
-								Email address
+							<label
+								htmlFor='email'
+								className='block text-sm font-medium leading-6'
+							>
+								Email
 							</label>
 							<div className='mt-2'>
 								<input

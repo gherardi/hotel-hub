@@ -1,11 +1,27 @@
 @import 'tailwindcss/base';
-@import './styles/base.css';
-
 @import 'tailwindcss/components';
-@import './styles/components.css';
-
 @import 'tailwindcss/utilities';
-@import './styles/utilities.css';
+
+@layer base {
+	:root {
+		color-scheme: light;
+
+		--color-background: 0 0% 100%;
+		--color-background-hover: 240 5% 96%;
+
+		--color-content: 240 10% 4%;
+		--color-accent: 243 75% 59%;
+
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		@apply overflow-hidden bg-background h-svh text-content;
+	}
+}
 
 .debug,
 .debug * {
