@@ -18,7 +18,7 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-	body {
+	#root {
 		@apply overflow-hidden bg-background h-svh text-content;
 	}
 }

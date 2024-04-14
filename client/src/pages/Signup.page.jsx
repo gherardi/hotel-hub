@@ -7,14 +7,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { signupSchema } from '../utils/schemas.js';
 
+import { useQuery } from '@tanstack/react-query';
+
 export default function SignupPage() {
 	const {
 		register,
 		handleSubmit,
-		// setError,
+		setError,
 		formState: { errors, isSubmitting },
 	} = useForm({
 		resolver: zodResolver(signupSchema),
+	});
+
+	const {
+		data: hotels,
+		isLoading,
+	} = useQuery({
+		queryFn: async () => {
+			const res = await fetch('http://localhost:3000/api/hotels');
+			const { data } = await res.json();
+			return data;
+		},
+		queryKey: ['hotels'],
 	});
 
 	// const { setItem } = useLocalStorage('token');
@@ -44,24 +58,6 @@ export default function SignupPage() {
 		// 		});
 		// 	}
 	};
-
-	// const [hotels, setHotels] = useState([]);
-	const [hotels] = useState([]);
-
-	// useEffect(() => {
-	// 	const getHotels = async () => {
-	// 		try {
-	// 			const res = await fetch('http://localhost:3000/api/auth/hotels');
-	// 			const { data } = await res.json();
-	// 			setHotels(data);
-	// 		} catch (err) {
-	// 			setError('root', {
-	// 				message: 'Failed to fetch hotels from the server, try again later!',
-	// 			});
-	// 		}
-	// 	};
-	// 	getHotels();
-	// }, [setError]);
 
 	return (
 		<>
@@ -189,12 +185,15 @@ export default function SignupPage() {
 									disabled={isSubmitting}
 									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								>
-									<option value=''>Choose an option</option>
-									{hotels.map((hotel) => (
-										<option key={hotel.id} value={hotel.id}>
-											{hotel.name}
-										</option>
-									))}
+									<option value=''>
+										{isLoading ? 'Fetching data...' : 'Choose an option'}
+									</option>
+									{hotels &&
+										hotels.map((hotel) => (
+											<option key={hotel.id} value={hotel.id}>
+												{hotel.name}
+											</option>
+										))}
 								</select>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
 									{errors.hotel_id?.message}

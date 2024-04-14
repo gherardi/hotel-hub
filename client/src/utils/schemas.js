@@ -9,9 +9,14 @@ const strongPasswordOptions = {
 };
 
 const validateName = (errMessage) =>
-	z.string().refine((value) => !!value, {
-		message: errMessage,
-	});
+	z
+		.string()
+		.refine((value) => !!value, {
+			message: `Please provide your ${errMessage} name!`,
+		})
+		.refine((value) => validator.matches(value, /^([a-zA-Z]+\s)*[a-zA-Z]+$/), {
+			message: `Please provide a valid ${errMessage} name!`,
+		});
 
 const validateEmail = z
 	.string()
@@ -36,8 +41,8 @@ const validateHotelId = z.string().refine((value) => !!value, {
 });
 
 export const signupSchema = z.object({
-	first_name: validateName('Please provide your first name!'),
-	last_name: validateName('Please provide your last name!'),
+	first_name: validateName('first'),
+	last_name: validateName('last'),
 	email: validateEmail,
 	password: validatePassword,
 	hotel_id: validateHotelId,
