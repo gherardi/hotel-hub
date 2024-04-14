@@ -1,20 +1,17 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-// import useLocalStorage from '../hooks/useLocalStorage.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import { signupSchema } from '../utils/schemas.js';
 
-import { useQuery } from '@tanstack/react-query';
-
 export default function SignupPage() {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		setError,
-		formState: { errors, isSubmitting },
+		formState: { errors },
 	} = useForm({
 		resolver: zodResolver(signupSchema),
 	});
@@ -22,6 +19,8 @@ export default function SignupPage() {
 	const {
 		data: hotels,
 		isLoading,
+		// isError,
+		// error,
 	} = useQuery({
 		queryFn: async () => {
 			const res = await fetch('http://localhost:3000/api/hotels');
@@ -31,33 +30,35 @@ export default function SignupPage() {
 		queryKey: ['hotels'],
 	});
 
-	// const { setItem } = useLocalStorage('token');
-
-	// const navigate = useNavigate();
-
 	const onSubmit = async function (data) {
 		console.log('RECEIVED DATA: ', data);
-		// 	try {
-		// 		const res = await axios.post(
-		// 			'http://localhost:3000/api/auth/signup',
-		// 			data
-		// 		);
-		// 		const { token } = res.data;
-		// 		setItem(token);
-		// 		document.cookie = `jwt=${token}`;
-		// 		navigate('/dashboard', { replace: true, state: { from: '/' } });
-		// 	} catch (err) {
-		// 		if (err.code === 'ERR_NETWORK') {
-		// 			setError('root', {
-		// 				message: 'Failed to connect to the server, try again later!',
-		// 			});
-		// 			return;
-		// 		}
-		// 		setError('root', {
-		// 			message: err.response.data.message,
-		// 		});
-		// 	}
+		mutate(data);
 	};
+
+	const { mutate, isPending } = useMutation({
+		mutationFn: async (data) => {
+			const res = await fetch('http://localhost:3000/api/auth/signup', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+			const resData = await res.json();
+
+			return resData;
+		},
+		onSuccess: (data) => {
+			if (data.status !== 'success')
+				return setError('root', { message: data.message });
+
+			document.cookie = `jwt=${data.token}`;
+			localStorage.setItem('jwt', data.token);
+
+			navigate('/dashboard', { replace: true, state: { from: '/' } });
+		},
+		onError: (error) => setError('root', { message: error.message }),
+	});
 
 	return (
 		<>
@@ -84,8 +85,7 @@ export default function SignupPage() {
 										name='first_name'
 										id='first_name'
 										placeholder='John Doe'
-										autoComplete='given-name'
-										disabled={isSubmitting}
+										disabled={isPending}
 										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 									/>
 									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -108,8 +108,7 @@ export default function SignupPage() {
 										name='last_name'
 										id='last_name'
 										placeholder='John Doe'
-										autoComplete='given-name'
-										disabled={isSubmitting}
+										disabled={isPending}
 										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 									/>
 									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -132,9 +131,8 @@ export default function SignupPage() {
 									id='email'
 									name='email'
 									type='email'
-									autoComplete='email'
 									placeholder='email@example.com'
-									disabled={isSubmitting}
+									disabled={isPending}
 									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								{/* disabled:opacity-60 - guardare video degli input su tailwindlabs YT */}
@@ -159,9 +157,8 @@ export default function SignupPage() {
 									id='password'
 									name='password'
 									type='password'
-									autoComplete='current-password'
 									placeholder='••••••••'
-									disabled={isSubmitting}
+									disabled={isPending}
 									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -182,11 +179,11 @@ export default function SignupPage() {
 									{...register('hotel_id')}
 									id='hotel_id'
 									name='hotel_id'
-									disabled={isSubmitting}
+									disabled={isPending}
 									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								>
 									<option value=''>
-										{isLoading ? 'Fetching data...' : 'Choose an option'}
+										{isLoading ? 'Loading hotels...' : 'Choose an option'}
 									</option>
 									{hotels &&
 										hotels.map((hotel) => (
@@ -204,10 +201,10 @@ export default function SignupPage() {
 						<div>
 							<button
 								type='submit'
-								disabled={isSubmitting}
+								disabled={isPending}
 								className='flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
 							>
-								{isSubmitting ? 'Loading...' : 'Sign up'}
+								{isPending ? 'Loading...' : 'Registrati'}
 							</button>
 							<div className='h-4 mt-1 text-xs font-medium text-red-400'>
 								{errors.root?.message}

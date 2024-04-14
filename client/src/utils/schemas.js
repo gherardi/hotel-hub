@@ -47,3 +47,8 @@ export const signupSchema = z.object({
 	password: validatePassword,
 	hotel_id: validateHotelId,
 });
+
+export const loginSchema = z.object({
+	email: validateEmail,
+	password: validatePassword,
+});

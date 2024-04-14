@@ -1,89 +1,67 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import axios from 'axios';
-import validator from 'validator';
-import useLocalStorage from '../hooks/useLocalStorage.jsx';
+import { useMutation } from '@tanstack/react-query';
 
-const schema = z.object({
-	email: z
-		.string()
-		.refine((value) => !!value, {
-			message: 'Please provide your email!',
-		})
-		.refine((value) => validator.isEmail(value), {
-			message: 'Please provide a valid email!',
-		}),
-
-	password: z
-		.string()
-		.min(8, {
-			message: 'Password must be at least 8 characters long!',
-		})
-		.refine(
-			(value) =>
-				validator.isStrongPassword(value, {
-					minUppercase: 0,
-					minNumbers: 0,
-					minLength: 8,
-					minSymbols: 1,
-				}),
-			{
-				message: 'Password should contains at leats one symbol',
-			}
-		),
-});
+import { loginSchema } from '../utils/schemas.js';
 
 export default function LoginPage() {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		setError,
-		formState: { errors, isSubmitting },
+		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(schema),
+		resolver: zodResolver(loginSchema),
 	});
 
-	const { setItem } = useLocalStorage('token');
+	const { mutate, isPending } = useMutation({
+		mutationFn: async (data) => {
+			const res = await fetch('http://localhost:3000/api/auth/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+			const resData = await res.json();
 
-	const navigate = useNavigate();
+			return resData;
+		},
+		onSuccess: (data) => {
+			if (data.status !== 'success')
+				return setError('root', { message: data.message });
 
-	const onSubmit = async function (data) {
-		try {
-			const res = await axios.post('http://localhost:3000/api/auth/login', data);
-			const { token } = res.data;
-
-			setItem(token);
-			document.cookie = `jwt=${token}`;
+			document.cookie = `jwt=${data.token}`;
+			localStorage.setItem('jwt', data.token);
 
 			navigate('/dashboard', { replace: true, state: { from: '/' } });
-		} catch (err) {
-			if (err.code === 'ERR_NETWORK') {
-				setError('root', {
-					message: 'Failed to connect to the server, try again later!',
-				});
-				return;
-			}
-			setError('root', {
-				message: err.response.data.message,
-			});
-		}
+		},
+		onError: (error) => setError('root', { message: error.message }),
+	});
+
+	const onSubmit = async function (data) {
+		mutate(data);
 	};
+
 	return (
 		<>
 			<div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
-				<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-					<h2 className='text-2xl font-bold leading-9 tracking-tight text-center '>
-						Log in to your account
+				<div className='sm:mx-auto sm:w-full sm:max-w-md'>
+					<h2 className='text-2xl font-bold leading-9 tracking-tight'>
+						Accedi al tuo account
 					</h2>
 				</div>
 
-				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
 					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
 						<div>
-							<label htmlFor='email' className='block text-sm font-medium leading-6 '>
-								Email address
+							<label
+								htmlFor='email'
+								className='block text-sm font-medium leading-6 '
+							>
+								Email
 							</label>
 							<div className='mt-2'>
 								<input
@@ -91,10 +69,8 @@ export default function LoginPage() {
 									id='email'
 									name='email'
 									type='email'
-									autoComplete='email'
-									required
 									placeholder='email@example.com'
-									disabled={isSubmitting}
+									disabled={isPending}
 									className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -105,7 +81,10 @@ export default function LoginPage() {
 
 						<div>
 							<div className='flex items-center justify-between'>
-								<label htmlFor='password' className='block text-sm font-medium leading-6 '>
+								<label
+									htmlFor='password'
+									className='block text-sm font-medium leading-6 '
+								>
 									Password
 								</label>
 								<div className='text-sm'>
@@ -113,7 +92,7 @@ export default function LoginPage() {
 										to='/forgot-password'
 										className='font-semibold text-indigo-600 hover:text-indigo-500'
 									>
-										Forgot password?
+										Password dimenticata?
 									</Link>
 								</div>
 							</div>
@@ -123,10 +102,8 @@ export default function LoginPage() {
 									id='password'
 									name='password'
 									type='password'
-									autoComplete='current-password'
 									placeholder='••••••••'
-									required
-									disabled={isSubmitting}
+									disabled={isPending}
 									className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 								/>
 								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
@@ -138,10 +115,10 @@ export default function LoginPage() {
 						<div>
 							<button
 								type='submit'
-								disabled={isSubmitting}
+								disabled={isPending}
 								className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 							>
-								{isSubmitting ? 'Loading...' : 'Log in'}
+								{isPending ? 'Loading...' : 'Accedi'}
 							</button>
 							<div className='h-4 mt-1 text-xs font-medium text-red-400'>
 								{errors.root?.message}
