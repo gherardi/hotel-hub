@@ -1,4 +1,11 @@
-import { Home, CalendarDays, Church, CircleUserRound, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import {
+	Home,
+	CalendarDays,
+	Church,
+	CircleUserRound,
+	LogOut,
+} from 'lucide-react';
 
 export default function NewSidebar({ setView }) {
 	return (
@@ -6,7 +13,12 @@ export default function NewSidebar({ setView }) {
 			<nav className='flex flex-col h-full'>
 				<div className='space-y-2'>
 					<p className='block px-3 text-xs uppercase'>ruolo: utente</p>
-					<Link icon={<Home size={16} />} text={'Dashboard'} setView={setView} to={'dashboard'} />
+					<Link
+						icon={<Home size={16} />}
+						text={'Dashboard'}
+						setView={setView}
+						to={'dashboard'}
+					/>
 
 					<Link
 						icon={<CalendarDays size={16} />}
@@ -15,7 +27,12 @@ export default function NewSidebar({ setView }) {
 						to={'bookings'}
 					/>
 
-					<Link icon={<Church size={16} />} text={'Camere'} setView={setView} to={'rooms'} />
+					<Link
+						icon={<Church size={16} />}
+						text={'Camere'}
+						setView={setView}
+						to={'rooms'}
+					/>
 				</div>
 
 				<div className='mt-auto space-y-2'>
@@ -25,7 +42,12 @@ export default function NewSidebar({ setView }) {
 						setView={setView}
 						to={'profile'}
 					/>
-					<Link icon={<LogOut size={16} />} text={'Log Out'} setView={setView} to={'logout'} />
+					<Link
+						icon={<LogOut size={16} />}
+						text={'Log Out'}
+						setView={setView}
+						to={'logout'}
+					/>
 				</div>
 			</nav>
 		</aside>
@@ -33,6 +55,7 @@ export default function NewSidebar({ setView }) {
 }
 
 function Link({ icon, text, to, setView }) {
+	const navigate = useNavigate();
 	return (
 		<a
 			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-accent/5 hover:text-accent/90'
@@ -40,9 +63,9 @@ function Link({ icon, text, to, setView }) {
 			onClick={(e) => {
 				e.preventDefault();
 				if (to === 'logout') {
-					document.cookie = 'jwt=;';
+					document.cookie = 'token=;';
 					localStorage.clear();
-					location.reload();
+					navigate('/', { replace: true });
 				}
 				setView(to);
 			}}

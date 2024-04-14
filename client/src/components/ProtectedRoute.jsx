@@ -1,33 +1,36 @@
-// import { useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useAuth } from './AuthProvider.jsx';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
-import LoadingPage from '../pages/Loading.page.jsx';
 import AdminPage from '../pages/Admin.page.jsx';
-import { useEffect, useState } from 'react';
-import API from '../utils/api.js';
+import LoadingPage from '../pages/Loading.page.jsx';
+import { useAuth } from './AuthProvider.jsx';
 
 export default function ProtectedRoute({ children }) {
-	const [isLoading, setIsLoading] = useState(true);
-	const [isAdmin, setIsAdmin] = useState(false);
+	const navigate = useNavigate();
+	const jwt = useAuth();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const { data: response } = await API.get('/api/albergatori/me', {
-					headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}` },
-				});
+	if (!jwt) navigate('/login', { replace: true });
 
-				if (response.data.is_admin) setIsAdmin(true);
-				setIsLoading(false);
-			} catch (err) {
-				console.log('Error in API request:', err.response.data.message);
-				window.location.href = '/';
-			}
-		};
+	const { data, isLoading, isError } = useQuery({
+		queryFn: async () => {
+			const res = await fetch('http://localhost:3000/api/users/me', {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			});
+			const resData = await res.json();
+			return resData;
+		},
+		queryKey: [],
+	});
 
-		fetchData();
-	}, []);
+	if (isError) return navigate('/login', { replace: true });
 
-	return isLoading ? <LoadingPage /> : isAdmin ? <AdminPage /> : children;
+	if (isLoading) return <LoadingPage />;
+
+	if (data.status !== 'success') return navigate('/login', { replace: true });
+
+	if (data.data.is_admin) return <AdminPage />;
+
+	return children;
 }

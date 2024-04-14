@@ -33,8 +33,8 @@ export default function LoginPage() {
 			if (data.status !== 'success')
 				return setError('root', { message: data.message });
 
-			document.cookie = `jwt=${data.token}`;
-			localStorage.setItem('jwt', data.token);
+			document.cookie = `token=${data.token}`;
+			localStorage.setItem('token', data.token);
 
 			navigate('/dashboard', { replace: true, state: { from: '/' } });
 		},

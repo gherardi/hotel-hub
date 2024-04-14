@@ -1,12 +1,10 @@
 import { createContext, useContext } from 'react';
-import useLocaleStorage from '../hooks/useLocalStorage.jsx';
+// import useLocaleStorage from '../hooks/useLocalStorage.jsx';
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-	const { getItem } = useLocaleStorage('token');
-
-	const token = getItem('token');
+	const token = localStorage.getItem('token');
 
 	return <AuthContext.Provider value={token}>{children}</AuthContext.Provider>;
 }
