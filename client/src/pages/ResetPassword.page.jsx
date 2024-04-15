@@ -23,14 +23,18 @@ export default function ResetPasswordPage() {
 		}
 		try {
 			// use backticks instead of single quotes
-			const res = await fetch(`http://localhost:3000/api/auth/resetPassword/${token}`, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ password }),
-			});
-			if (res.status === 401) return setError('Please provide a stronger password');
+			const res = await fetch(
+				`http://localhost:3000/api/auth/resetPassword/${token}`,
+				{
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ password }),
+				}
+			);
+			if (res.status === 401)
+				return setError('Please provide a stronger password');
 
 			const data = await res.json();
 

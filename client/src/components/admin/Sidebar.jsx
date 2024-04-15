@@ -1,4 +1,4 @@
-import { UsersRound, CalendarDays, Church, LogOut, Hotel } from 'lucide-react';
+import { UsersRound, LogOut, Hotel } from 'lucide-react';
 
 export default function AdminSidebar({ setView }) {
 	return (
@@ -6,21 +6,27 @@ export default function AdminSidebar({ setView }) {
 			<nav className='flex flex-col h-full'>
 				<div className='space-y-2'>
 					<p className='block px-3 text-xs uppercase'>ruolo: amministratore</p>
-					<Link icon={<UsersRound size={16} />} text={'Utenti'} setView={setView} to={'users'} />
-
 					<Link
-						icon={<CalendarDays size={16} />}
-						text={'Prenotazioni'}
+						icon={<UsersRound size={16} />}
+						text={'Utenti'}
 						setView={setView}
-						to={'bookings'}
+						to={'users'}
 					/>
-
-					<Link icon={<Church size={16} />} text={'Camere'} setView={setView} to={'rooms'} />
-					<Link icon={<Hotel size={16} />} text={'Hotels'} setView={setView} to={'hotels'} />
+					<Link
+						icon={<Hotel size={16} />}
+						text={'Hotels'}
+						setView={setView}
+						to={'hotels'}
+					/>
 				</div>
 
 				<div className='mt-auto space-y-2'>
-					<Link icon={<LogOut size={16} />} text={'Log Out'} setView={setView} to={'logout'} />
+					<Link
+						icon={<LogOut size={16} />}
+						text={'Log Out'}
+						setView={setView}
+						to={'logout'}
+					/>
 				</div>
 			</nav>
 		</aside>

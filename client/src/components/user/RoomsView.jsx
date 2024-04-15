@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../components/AuthProvider.jsx';
+import { useAuth } from '../AuthProvider.jsx';
+import { Trash2 } from 'lucide-react';
 
-export default function AdminRooms() {
+import CreateRoomsButton from '../ui/CreateRoomsButton.jsx';
+
+export default function RoomsPage() {
 	const [rooms, setRooms] = useState([]);
 	const jwt = useAuth();
 
 	useEffect(() => {
 		const getData = async () => {
-			const resp = await fetch('http://localhost:3000/api/camere/all', {
+			const resp = await fetch('http://localhost:3000/api/camere', {
 				headers: {
 					Authorization: `Bearer ${jwt}`,
 				},
 			});
 			const { data } = await resp.json();
+			data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 			setRooms(data);
 		};
 		getData();
@@ -20,7 +24,8 @@ export default function AdminRooms() {
 
 	return (
 		<>
-			<h2>Camere</h2>
+			<h2>Rooms</h2>
+			<CreateRoomsButton />
 
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500'>
@@ -31,6 +36,7 @@ export default function AdminRooms() {
 							<th scope='col'>prezzo a notte</th>
 							<th scope='col'>numero</th>
 							<th scope='col'>hotel</th>
+							<th scope='col'>Elimina</th>
 						</tr>
 					</thead>
 					<tbody className='divide-y-2 empty:hidden'>
@@ -43,6 +49,31 @@ export default function AdminRooms() {
 										<td>{room.price}€</td>
 										<td>{room.number}</td>
 										<td>{room.hotel.name}</td>
+										<td>
+											<button
+												type='button'
+												className='px-3 py-3 bg-gray-100 rounded-lg hover:bg-gray-200'
+												onClick={async () => {
+													const resp = await fetch(
+														`http://localhost:3000/api/camere/${room.id}`,
+														{
+															method: 'DELETE',
+															headers: {
+																Authorization: `Bearer ${jwt}`,
+															},
+														}
+													);
+													const data = await resp.json();
+													if (data.status === 'success') {
+														setRooms((prev) =>
+															prev.filter((u) => u.id !== room.id)
+														);
+													}
+												}}
+											>
+												<Trash2 size={16} />
+											</button>
+										</td>
 									</tr>
 								);
 							})}

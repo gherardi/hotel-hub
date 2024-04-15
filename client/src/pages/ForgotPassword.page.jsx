@@ -19,12 +19,15 @@ export default function ForgotPasswordPage() {
 				},
 				body: JSON.stringify({ email }),
 			});
-			if (res.status === 401) return setError('non esistono account con questa email');
+			if (res.status === 401)
+				return setError('non esistono account con questa email');
 
 			const data = await res.json();
 
 			if (data.status === 'success')
-				alert('ResetURL sent to your email! follow the link to reset your password');
+				alert(
+					'ResetURL sent to your email! follow the link to reset your password'
+				);
 		} catch (err) {
 			setError('There is no account with this email');
 		}

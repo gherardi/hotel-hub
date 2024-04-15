@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import validator from 'validator';
-import { useAuth } from '../components/AuthProvider.jsx';
+import { useAuth } from '../AuthProvider.jsx';
 
 const schema = z.object({
 	name: z.string().refine((value) => !!value, {
@@ -53,14 +53,17 @@ export default function ProfilePage() {
 		try {
 			console.log('submitted data:', data);
 
-			const res = await fetch('http://localhost:3000/api/albergatori/updateMe', {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${jwt}`,
-				},
-				body: JSON.stringify(data),
-			});
+			const res = await fetch(
+				'http://localhost:3000/api/albergatori/updateMe',
+				{
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${jwt}`,
+					},
+					body: JSON.stringify(data),
+				}
+			);
 			const resp = await res.json();
 			console.log(resp);
 			if (resp.status === 'success') {
@@ -89,7 +92,10 @@ export default function ProfilePage() {
 			>
 				<div className='space-y-4'>
 					<div>
-						<label htmlFor='name' className='block text-sm font-semibold leading-6 text-gray-900'>
+						<label
+							htmlFor='name'
+							className='block text-sm font-semibold leading-6 text-gray-900'
+						>
 							Full name
 						</label>
 						<div className='mt-2'>
@@ -110,7 +116,10 @@ export default function ProfilePage() {
 					</div>
 
 					<div>
-						<label htmlFor='email' className='block text-sm font-semibold leading-6 text-gray-900'>
+						<label
+							htmlFor='email'
+							className='block text-sm font-semibold leading-6 text-gray-900'
+						>
 							Email
 						</label>
 						<div className='mt-2'>

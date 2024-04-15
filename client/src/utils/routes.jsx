@@ -1,32 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-// const LandingPage = lazy(() => import('../pages/Landing.page.jsx'));
-
-// const SignupPage = lazy(() => import('../pages/Signup.page.jsx'));
-// const LoginPage = lazy(() => import('../pages/Login.page.jsx'));
-
-// const DashboardPage = lazy(() => import('../pages/Dashboard.page.jsx'));
-
-// const ForgotPasswordPage = lazy(() =>
-// 	import('../pages/ForgotPassword.page.jsx')
-// );
-// const ResetPasswordPage = lazy(() => import('../pages/ResetPassword.page.jsx'));
-// const NotFoundPage = lazy(() => import('../pages/NotFound.page.jsx'));
-
-// const routeConfigurations = [
-// 	{ path: '/', element: <LandingPage /> },
-// 	{ path: '/signup', element: <SignupPage /> },
-// 	{ path: '/login', element: <LoginPage /> },
-
-// 	{ path: '/dashboard', element: <DashboardPage />, protected: true },
-
-// 	{ path: '/forgot-password', element: <ForgotPasswordPage /> },
-// 	{ path: '/reset-password/:token', element: <ResetPasswordPage /> },
-
-// 	{ path: '/*', element: <NotFoundPage /> },
-// ];
-
 import AuthProvider from '../components/AuthProvider.jsx';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 
@@ -36,7 +10,7 @@ import ErrorPage from '../pages/Error.page.jsx';
 const Landing = lazy(() => import('../pages/Landing.page.jsx'));
 const Signup = lazy(() => import('../pages/Signup.page.jsx'));
 const Login = lazy(() => import('../pages/Login.page.jsx'));
-const Dashboard = lazy(() => import('../pages/Dashboard.page.jsx'));
+const User = lazy(() => import('../pages/User.page.jsx'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword.page.jsx'));
 const ResetPassword = lazy(() => import('../pages/ResetPassword.page.jsx'));
 const NotFound = lazy(() => import('../pages/NotFound.page.jsx'));
@@ -47,7 +21,7 @@ const routeConfigurations = [
 	{ path: '/login', element: <Login /> },
 	{
 		path: '/dashboard',
-		element: <Dashboard />,
+		element: <User />,
 		protected: true,
 	},
 	{
