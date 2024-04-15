@@ -4,14 +4,14 @@ import UsersView from '../components/admin/UsersView.jsx';
 import HotelsView from '../components/admin/HotelsView.jsx';
 
 export default function AdminPage() {
-	const [view, setView] = useState('users');
+	const [view, setView] = useState('hotels');
 
 	return (
 		<div className='flex h-full'>
 			<AdminSidebar setView={setView} />
 
 			<div className='w-[84vw] h-full'>
-				<div className='h-full text-content/80 px-5 pt-12 mx-auto overflow-y-auto lg:w-11/12 [&>h2]:text-3xl [&>h2]:pb-8 [&>h2]:font-bold'>
+				<div className='h-full px-5 pt-12 mx-auto overflow-y-auto text-content/80 lg:w-11/12'>
 					{view === 'users' && <UsersView />}
 					{view === 'hotels' && <HotelsView />}
 				</div>

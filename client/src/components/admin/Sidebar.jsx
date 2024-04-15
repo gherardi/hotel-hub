@@ -36,7 +36,7 @@ export default function AdminSidebar({ setView }) {
 function Link({ icon, text, to, setView }) {
 	return (
 		<a
-			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-accent/5 hover:text-accent/90'
+			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-accent/5 hover:text-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 			href={'#' + to}
 			onClick={(e) => {
 				e.preventDefault();
