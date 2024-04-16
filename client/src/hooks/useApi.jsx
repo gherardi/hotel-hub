@@ -3,7 +3,7 @@ import API from '../utils/api.js';
 
 import { BACKEND_URL, REQUEST_TIMEOUT } from '../utils/config.js';
 
-export default function useApi({ method = 'get', url, body }) {
+function useApi({ method = 'get', url, body }) {
 	const [data, setData] = useState();
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);

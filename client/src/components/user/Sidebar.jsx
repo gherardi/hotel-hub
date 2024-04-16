@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import {
 	Home,
 	CalendarDays,
@@ -6,6 +5,7 @@ import {
 	CircleUserRound,
 	LogOut,
 } from 'lucide-react';
+import NavItem from '../ui/NavItem';
 
 export default function NewSidebar({ setView }) {
 	return (
@@ -13,65 +13,31 @@ export default function NewSidebar({ setView }) {
 			<nav className='flex flex-col h-full'>
 				<div className='space-y-2'>
 					<p className='block px-3 text-xs uppercase'>ruolo: utente</p>
-					<Link
-						icon={<Home size={16} />}
-						text={'Dashboard'}
-						setView={setView}
-						to={'dashboard'}
-					/>
-
-					<Link
-						icon={<CalendarDays size={16} />}
-						text={'Prenotazioni'}
-						setView={setView}
-						to={'bookings'}
-					/>
-
-					<Link
-						icon={<Church size={16} />}
-						text={'Camere'}
-						setView={setView}
-						to={'rooms'}
-					/>
+					<NavItem to={'dashboard'} setView={setView}>
+						<Home size={16} />
+						<span className='mx-2 font-medium'>Dashboard</span>
+					</NavItem>
+					<NavItem to={'bookings'} setView={setView}>
+						<CalendarDays size={16} />
+						<span className='mx-2 font-medium'>Prenotazioni</span>
+					</NavItem>
+					<NavItem to={'rooms'} setView={setView}>
+						<Church size={16} />
+						<span className='mx-2 font-medium'>Camere</span>
+					</NavItem>
 				</div>
 
 				<div className='mt-auto space-y-2'>
-					<Link
-						icon={<CircleUserRound size={16} />}
-						text={'Profile'}
-						setView={setView}
-						to={'profile'}
-					/>
-					<Link
-						icon={<LogOut size={16} />}
-						text={'Log Out'}
-						setView={setView}
-						to={'logout'}
-					/>
+					<NavItem to={'profile'} setView={setView}>
+						<CircleUserRound size={16} />
+						<span className='mx-2 font-medium'>Profilo</span>
+					</NavItem>
+					<NavItem to={'logout'} setView={setView}>
+						<LogOut size={16} />
+						<span className='mx-2 font-medium'>Log Out</span>
+					</NavItem>
 				</div>
 			</nav>
 		</aside>
-	);
-}
-
-function Link({ icon, text, to, setView }) {
-	const navigate = useNavigate();
-	return (
-		<a
-			className='flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-accent/5 hover:text-accent/90'
-			href={'#' + to}
-			onClick={(e) => {
-				e.preventDefault();
-				if (to === 'logout') {
-					document.cookie = 'token=;';
-					localStorage.clear();
-					navigate('/', { replace: true });
-				}
-				setView(to);
-			}}
-		>
-			{icon}
-			<span className='mx-2 font-medium'>{text}</span>
-		</a>
 	);
 }
