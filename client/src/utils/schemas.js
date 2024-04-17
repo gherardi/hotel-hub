@@ -52,3 +52,7 @@ export const loginSchema = z.object({
 	email: validateEmail,
 	password: validatePassword,
 });
+
+export const hotelSchema = z.object({
+	name: z.string().min(1)
+});

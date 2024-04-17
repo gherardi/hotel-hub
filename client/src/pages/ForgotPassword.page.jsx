@@ -11,7 +11,6 @@ export default function ForgotPasswordPage() {
 			return;
 		}
 		try {
-			console.log(email);
 			const res = await fetch('http://localhost:3000/api/auth/forgotPassword', {
 				method: 'POST',
 				headers: {

@@ -30,7 +30,7 @@ export default function SignupPage() {
 		queryKey: ['hotels'],
 	});
 
-	const onSubmit = async function (data) {
+	const onSubmit = function (data) {
 		mutate(data);
 	};
 

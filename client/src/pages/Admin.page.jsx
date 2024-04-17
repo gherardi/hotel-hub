@@ -4,7 +4,7 @@ import UsersView from '../components/admin/UsersView.jsx';
 import HotelsView from '../components/admin/HotelsView.jsx';
 
 export default function AdminPage() {
-	const [view, setView] = useState('users');
+	const [view, setView] = useState('hotels');
 
 	return (
 		<div className='flex h-full'>

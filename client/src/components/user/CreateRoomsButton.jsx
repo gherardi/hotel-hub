@@ -15,8 +15,6 @@ export default function CreateRoomsButton() {
 
 	const onSubmit = async function (data) {
 		try {
-			console.log(data);
-			console.log('jwt:', jwt);
 			// return;
 			const res = await fetch('http://localhost:3000/api/camere', {
 				method: 'POST',

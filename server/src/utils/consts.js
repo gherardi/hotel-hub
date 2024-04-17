@@ -7,6 +7,6 @@ export const strongPasswordOptions = {
 
 export const rateLimitOptions = {
 	windowMs: 60 * 60 * 1000,
-	limit: 100,
+	limit: 1000,
 	message: 'Too many requests from this IP, please try again in an hour!',
 };

@@ -5,6 +5,11 @@ import { useMutation } from '@tanstack/react-query';
 
 import { loginSchema } from '../utils/schemas.js';
 
+import Label from '../components/ui/Label.jsx';
+import Input from '../components/ui/Input.jsx';
+import ErrorMessage from '../components/ui/ErrorMessage.jsx';
+import SubmitButton from '../components/ui/SubmitButton.jsx';
+
 export default function LoginPage() {
 	const navigate = useNavigate();
 	const {
@@ -25,14 +30,15 @@ export default function LoginPage() {
 				},
 				body: JSON.stringify(data),
 			});
+			if(!res.ok) throw new Error('Errore nella richiesta di login');
 			const resData = await res.json();
+
+			if (resData.status !== 'success')
+				return setError('root', { message: data.message });
 
 			return resData;
 		},
 		onSuccess: (data) => {
-			if (data.status !== 'success')
-				return setError('root', { message: data.message });
-
 			document.cookie = `token=${data.token}`;
 			localStorage.setItem('token', data.token);
 
@@ -41,7 +47,7 @@ export default function LoginPage() {
 		onError: (error) => setError('root', { message: error.message }),
 	});
 
-	const onSubmit = async function (data) {
+	const onSubmit = function (data) {
 		mutate(data);
 	};
 
@@ -57,36 +63,22 @@ export default function LoginPage() {
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
 					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
 						<div>
-							<label
-								htmlFor='email'
-								className='block text-sm font-medium leading-6 '
-							>
-								Email
-							</label>
+							<Label htmlFor={'email'}>Email</Label>
 							<div className='mt-2'>
-								<input
-									{...register('email')}
-									id='email'
+								<Input
+									reactHookFormRegister={register('email')}
 									name='email'
 									type='email'
 									placeholder='email@example.com'
-									disabled={isPending}
-									className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+									isPending={isPending}
 								/>
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.email?.message}
-								</div>
+								<ErrorMessage>{errors.email?.message}</ErrorMessage>
 							</div>
 						</div>
 
 						<div>
 							<div className='flex items-center justify-between'>
-								<label
-									htmlFor='password'
-									className='block text-sm font-medium leading-6 '
-								>
-									Password
-								</label>
+								<Label htmlFor={'password'}>Password</Label>
 								<div className='text-sm'>
 									<Link
 										to='/forgot-password'
@@ -97,32 +89,20 @@ export default function LoginPage() {
 								</div>
 							</div>
 							<div className='mt-2'>
-								<input
-									{...register('password')}
-									id='password'
+								<Input
+									reactHookFormRegister={register('password')}
 									name='password'
 									type='password'
 									placeholder='••••••••'
-									disabled={isPending}
-									className='block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+									isPending={isPending}
 								/>
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.password?.message}
-								</div>
+								<ErrorMessage>{errors.password?.message}</ErrorMessage>
 							</div>
 						</div>
 
 						<div>
-							<button
-								type='submit'
-								disabled={isPending}
-								className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-							>
-								{isPending ? 'Loading...' : 'Accedi'}
-							</button>
-							<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-								{errors.root?.message}
-							</div>
+							<SubmitButton isPending={isPending}>Accedi</SubmitButton>
+							<ErrorMessage>{errors.root?.message}</ErrorMessage>
 						</div>
 					</form>
 				</div>

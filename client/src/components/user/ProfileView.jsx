@@ -51,7 +51,6 @@ export default function ProfilePage() {
 
 	const onSubmit = async function (data) {
 		try {
-			console.log('submitted data:', data);
 
 			const res = await fetch(
 				'http://localhost:3000/api/albergatori/updateMe',
@@ -65,7 +64,6 @@ export default function ProfilePage() {
 				}
 			);
 			const resp = await res.json();
-			console.log(resp);
 			if (resp.status === 'success') {
 				setSuccess(true);
 			}
