@@ -1,5 +1,4 @@
-# Status
-backend/frontend refactoring in progress
+**status:** backend/frontend refactoring in progress
 
 # HotelHub
 L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
