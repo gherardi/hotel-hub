@@ -56,3 +56,11 @@ export const loginSchema = z.object({
 export const hotelSchema = z.object({
 	name: z.string().min(1)
 });
+
+export const userSchema = z.object({
+	first_name: validateName('first'),
+	last_name: validateName('last'),
+	password: validatePassword,
+	email: validateEmail,
+	hotel_id: validateHotelId,
+});

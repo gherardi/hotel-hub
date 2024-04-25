@@ -79,7 +79,9 @@ export const dashboard = handleAsyncError(async (req, res, next) => {
 
 // nel frontend fare un get a /me ed escludere l'utente con lo stesso id
 export const getAllUsers = handleAsyncError(async (req, res, next) => {
-	const { data, error } = await supabase.from('users').select('*');
+	const { data, error } = await supabase
+		.from('users')
+		.select('*, hotels(id, name)');
 
 	if (error) return next(new ApplicationError(error.message));
 
