@@ -6,9 +6,10 @@ export default function NavItem({ children, to, setView }) {
 			onClick={(e) => {
 				e.preventDefault();
 				if (to === 'logout') {
-					document.cookie = 'jwt=;';
-					localStorage.clear();
-					location.reload();
+					// document.cookie = 'jwt=;';
+					// localStorage.clear();
+					// location.reload();
+					alert('logged out');
 				}
 				setView(to);
 			}}

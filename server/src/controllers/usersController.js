@@ -39,13 +39,11 @@ export const getMe = handleAsyncError(async (req, res, next) => {
 });
 
 export const updateMe = handleAsyncError(async (req, res, next) => {
-	const { first_name, last_name, email, password } = req.body;
-
-	const hash = await bcrypt.hash(password, 12);
+	const { first_name, last_name, email } = req.body;
 
 	const { data, error } = await supabase
 		.from('users')
-		.update({ first_name, last_name, email, password: hash })
+		.update({ first_name, last_name, email })
 		.eq('id', req.user.id)
 		.select('*')
 		.maybeSingle();

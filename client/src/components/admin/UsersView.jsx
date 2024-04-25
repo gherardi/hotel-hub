@@ -10,7 +10,7 @@ import Input from '../ui/Input.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import SubmitButton from '../ui/SubmitButton.jsx';
 
-import { userSchema } from '../../utils/schemas.js';
+import { signupSchema } from '../../utils/schemas.js';
 
 export default function UsersView() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function UsersView() {
 		setError,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(userSchema),
+		resolver: zodResolver(signupSchema),
 	});
 
 	const openModal = () => setIsOpen(true);

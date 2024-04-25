@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use(authController.protect);
 router.get('/me', usersController.getMe);
-router.patch('/me', v.name, v.email, v.password, usersController.updateMe);
+router.patch('/me', v.name, v.email, usersController.updateMe);
 router.get('/dashboard', usersController.dashboard);
 
 router.use(authController.restrictToAdmin);
