@@ -1,16 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { useAuth } from '../AuthProvider.jsx';
 
-import Label from '../ui/Label.jsx';
-import Input from '../ui/Input.jsx';
-import ErrorMessage from '../ui/ErrorMessage.jsx';
-import SubmitButton from '../ui/SubmitButton.jsx';
+import Label from './Label.jsx';
+import Input from './Input.jsx';
+import ErrorMessage from './ErrorMessage.jsx';
+import SubmitButton from './SubmitButton.jsx';
 
 import { updateSchema } from '../../utils/schemas.js';
 
-export default function ProfileView() {
+export default function UpdateProfile() {
 	const jwt = useAuth();
 	const queryClient = useQueryClient();
 
@@ -58,7 +59,8 @@ export default function ProfileView() {
 				},
 				body: JSON.stringify(data),
 			});
-			if (!res.ok) throw new Error("Errore nel cambio delle credenziali dell'utente");
+			if (!res.ok)
+				throw new Error("Errore nel cambio delle credenziali dell'utente");
 
 			const resData = await res.json();
 

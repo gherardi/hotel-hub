@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../AuthProvider.jsx';
 import { Trash2 } from 'lucide-react';
 
-import CreateBookingsButton from '../ui/CreateBookingsButton.jsx';
-
 export default function BookingsPage() {
 	const [bookings, setBookings] = useState([]);
 	const jwt = useAuth();
@@ -25,7 +23,6 @@ export default function BookingsPage() {
 	return (
 		<>
 			<h2>Bookings</h2>
-			<CreateBookingsButton />
 
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500'>

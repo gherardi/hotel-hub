@@ -142,7 +142,7 @@ export default function ProfileView() {
 						</div>
 
 						<div>
-							<SubmitButton isPending={isDisabled}>Aggiungi</SubmitButton>
+							<SubmitButton isPending={isDisabled}>Aggiorna</SubmitButton>
 							<ErrorMessage>{errors.root?.message}</ErrorMessage>
 						</div>
 					</form>

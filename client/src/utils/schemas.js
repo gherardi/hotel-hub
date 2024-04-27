@@ -62,3 +62,11 @@ export const updateSchema = z.object({
 	last_name: validateName('last'),
 	email: validateEmail,
 });
+
+export const roomSchema = z.object({
+	type: z.enum(['Single', 'Double', 'Triple', 'Quadruple']),
+	name: z.string().min(1),
+	price: z.number(),
+	number: z.number(),
+	hotel_id: validateHotelId,
+});

@@ -5,9 +5,10 @@ import {
 	CircleUserRound,
 	LogOut,
 } from 'lucide-react';
+
 import NavItem from '../ui/NavItem';
 
-export default function NewSidebar({ setView }) {
+export default function UserSidebar({ setView }) {
 	return (
 		<aside className='w-[16vw] px-3 py-6 border-r min-w-fit h-svh bg-background-hover/50 text-content/70'>
 			<nav className='flex flex-col h-full'>
@@ -17,6 +18,7 @@ export default function NewSidebar({ setView }) {
 						<Home size={16} />
 						<span className='mx-2 font-medium'>Dashboard</span>
 					</NavItem>
+
 					<NavItem to={'bookings'} setView={setView}>
 						<CalendarDays size={16} />
 						<span className='mx-2 font-medium'>Prenotazioni</span>
