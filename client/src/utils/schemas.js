@@ -64,9 +64,21 @@ export const updateSchema = z.object({
 });
 
 export const roomSchema = z.object({
-	type: z.enum(['Single', 'Double', 'Triple', 'Quadruple']),
-	name: z.string().min(1),
-	price: z.number(),
-	number: z.number(),
-	hotel_id: validateHotelId,
+	capacity: z.enum(['Single', 'Double', 'Triple', 'Quadruple'], {
+		message:
+			'Please select a valid capacity [single, double, triple, quadruple]',
+	}),
+	price: z.string().min(1, {
+		message: 'Please provide a valid price!',
+	}),
+	number: z.string().min(1, {
+		message: 'Please provide a valid room number!',
+	}),
 });
+
+export const capacityAlias = {
+	Single: 'Singola',
+	Double: 'Doppia',
+	Triple: 'Tripla',
+	Quadruple: 'Quadrupla',
+};

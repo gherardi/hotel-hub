@@ -16,17 +16,16 @@ export const getOurRooms = handleAsyncError(async (req, res, next) => {
 });
 
 export const createRoom = handleAsyncError(async (req, res, next) => {
-	const { type, price, number } = req.body;
-	const { hotel_id, id: created_by } = req.user;
+	const { capacity, price, number } = req.body;
+	const { hotel_id } = req.user;
 
 	const { data, error } = await supabase
 		.from('rooms')
 		.insert({
-			type,
+			capacity,
 			price,
 			number,
 			hotel_id,
-			created_by,
 		})
 		.select()
 		.maybeSingle();

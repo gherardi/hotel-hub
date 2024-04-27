@@ -10,7 +10,7 @@ import Input from '../ui/Input.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import SubmitButton from '../ui/SubmitButton.jsx';
 
-import { roomSchema } from '../../utils/schemas.js';
+import { roomSchema, capacityAlias } from '../../utils/schemas.js';
 
 export default function RoomsView() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +27,50 @@ export default function RoomsView() {
 		resolver: zodResolver(roomSchema),
 	});
 
+	const {
+		data: rooms,
+		// isLoading,
+		// isError,
+		// error,
+	} = useQuery({
+		queryFn: async () => {
+			const res = await fetch('http://localhost:3000/api/rooms', {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			});
+			if (!res.ok) throw new Error('Errore nella richiesta delle camere');
+			const { data } = await res.json();
+			return data;
+		},
+		queryKey: ['rooms'],
+	});
+
+	const { mutate, isPending } = useMutation({
+		mutationFn: async (data) => {
+			const res = await fetch('http://localhost:3000/api/rooms', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${jwt}`,
+				},
+				body: JSON.stringify(data),
+			});
+			if (!res.ok) throw new Error("Errore nella creazione dell'hotel");
+
+			const resData = await res.json();
+
+			if (resData.status !== 'success') throw new Error(resData.message);
+
+			return resData;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries(['rooms']);
+			closeModal();
+		},
+		onError: (error) => setError('root', { message: error.message }),
+	});
+
 	const openModal = () => setIsOpen(true);
 	const closeModal = () => {
 		setIsOpen(false);
@@ -34,7 +78,8 @@ export default function RoomsView() {
 	};
 
 	const onSubmit = function (data) {
-		console.log(data);
+		console.log('RECEIVED DATA: ', data);
+		mutate(data);
 	};
 
 	return (
@@ -54,40 +99,47 @@ export default function RoomsView() {
 					onSubmit={handleSubmit(onSubmit)}
 				>
 					<div>
-						<Label htmlFor={'email'}>Email</Label>
-						<Input
-							reactHookFormRegister={register('email')}
-							name='email'
-							type='text'
-							// isPending={isPending}
-						/>
-						<ErrorMessage>{errors.email?.message}</ErrorMessage>
-					</div>
-
-					<div>
-						<Label htmlFor={'hotel_id'}>Hotel associato</Label>
+						<Label htmlFor={'capacity'}>Capacità</Label>
 						<select
-							{...register('hotel_id')}
-							id='hotel_id'
-							name='hotel_id'
-							// disabled={isPending}
+							{...register('capacity')}
+							id='capacity'
+							name='capacity'
+							disabled={isPending}
 							className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 						>
-							<option value=''>
-								{/* {isFetching ? 'Caricamento hotel...' : 'Scegli un hotel'} */}
-							</option>
-							{/* {hotels &&
-								hotels.map((hotel) => (
-									<option key={hotel.id} value={hotel.id}>
-										{hotel.name}
-									</option>
-								))} */}
+							<option value=''>Scegli la capacità</option>
+							<option value='Single'>Singola</option>
+							<option value='Double'>Doppia</option>
+							<option value='Triple'>Tripla</option>
+							<option value='Quadruple'>Quadrupla</option>
 						</select>
-						<ErrorMessage>{errors.hotel_id?.message}</ErrorMessage>
+						<ErrorMessage>{errors.capacity?.message}</ErrorMessage>
 					</div>
 
 					<div>
-						<SubmitButton isPending={false}>Aggiungi</SubmitButton>
+						<Label htmlFor={'price'}>Prezzo a notte</Label>
+						<Input
+							reactHookFormRegister={register('price')}
+							name='price'
+							type='number'
+							isPending={isPending}
+						/>
+						<ErrorMessage>{errors.price?.message}</ErrorMessage>
+					</div>
+
+					<div>
+						<Label htmlFor={'number'}>Numero della camera</Label>
+						<Input
+							reactHookFormRegister={register('number')}
+							name='number'
+							type='number'
+							isPending={isPending}
+						/>
+						<ErrorMessage>{errors.number?.message}</ErrorMessage>
+					</div>
+
+					<div>
+						<SubmitButton isPending={isPending}>Aggiungi</SubmitButton>
 						<ErrorMessage>{errors.root?.message}</ErrorMessage>
 					</div>
 				</FormDialog>
@@ -96,57 +148,34 @@ export default function RoomsView() {
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500'>
 					<thead className='text-xs uppercase text-content/80 bg-background-hover'>
-						<tr className='[&>*]:px-6 [&>*]:py-3'>
-							<th scope='col'>Numero</th>
-							<th scope='col'>Tipo</th>
-							{/* <th scope='col'>Created at</th>
+						<tr className='[&>*]:px-6 [&>*]:py-3 [&>*]:text-nowrap'>
+							<th scope='col'>Capacità</th>
 							<th scope='col'>prezzo a notte</th>
-							<th scope='col'>numero</th>
-							<th scope='col'>hotel</th>
-							<th scope='col'>Elimina</th> */}
+							<th scope='col'>Numero</th>
 							<th scope='col'></th>
 						</tr>
 					</thead>
-					<tbody className='divide-y-2'></tbody>
-					{/* <tbody className='divide-y-2 empty:hidden'>
-						{rooms &&
+					<tbody className='divide-y-2'>
+						{rooms && rooms.length !== 0 ? (
 							rooms.map((room) => {
 								return (
-									<tr key={room.id} className='[&>*]:px-6 [&>*]:py-4'>
-										<td>{new Date(room.created_at).toLocaleString()}</td>
-										<td>{room.type}</td>
+									<tr
+										key={room.id}
+										className='[&>*]:px-6 [&>*]:py-4 [&>*]:text-nowrap'
+									>
+										<td>{capacityAlias[room.capacity]}</td>
 										<td>{room.price}€</td>
 										<td>{room.number}</td>
-										<td>{room.hotel.name}</td>
-										<td>
-											<button
-												type='button'
-												className='px-3 py-3 bg-gray-100 rounded-lg hover:bg-gray-200'
-												onClick={async () => {
-													const resp = await fetch(
-														`http://localhost:3000/api/camere/${room.id}`,
-														{
-															method: 'DELETE',
-															headers: {
-																Authorization: `Bearer ${jwt}`,
-															},
-														}
-													);
-													const data = await resp.json();
-													if (data.status === 'success') {
-														setRooms((prev) =>
-															prev.filter((u) => u.id !== room.id)
-														);
-													}
-												}}
-											>
-												<Trash2 size={16} />
-											</button>
-										</td>
+										<td>action...</td>
 									</tr>
 								);
-							})}
-					</tbody> */}
+							})
+						) : (
+							<tr className='[&>*]:px-6 [&>*]:py-4'>
+								<td>Nessuna camera registrato</td>
+							</tr>
+						)}
+					</tbody>
 				</table>
 			</div>
 		</>

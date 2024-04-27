@@ -118,14 +118,14 @@ export default function HotelsView() {
 			<div className='relative overflow-x-auto border'>
 				<table className='w-full text-sm text-left text-gray-500 '>
 					<thead className='text-xs uppercase text-content/80 bg-background-hover'>
-						<tr className='[&>*]:px-6 [&>*]:py-3'>
+						<tr className='[&>*]:px-6 [&>*]:py-3 [&>*]:text-nowrap'>
 							<th scope='col'>Creazione</th>
 							<th scope='col'>Nominativo</th>
 							<th scope='col'></th>
 						</tr>
 					</thead>
 					<tbody className='divide-y-2 empty:hidden'>
-						{hotels ? (
+						{hotels && hotels.length !== 0 ? (
 							hotels.map((hotel) => {
 								return (
 									<tr

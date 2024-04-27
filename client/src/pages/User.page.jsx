@@ -7,7 +7,7 @@ import BookingsView from '../components/user/BookingsView.jsx';
 import ProfileView from '../components/user/ProfileView.jsx';
 
 export default function DashboardPage() {
-	const [view, setView] = useState('profile');
+	const [view, setView] = useState('rooms');
 
 	return (
 		<div className='flex h-full'>
@@ -16,8 +16,8 @@ export default function DashboardPage() {
 			<div className='w-[84vw] h-full'>
 				<div className='h-full px-5 pt-12 mx-auto overflow-y-auto text-content/80 lg:w-11/12'>
 					{view === 'dashboard' && <DashboardView />}
-					{view === 'rooms' && <RoomsView />}
 					{view === 'bookings' && <BookingsView />}
+					{view === 'rooms' && <RoomsView />}
 					{view === 'profile' && <ProfileView />}
 				</div>
 			</div>
