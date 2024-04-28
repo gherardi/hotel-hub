@@ -82,3 +82,11 @@ export const capacityAlias = {
 	Triple: 'Tripla',
 	Quadruple: 'Quadrupla',
 };
+
+export const bookingSchema = {
+	customer_first_name: validateName('customer first'),
+	customer_last_name: validateName('customer last'),
+	start_date: z.string(),
+	end_date: z.string(),
+	room_id: z.string(),
+};

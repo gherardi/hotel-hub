@@ -7,7 +7,7 @@ import BookingsView from '../components/user/BookingsView.jsx';
 import ProfileView from '../components/user/ProfileView.jsx';
 
 export default function DashboardPage() {
-	const [view, setView] = useState('rooms');
+	const [view, setView] = useState('bookings');
 
 	return (
 		<div className='flex h-full'>

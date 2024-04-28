@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueries, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../AuthProvider.jsx';
 
 import FormDialog from '../ui/FormDialog.jsx';
@@ -9,6 +9,8 @@ import Label from '../ui/Label.jsx';
 import Input from '../ui/Input.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import SubmitButton from '../ui/SubmitButton.jsx';
+
+import fetchData from '../../utils/api.js';
 
 import { roomSchema, capacityAlias } from '../../utils/schemas.js';
 
@@ -27,23 +29,13 @@ export default function RoomsView() {
 		resolver: zodResolver(roomSchema),
 	});
 
-	const {
-		data: rooms,
-		// isLoading,
-		// isError,
-		// error,
-	} = useQuery({
-		queryFn: async () => {
-			const res = await fetch('http://localhost:3000/api/rooms', {
-				headers: {
-					Authorization: `Bearer ${jwt}`,
-				},
-			});
-			if (!res.ok) throw new Error('Errore nella richiesta delle camere');
-			const { data } = await res.json();
-			return data;
-		},
-		queryKey: ['rooms'],
+	const [rooms] = useQueries({
+		queries: [
+			{
+				queryKey: ['rooms'],
+				queryFn: fetchData('http://localhost:3000/api/rooms'),
+			},
+		],
 	});
 
 	const { mutate, isPending } = useMutation({
@@ -156,8 +148,8 @@ export default function RoomsView() {
 						</tr>
 					</thead>
 					<tbody className='divide-y-2'>
-						{rooms && rooms.length !== 0 ? (
-							rooms.map((room) => {
+						{rooms && rooms.data?.length !== 0 ? (
+							rooms.data?.map((room) => {
 								return (
 									<tr
 										key={room.id}
