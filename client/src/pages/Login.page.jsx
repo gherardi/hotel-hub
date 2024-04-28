@@ -30,12 +30,8 @@ export default function LoginPage() {
 				},
 				body: JSON.stringify(data),
 			});
-			if(!res.ok) throw new Error('Errore nella richiesta di login');
 			const resData = await res.json();
-
-			if (resData.status !== 'success')
-				return setError('root', { message: data.message });
-
+			if (resData.status !== 'success') throw new Error(resData.message);
 			return resData;
 		},
 		onSuccess: (data) => {
@@ -47,10 +43,6 @@ export default function LoginPage() {
 		onError: (error) => setError('root', { message: error.message }),
 	});
 
-	const onSubmit = function (data) {
-		mutate(data);
-	};
-
 	return (
 		<>
 			<div className='flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8'>
@@ -61,19 +53,17 @@ export default function LoginPage() {
 				</div>
 
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
-					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
+					<form className='space-y-2.5' onSubmit={handleSubmit(mutate)}>
 						<div>
 							<Label htmlFor={'email'}>Email</Label>
-							<div className='mt-2'>
-								<Input
-									reactHookFormRegister={register('email')}
-									name='email'
-									type='email'
-									placeholder='email@example.com'
-									isPending={isPending}
-								/>
-								<ErrorMessage>{errors.email?.message}</ErrorMessage>
-							</div>
+							<Input
+								reactHookFormRegister={register('email')}
+								name='email'
+								type='email'
+								placeholder='email@example.com'
+								isPending={isPending}
+							/>
+							<ErrorMessage>{errors.email?.message}</ErrorMessage>
 						</div>
 
 						<div>
@@ -82,22 +72,20 @@ export default function LoginPage() {
 								<div className='text-sm'>
 									<Link
 										to='/forgot-password'
-										className='font-semibold text-indigo-600 hover:text-indigo-500'
+										className='font-semibold text-indigo-600 rounded-sm hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 									>
 										Password dimenticata?
 									</Link>
 								</div>
 							</div>
-							<div className='mt-2'>
-								<Input
-									reactHookFormRegister={register('password')}
-									name='password'
-									type='password'
-									placeholder='••••••••'
-									isPending={isPending}
-								/>
-								<ErrorMessage>{errors.password?.message}</ErrorMessage>
-							</div>
+							<Input
+								reactHookFormRegister={register('password')}
+								name='password'
+								type='password'
+								placeholder='••••••••'
+								isPending={isPending}
+							/>
+							<ErrorMessage>{errors.password?.message}</ErrorMessage>
 						</div>
 
 						<div>

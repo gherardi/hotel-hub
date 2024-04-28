@@ -128,7 +128,11 @@ export default function SignupPage() {
 								className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 							>
 								<option value=''>
-									{hotels.isFetching ? 'Caricamento...' : 'Scegli un hotel'}
+									{hotels.isFetching
+										? 'Caricamento...'
+										: hotels.data?.length === 0
+										? 'Nessun hotel registrato'
+										: 'Scegli un hotel'}
 								</option>
 								{hotels.data?.map((hotel) => (
 									<option key={hotel.id} value={hotel.id}>
