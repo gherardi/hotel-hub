@@ -1,7 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueries } from '@tanstack/react-query';
+
+import Label from '../components/ui/Label.jsx';
+import Input from '../components/ui/Input.jsx';
+import ErrorMessage from '../components/ui/ErrorMessage.jsx';
+import SubmitButton from '../components/ui/SubmitButton.jsx';
 
 import { signupSchema } from '../utils/schemas.js';
 
@@ -16,23 +21,18 @@ export default function SignupPage() {
 		resolver: zodResolver(signupSchema),
 	});
 
-	const {
-		data: hotels,
-		isLoading,
-		// isError,
-		// error,
-	} = useQuery({
-		queryFn: async () => {
-			const res = await fetch('http://localhost:3000/api/hotels');
-			const { data } = await res.json();
-			return data;
-		},
-		queryKey: ['hotels'],
+	const [hotels] = useQueries({
+		queries: [
+			{
+				queryKey: ['hotels'],
+				queryFn: async () => {
+					const res = await fetch('http://localhost:3000/api/hotels');
+					const { data } = await res.json();
+					return data;
+				},
+			},
+		],
 	});
-
-	const onSubmit = function (data) {
-		mutate(data);
-	};
 
 	const { mutate, isPending } = useMutation({
 		mutationFn: async (data) => {
@@ -68,146 +68,80 @@ export default function SignupPage() {
 					</h2>
 				</div>
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
-					<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
+					<form className='space-y-2.5' onSubmit={handleSubmit(mutate)}>
 						<div className='grid gap-4 sm:grid-cols-2'>
 							<div>
-								<label
-									htmlFor='first_name'
-									className='block text-sm font-medium leading-6'
-								>
-									Nome
-								</label>
-								<div className='mt-2'>
-									<input
-										{...register('first_name')}
-										type='text'
-										name='first_name'
-										id='first_name'
-										placeholder='John Doe'
-										disabled={isPending}
-										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-									/>
-									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-										{errors.first_name?.message}
-									</div>
-								</div>
+								<Label htmlFor='first_name'>Nome</Label>
+								<Input
+									reactHookFormRegister={register('first_name')}
+									name='first_name'
+									type='text'
+									isPending={isPending}
+								/>
+								<ErrorMessage>{errors.first_name?.message}</ErrorMessage>
 							</div>
 
 							<div>
-								<label
-									htmlFor='last_name'
-									className='block text-sm font-medium leading-6'
-								>
-									Cognome
-								</label>
-								<div className='mt-2'>
-									<input
-										{...register('last_name')}
-										type='text'
-										name='last_name'
-										id='last_name'
-										placeholder='John Doe'
-										disabled={isPending}
-										className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-									/>
-									<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-										{errors.last_name?.message}
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div>
-							<label
-								htmlFor='email'
-								className='block text-sm font-medium leading-6'
-							>
-								Email
-							</label>
-							<div className='mt-2'>
-								<input
-									{...register('email')}
-									id='email'
-									name='email'
-									type='email'
-									placeholder='email@example.com'
-									disabled={isPending}
-									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
+								<Label htmlFor='last_name'>Cognome</Label>
+								<Input
+									reactHookFormRegister={register('last_name')}
+									name='last_name'
+									type='text'
+									isPending={isPending}
 								/>
-								{/* disabled:opacity-60 - guardare video degli input su tailwindlabs YT */}
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.email?.message}
-								</div>
+								<ErrorMessage>{errors.last_name?.message}</ErrorMessage>
 							</div>
 						</div>
 
 						<div>
-							<div className='flex items-center justify-between'>
-								<label
-									htmlFor='password'
-									className='block text-sm font-medium leading-6'
-								>
-									Password
-								</label>
-							</div>
-							<div className='mt-2'>
-								<input
-									{...register('password')}
-									id='password'
-									name='password'
-									type='password'
-									placeholder='••••••••'
-									disabled={isPending}
-									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-								/>
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.password?.message}
-								</div>
-							</div>
+							<Label htmlFor='email'>Email</Label>
+							<Input
+								reactHookFormRegister={register('email')}
+								name='email'
+								type='text'
+								isPending={isPending}
+								placeholder='email@example.com'
+							/>
+							<ErrorMessage>{errors.email?.message}</ErrorMessage>
 						</div>
 
 						<div>
-							<label
-								htmlFor='hotel_id'
-								className='block text-sm font-medium leading-6'
-							>
-								Hotel
-							</label>
-							<div className='mt-2'>
-								<select
-									{...register('hotel_id')}
-									id='hotel_id'
-									name='hotel_id'
-									disabled={isPending}
-									className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
-								>
-									<option value=''>
-										{isLoading ? 'Loading hotels...' : 'Choose an option'}
-									</option>
-									{hotels &&
-										hotels.map((hotel) => (
-											<option key={hotel.id} value={hotel.id}>
-												{hotel.name}
-											</option>
-										))}
-								</select>
-								<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-									{errors.hotel_id?.message}
-								</div>
-							</div>
+							<Label htmlFor='password'>Password</Label>
+							<Input
+								reactHookFormRegister={register('password')}
+								name='password'
+								type='password'
+								isPending={isPending}
+								placeholder='••••••••'
+							/>
+							<ErrorMessage>{errors.password?.message}</ErrorMessage>
 						</div>
 
 						<div>
-							<button
-								type='submit'
+							<Label htmlFor='hotel_id'>Hotel associato</Label>
+
+							<select
+								{...register('hotel_id')}
+								id='hotel_id'
+								name='hotel_id'
 								disabled={isPending}
-								className='flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-background shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+								className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6'
 							>
-								{isPending ? 'Loading...' : 'Registrati'}
-							</button>
-							<div className='h-4 mt-1 text-xs font-medium text-red-400'>
-								{errors.root?.message}
-							</div>
+								<option value=''>
+									{hotels.isFetching ? 'Caricamento...' : 'Scegli un hotel'}
+								</option>
+								{hotels.data?.map((hotel) => (
+									<option key={hotel.id} value={hotel.id}>
+										{hotel.name}
+									</option>
+								))}
+							</select>
+							<ErrorMessage>{errors.hotel_id?.message}</ErrorMessage>
+						</div>
+
+						<div>
+							<SubmitButton isPending={isPending}>Registrati</SubmitButton>
+							<ErrorMessage>{errors.root?.message}</ErrorMessage>
 						</div>
 					</form>
 				</div>
