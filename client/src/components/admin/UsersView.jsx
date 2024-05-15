@@ -9,6 +9,7 @@ import Label from '../ui/Label.jsx';
 import Input from '../ui/Input.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import SubmitButton from '../ui/SubmitButton.jsx';
+import OptionsDots from '../ui/OptionsDots.jsx';
 
 import { signupSchema } from '../../utils/schemas.js';
 
@@ -222,22 +223,7 @@ export default function UsersView() {
 												: 'Nessun hotel associato'}
 										</td>
 										<td>
-											<svg
-												xmlns='http://www.w3.org/2000/svg'
-												width='16'
-												height='16'
-												viewBox='0 0 24 24'
-												fill='none'
-												stroke='currentColor'
-												strokeWidth='2'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												className='lucide lucide-ellipsis-vertical'
-											>
-												<circle cx='12' cy='12' r='1' />
-												<circle cx='12' cy='5' r='1' />
-												<circle cx='12' cy='19' r='1' />
-											</svg>
+											<OptionsDots />
 										</td>
 									</tr>
 								);

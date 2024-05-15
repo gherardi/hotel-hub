@@ -30,7 +30,7 @@ export default function fetchData(url){
 
 		const resData = await res.json();
 		if (resData.status !== 'success') throw new Error(resData.message);
-		
+
 		return resData.data;
 	};
 }
