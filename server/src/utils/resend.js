@@ -6,7 +6,8 @@ dotenv.config();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // const from = 'Hotel Hub <onboarding@resend.dev>';
-const from = 'Hotel Hub <noreply@gherardi.work>';
+// const from = 'Hotel Hub <noreply@gherardi.work>';
+const from = `Hotel Hub <${process.env.RESEND_API_EMAIL_FROM}>`;
 
 export const sendWelcomeEmail = async (email) => {
 	await resend.emails.send({
