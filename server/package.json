@@ -11,11 +11,15 @@
   "license": "ISC",
   "devDependencies": {
     "@supabase/supabase-js": "^2.43.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/lodash": "^4.17.3",
     "@types/morgan": "^1.9.9",
+    "@types/validator": "^13.11.10",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -28,7 +32,11 @@
     "zod": "^3.23.8"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.19.2",
-    "resend": "^3.2.0"
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "resend": "^3.2.0",
+    "validator": "^13.12.0"
   }
 }
