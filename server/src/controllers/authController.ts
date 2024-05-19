@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { merge, get } from 'lodash';
 // import { promisify } from 'util';
 
+import { Tables } from '../types/database.types';
 import supabase from '../services/supabase-client';
 import handleAsyncError from '../utils/handleAsyncError';
 import ApplicationError from '../utils/applicationError';
@@ -11,15 +12,13 @@ import { sendPasswordResetEmail } from '../services/resend';
 
 import { env } from '../utils/env';
 
-import { User } from '../types/User';
-
 const signToken = (id: string) => {
 	return jwt.sign({ id }, env.JWT_SECRET, {
 		expiresIn: env.JWT_EXPIRES_IN,
 	});
 };
 
-const createSendToken = (user: User, res: Response) => {
+const createSendToken = (user: Tables<'users'>, res: Response) => {
 	const token = signToken(user.id);
 
 	res.cookie('jwt', token, {
@@ -52,7 +51,7 @@ export const signup = handleAsyncError(async (req, res, next) => {
 			...(hotel_id ? hotel_id : null),
 		})
 		.select()
-		.single<User>();
+		.single<Tables<'users'>>();
 
 	if (error) {
 		if (error.code === '23505')
@@ -73,7 +72,7 @@ export const login = handleAsyncError(async (req, res, next) => {
 		.from('users')
 		.select('*')
 		.eq('email', email)
-		.maybeSingle();
+		.single<Tables<'users'>>();
 
 	if (error) return next(new ApplicationError(error.message));
 
@@ -116,7 +115,7 @@ export const forgotPassword = handleAsyncError(async (req, res, next) => {
 		})
 		.eq('email', email)
 		.select('*')
-		.maybeSingle();
+		.single<Tables<'users'>>();
 
 	if (error) return next(new ApplicationError(error.message));
 	if (!user)
@@ -146,7 +145,7 @@ export const resetPassword = handleAsyncError(async (req, res, next) => {
 		})
 		.eq('password_reset_token', token)
 		.select('*')
-		.single<User>();
+		.single<Tables<'users'>>();
 
 	if (error) return next(new ApplicationError(error.message));
 	if (!user) return next(new ApplicationError('Invalid Token', 400));
@@ -182,29 +181,41 @@ export const protect = handleAsyncError(async (req, res, next) => {
 	// 	env.JWT_SECRET
 	// )) as unknown as User;
 
-	const decoded = { id: 'ciao' };
+	jwt.verify(token, env.JWT_SECRET, async function (err: any, decoded: any) {
+		if (err) {
+			// Handle the error appropriately
+			console.error('Token verification failed:', err.message);
+			return next(new ApplicationError(err.message, 401));
+		} else {
+			decoded as Tables<'users'>;
+			// Token is successfully verified
+			console.log('Token is valid. Decoded payload:', decoded);
+			const { data: user, error } = await supabase
+				.from('users')
+				.select('*')
+				.eq('id', decoded.id)
+				.single<Tables<'users'>>();
 
-	const { data: user, error } = await supabase
-		.from('users')
-		.select('*')
-		.eq('id', decoded.id)
-		.maybeSingle();
+			if (error) return next(new ApplicationError(error.message));
+			if (!user)
+				return next(
+					new ApplicationError('There are no user with this jwt', 403)
+				);
 
-	if (error) return next(new ApplicationError(error.message));
-	if (!user)
-		return next(new ApplicationError('There are no user with this jwt', 403));
+			user.password = '';
 
-	user.password = null;
-
-	// TODO: GRANT ACCESS TO PROTECTED ROUTE
-	merge(req, { user });
-	// req.user = user;
-	next();
+			// TODO: GRANT ACCESS TO PROTECTED ROUTE
+			merge(req, { user });
+			// req.user = user;
+			next();
+		}
+	});
 });
 
 export const restrictToAdmin: RequestHandler = (req, res, next) => {
 	// TODO: CHECK IF IT WORKS
-	const user = get(req, 'user', {} as User);
+	const user = get(req, 'user', {} as Tables<'users'>);
+
 	if (!user.is_admin) {
 		return next(
 			new ApplicationError(

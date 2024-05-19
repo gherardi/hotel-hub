@@ -1,5 +1,4 @@
 import { merge, get } from 'lodash';
-import { User } from '../types/User';
 
 import supabase from '../services/supabase-client';
 import ApplicationError from '../utils/applicationError';
