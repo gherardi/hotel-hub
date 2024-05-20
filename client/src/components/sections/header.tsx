@@ -9,10 +9,10 @@ export default function header() {
 			</Link>
 			{/* AGGIUNGER THEME TOGGLER */}
 			<div className='space-x-4'>
-				<Button variant={'ghost'}>
+				<Button variant={'ghost'} asChild size='sm'>
 					<Link to='/login'>Accedi</Link>
 				</Button>
-				<Button>
+				<Button asChild size='sm'>
 					<Link to='/signup'>Registrati</Link>
 				</Button>
 			</div>

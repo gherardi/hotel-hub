@@ -5,7 +5,7 @@ export default function Landing () {
 	return (
 		<>
 			<Header />
-			<main className='container debug'>
+			<main className='container'>
 				<Hero />
 			</main>
 		</>

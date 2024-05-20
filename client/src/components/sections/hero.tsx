@@ -1,7 +1,7 @@
 export default function Hero() {
 	return (
-		<section className='debug pt-16 pb-24 md:pt-24'>
-			<h1 className='text-4xl md:text-6xl  font-extrabold'>
+		<section className='pt-16 pb-24 md:pt-24'>
+			<h1 className='text-4xl md:text-6xl font-extrabold'>
 				<span
 					className='bg-clip-text text-transparent tracking-tight md:text-center block text-balance py-1'
 					style={{
