@@ -1,16 +1,20 @@
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 export default function header() {
 	return (
-		<header className='container py-6 flex justify-between debug items-center'>
-			<a href='/' rel='noopener noreferrer' className='text-xl font-bold'>
+		<header className='container h-[--header-height] flex justify-between items-center'>
+			<Link to='/' className='text-xl font-bold'>
 				Hotel Hub
-			</a>
+			</Link>
 			{/* AGGIUNGER THEME TOGGLER */}
-			{/* DENTRO IL BUTTON METTERE LINK DI REACT ROUTER DOM */}
 			<div className='space-x-4'>
-				<Button variant={'ghost'}>Accedi</Button>
-				<Button>Registrati</Button>
+				<Button variant={'ghost'}>
+					<Link to='/login'>Accedi</Link>
+				</Button>
+				<Button>
+					<Link to='/signup'>Registrati</Link>
+				</Button>
 			</div>
 		</header>
 	);
