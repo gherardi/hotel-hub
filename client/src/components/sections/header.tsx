@@ -10,7 +10,6 @@ export default function header() {
 			</Link>
 			<ThemeToggler />
 			<div className='space-x-4'>
-				{/* AGGIUNGER THEME TOGGLER */}
 				<Button variant={'outline'} asChild size='sm'>
 					<Link to='/login'>Accedi</Link>
 				</Button>
