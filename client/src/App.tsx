@@ -1,11 +1,16 @@
+import Header from '@/components/sections/header';
+import Hero from '@/components/sections/hero';
+
 import './index.css';
-import { Button } from '@/components/ui/button';
 
 function App() {
 	return (
 		<>
-			<p>hello world from shadcn ui</p>
-			<Button>Click me</Button>
+			<Header />
+			<main className='container debug'>
+				<Hero />
+
+			</main>
 		</>
 	);
 }

@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import tailwindanimate from 'tailwindcss-animate'
+
+export default {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -16,6 +18,15 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+			sans: [
+				'SF Pro Display',
+				'Helvetica Neue',
+				'Helvetica',
+				'Arial',
+				'sans-serif',
+			],
+		},
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -73,5 +84,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindanimate],
 }
