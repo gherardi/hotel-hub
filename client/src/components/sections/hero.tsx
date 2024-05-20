@@ -1,12 +1,17 @@
+import { useTheme } from "@/components/theme-provider";
+
 export default function Hero() {
+	const { theme } = useTheme();
+
 	return (
 		<section className='pt-16 pb-24 md:pt-24'>
 			<h1 className='text-4xl md:text-6xl font-extrabold'>
 				<span
 					className='bg-clip-text text-transparent tracking-tight md:text-center block text-balance py-1'
 					style={{
-						backgroundImage:
-							'linear-gradient(to left, #565656 0%, #121212 100%)',
+						backgroundImage: theme === 'dark'
+							? 'linear-gradient(to right, #EAEAEA 0%, #8B8B8B 100%)'
+							: 'linear-gradient(to left, #565656 0%, #121212 100%)'
 					}}
 				>
 					Scopri il nuovo modo di gestire le tue prenotazioni in albergo.
