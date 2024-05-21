@@ -20,6 +20,7 @@ export default {
     },
     fontFamily: {
 			sans: [
+        'Poppins',
 				'SF Pro Display',
 				'Helvetica Neue',
 				'Helvetica',
