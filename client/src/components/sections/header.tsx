@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ThemeToggler } from '@/components/theme-toggler';
+// import { ThemeToggler } from '@/components/theme-toggler';
 
 export default function header() {
 	return (
@@ -8,7 +8,7 @@ export default function header() {
 			<Link to='/' className='text-xl font-bold'>
 				Hotel Hub
 			</Link>
-			<ThemeToggler />
+			{/* <ThemeToggler /> */}
 			<div className='space-x-4'>
 				<Button variant={'outline'} asChild size='sm'>
 					<Link to='/login'>Accedi</Link>

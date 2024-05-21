@@ -5,6 +5,7 @@ import Loader from './components/ui/loading';
 
 const Landing = lazy(() => import('@/pages/landing'));
 const Login = lazy(() => import('@/pages/login'));
+const Signup = lazy(() => import('@/pages/signup'));
 
 const NotFound = lazy(() => import('@/pages/notfound'));
 
@@ -24,7 +25,7 @@ function App() {
 					<Route path='/'>
 						<Route path='/' element={<Landing />} />
 						<Route path='/login' element={<Login />} />
-						{/* <Route path='/signup' element={<Landing />} /> */}
+						<Route path='/signup' element={<Signup />} />
 					</Route>
 					<Route path='*' element={<NotFound />} />
 				</Routes>

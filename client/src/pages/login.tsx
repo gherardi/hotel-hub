@@ -18,10 +18,8 @@ import {
 } from '@/components/ui/form';
 
 import { Toaster } from '@/components/ui/toaster';
-import { ToastAction } from '@/components/ui/toast';
+// import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-
-// TODO: METTERE PARTE SE EMAIL è GIA REGISTRATA E MAGARI QUANTO è STRONG LA PASSWORD
 
 const loginSchema = z.object({
 	email: z.string().email({ message: 'Inserisci un indirizzo email valido' }),
@@ -46,9 +44,9 @@ export default function Login() {
 				</div>
 				<div className='flex items-center justify-center py-12'>
 					<div className='mx-auto grid w-full md:w-[350px] gap-6'>
-						<div className='grid gap-2 md:text-center'>
-							<h1 className='text-3xl font-bold'>Login</h1>
-							<p className='md:text-balance leading-5 text-muted-foreground'>
+						<div className='grid gap-2'>
+							<h1 className='text-3xl font-bold'>Accedi</h1>
+							<p className='leading-5 text-muted-foreground'>
 								Inserisci la tua email qui sotto per accedere al tuo account
 							</p>
 						</div>
@@ -60,7 +58,7 @@ export default function Login() {
 							</Link>
 						</div>
 					</div>
-				<Toaster />
+					<Toaster />
 				</div>
 			</section>
 		</>
@@ -72,6 +70,10 @@ function LoginForm() {
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: 'gherardivictor@gmail.com',
+			password: 'qwerty123.',
+		},
 	});
 
 	async function onSubmit(values: z.infer<typeof loginSchema>) {
@@ -80,18 +82,18 @@ function LoginForm() {
 		console.log(values);
 		await new Promise((res) => setTimeout(res, 2000));
 
-		if (Math.random() > 0.5) {
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Qualcosa è andato storto.',
-				description: 'C\'è stato un problema con la tua richiesta.',
-				action: <ToastAction altText='Try again'>Riprova</ToastAction>,
-			});
-			return;
-		}
+		// if (Math.random() > 0.5) {
+		// 	toast({
+		// 		variant: 'destructive',
+		// 		title: 'Uh oh! Qualcosa è andato storto.',
+		// 		description: "C'è stato un problema con la tua richiesta.",
+		// 		action: <ToastAction altText='Try again'>Riprova</ToastAction>,
+		// 	});
+		// 	return;
+		// }
 		toast({
-			title: 'Accesso effettuato.',
-			description: 'Accesso alla tua area personale effettuato con successo.',
+			title: 'Accesso effettuato',
+			description: 'Login avvenuto con successo.',
 		});
 	}
 
