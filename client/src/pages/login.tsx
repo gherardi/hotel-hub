@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Mail } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import Header from '@/components/sections/header';
 import { Button } from '@/components/ui/button';
@@ -14,6 +16,10 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
+
+import { Toaster } from '@/components/ui/toaster';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 
 // TODO: METTERE PARTE SE EMAIL è GIA REGISTRATA E MAGARI QUANTO è STRONG LA PASSWORD
 
@@ -39,7 +45,7 @@ export default function Login() {
 					/>
 				</div>
 				<div className='flex items-center justify-center py-12'>
-					<div className='mx-auto grid w-[350px] gap-6'>
+					<div className='mx-auto grid w-full md:w-[350px] gap-6'>
 						<div className='grid gap-2 md:text-center'>
 							<h1 className='text-3xl font-bold'>Login</h1>
 							<p className='md:text-balance leading-5 text-muted-foreground'>
@@ -54,6 +60,7 @@ export default function Login() {
 							</Link>
 						</div>
 					</div>
+				<Toaster />
 				</div>
 			</section>
 		</>
@@ -61,14 +68,31 @@ export default function Login() {
 }
 
 function LoginForm() {
+	const { toast } = useToast();
+
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
 	});
 
-	function onSubmit(values: z.infer<typeof loginSchema>) {
+	async function onSubmit(values: z.infer<typeof loginSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
-		alert(values);
+		console.log(values);
+		await new Promise((res) => setTimeout(res, 2000));
+
+		if (Math.random() > 0.5) {
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Qualcosa è andato storto.',
+				description: 'C\'è stato un problema con la tua richiesta.',
+				action: <ToastAction altText='Try again'>Riprova</ToastAction>,
+			});
+			return;
+		}
+		toast({
+			title: 'Accesso effettuato.',
+			description: 'Accesso alla tua area personale effettuato con successo.',
+		});
 	}
 
 	return (
@@ -85,6 +109,7 @@ function LoginForm() {
 									id='email'
 									type='email'
 									placeholder='email@example.com'
+									disabled={form.formState.isSubmitting}
 									{...field}
 								/>
 							</FormControl>
@@ -112,6 +137,7 @@ function LoginForm() {
 									id='password'
 									type='password'
 									placeholder='********'
+									disabled={form.formState.isSubmitting}
 									{...field}
 								/>
 							</FormControl>
@@ -119,10 +145,24 @@ function LoginForm() {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='w-full'>
-					Accedi
+				<Button
+					type='submit'
+					className='w-full'
+					disabled={form.formState.isSubmitting}
+				>
+					{form.formState.isSubmitting ? (
+						<>
+							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
+							Accesso in corso
+						</>
+					) : (
+						<>
+							<Mail className='mr-2 h-4 w-4' />
+							Accedi con l'email
+						</>
+					)}
 				</Button>
-				<Button variant='outline' className='w-full'>
+				<Button variant='outline' className='w-full hidden'>
 					Accedi con Google
 				</Button>
 			</form>

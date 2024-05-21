@@ -12,7 +12,7 @@ export function ThemeToggler() {
 				checked={theme === 'dark'}
 				onCheckedChange={(e) => setTheme(e ? 'dark' : 'light')}
 			/>
-			<Label htmlFor='airplane-mode'>Dark Mode</Label>
+			<Label htmlFor='airplane-mode' className='hidden md:block'>Dark Mode</Label>
 		</div>
 	);
 }

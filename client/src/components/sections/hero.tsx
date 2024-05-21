@@ -7,7 +7,7 @@ export default function Hero() {
 		<section className='pt-16 pb-24 md:pt-24'>
 			<h1 className='text-4xl md:text-6xl font-extrabold'>
 				<span
-					className='bg-clip-text text-transparent tracking-tight md:text-center block text-balance py-1'
+					className='bg-clip-text text-transparent tracking-tight md:text-center block text-balance py-4'
 					style={{
 						backgroundImage:
 							theme === 'dark'
@@ -22,7 +22,7 @@ export default function Hero() {
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, vel
 				cupiditate eum quidem accusantium unde tempore accusamus.
 			</p>
-			<div className='flex justify-center items-center gap-1.5 mt-4 text-muted-foreground'>
+			<div className='flex md:justify-center items-center gap-x-2.5 mt-4 text-muted-foreground'>
 				<div
 					className='h-2 w-2 bg-[#d51616] rounded-full shadow-[#cf1212] mt-0.5'
 					style={{ boxShadow: '0 0 0 4px rgba(213, 21, 21, .27)' }}
