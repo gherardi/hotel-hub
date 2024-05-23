@@ -34,7 +34,7 @@
 
 		--radius: 0.5rem;
 
-		--header-height: 96px;
+		--header-height: 80px;
 		--hero-height: calc(100svh - var(--header-height));
 	}
 
@@ -71,7 +71,8 @@
 
 @layer base {
 	html {
-		scrollbar-gutter: stable;
+		/* CREA PADDING A SINISTRA DELLA PAGINA */
+		/* scrollbar-gutter: stable; */
 	}
 	* {
 		@apply border-border;
