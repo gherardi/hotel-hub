@@ -53,7 +53,7 @@ export default function Login() {
 						<LoginForm />
 						<div className='mt-4 text-center text-sm'>
 							Non hai un account?{' '}
-							<Link to='#' className='underline'>
+							<Link to='/signup' className='underline'>
 								Registrati
 							</Link>
 						</div>
@@ -108,7 +108,6 @@ function LoginForm() {
 							<FormLabel>Email</FormLabel>
 							<FormControl>
 								<Input
-									id='email'
 									type='email'
 									placeholder='email@example.com'
 									disabled={form.formState.isSubmitting}
@@ -136,7 +135,6 @@ function LoginForm() {
 							</div>
 							<FormControl>
 								<Input
-									id='password'
 									type='password'
 									placeholder='********'
 									disabled={form.formState.isSubmitting}
