@@ -7,13 +7,13 @@ export default function Landing() {
 			<Header />
 			<main className='container'>
 				<Hero />
-				{/* <div className='mx-auto relative h-[200svh]'>
+				<div className='mx-auto relative h-[200svh]'>
 					<img
 						src='/mockup-laptop.png'
 						alt='Macbook mockup'
-						className='sticky top-0 scale-90 debug'
+						className='sticky top-0 scale-80'
 					/>
-				</div> */}
+				</div>
 			</main>
 		</>
 	);

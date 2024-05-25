@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import Header from '@/components/sections/header';
@@ -23,6 +23,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 
 import { realisticConfetti } from '@/utils/confetti-animation';
+import { useAuth } from '@/components/auth-provider';
 
 const signupSchema = z.object({
 	first_name: z
@@ -72,6 +73,9 @@ export default function Signup() {
 }
 
 function SignupForm() {
+	const navigate = useNavigate();
+	const { setToken } = useAuth();
+
 	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof signupSchema>>({
@@ -94,6 +98,14 @@ function SignupForm() {
 		});
 
 		realisticConfetti();
+
+		const token = crypto.randomUUID();
+		localStorage.setItem('token', token);
+		setToken(token);
+
+		setTimeout(() => {
+			navigate('/profile', { replace: true});
+		}, 2000);
 	}
 
 	return (

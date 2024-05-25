@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -20,6 +20,7 @@ import {
 import { Toaster } from '@/components/ui/toaster';
 // import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
+import { useAuth } from '@/components/auth-provider';
 
 const loginSchema = z.object({
 	email: z.string().email({ message: 'Inserisci un indirizzo email valido' }),
@@ -66,7 +67,10 @@ export default function Login() {
 }
 
 function LoginForm() {
+	const navigate = useNavigate();
 	const { toast } = useToast();
+
+	const { setToken } = useAuth();
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
@@ -95,6 +99,14 @@ function LoginForm() {
 			title: 'Accesso effettuato',
 			description: 'Login avvenuto con successo.',
 		});
+
+		const token = crypto.randomUUID();
+		localStorage.setItem('token', token);
+		setToken(token);
+
+		setTimeout(() => {
+			navigate('/profile', { replace: true });
+		}, 2000);
 	}
 
 	return (
