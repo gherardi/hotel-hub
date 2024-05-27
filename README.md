@@ -3,21 +3,20 @@
 **presentazione:** [link](https://www.canva.com/design/DAGE_h_6Ofc/zzbpHPs599Tl1z9Ik-fcqA/view?utm_content=DAGE_h_6Ofc&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 # HotelHub
-L'applicazione è stata progettata per semplificare e ottimizzare il processo di prenotazione alberghiera. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia per hotel di ogni dimensione.
+HotelHub è un'applicazione web full-stack progettata per semplificare e ottimizzare il processo di prenotazione degli hotel. Con un'interfaccia pulita e funzionalità avanzate, offre un sistema di gestione delle prenotazioni all'avanguardia adatto ad hotel di qualsiasi dimensione.
 
-**Target:**
-Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni, camere ecc. in modo semplice e attraverso una piattaforma web intuitiva.
+**Pubblico di riferimento:**
+Proprietari di hotel che desiderano digitalizzare il loro processo di gestione delle prenotazioni e delle camere in modo intuitivo attraverso una piattaforma web.
 
 ## Funzionalità
 
 **Server: (Backend)**
 
-- [x]  Registrazione e Login al servizio tramite email e password
-- [x]  Middleware di controllo e sanitizzazione del body di ogni richiesta
-- [x]  Limitazione di richieste alle api per evitare spam
-- [x]  Esposizione API tramite protocollo REST
-- [x]  Autenticazione e Autorizzazione tramite jwt
-- [x]  Invio email di recupero password con token univoco temporaneo
+- [x]  Registrazione e accesso degli utenti tramite email e password
+- [x]  Middleware per il controllo e la sanificazione del corpo delle richieste
+- [x]  Endpoint API RESTful
+- [x]  Autenticazione e autorizzazione tramite JWT
+- [x]  Invio di email per il recupero della password con token temporaneo unico
 
 **Gestore: (Frontend)**
 
@@ -28,6 +27,14 @@ Albergatori che vogliono digitalizzare il loro processo di gestione prenotazioni
 - [x]  Pagina camere con gestione completa
 - [x]  Pagina prenotazioni con gestione completa
 - [x]  Recupero password tramite email con token
+
+- [x]  Routing lato client
+- [x]  Registrazione con validazione degli input e messaggi di errore personalizzati
+- [x]  Accesso con validazione degli input e messaggi di errore personalizzati
+- [x]  Dashboard che mostra riepiloghi delle prenotazioni, vendite e occupazione dell'hotel
+- [x]  Pagina gestione camere con funzionalità complete
+- [x]  Pagina gestione prenotazioni con funzionalità complete
+- [x]  Recupero della password tramite email con token
 
 ## Mockup & Wireframe
 
@@ -120,47 +127,39 @@ values
 
 ```
 
-## Prerequisites
+## Prerequisiti
 
-avere nodejs > v18.0 e npm installato localmente
+Assicurati che Node.js sia aggiornato a una versione superiore alla v18.0 e che npm sia installato localmente.
 
-## Environment Variables
+## Variabili d'Ambiente
 
-To run this project, you will need to add the following environment variables to your .env file in the server side code
+Per eseguire questo progetto, aggiungi le seguenti variabili d'ambiente al tuo file .env nel codice lato server:
 
-`NODE_ENV`
+- `NODE_ENV`
+- `PORT`
+- `JWT_SECRET`
+- `JWT_EXPIRES_IN`
+- `SALT`
+- `PASSWORD_RESET_EXPIRES`
+- `RESEND_API_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_KEY`
 
-`PORT`
+## Esecuzione Locale
 
-`JWT_SECRET`
-
-`JWT_EXPIRES_IN`
-
-`SALT`
-
-`PASSWORD_RESET_EXPIRES`
-
-`RESEND_API_KEY`
-
-`SUPABASE_URL`
-
-`SUPABASE_KEY`
-
-## Run Locally
-
-Clone the project
+Clona il progetto
 
 ```bash
   git clone https://github.com/gherardi/hotel-hub
 ```
 
-Go to the project directory
+Naviga nella directory del progetto
 
 ```bash
   cd hotel-hub
 ```
 
-Install dependencies
+Installa le dipendenze
 
 ```bash
   cd client && npm install
@@ -170,7 +169,7 @@ Install dependencies
   cd server && npm install
 ```
 
-Start the server
+Avvia il server
 
 ```bash
   cd server && npm start
@@ -180,7 +179,4 @@ Start the server
   cd client && npm start
 ```
 
-a questo punto recarsi all'indirizzo http://localhost:5173 e iniziare ad utilizzare il programma
-
-## Convenzioni dei commit
-In questo progetto utilizzo le convenzioni di [commitlint](https://commitlint.js.org/) per gestire i commit e fornire loro uno standard uniforme. Ciò facilita la comprensione del log dei commit e promuove una pratica coerenza nel processo di sviluppo.
+Ora visita http://localhost:5173 per iniziare a utilizzare l'applicazione.
