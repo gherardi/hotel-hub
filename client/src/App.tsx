@@ -1,21 +1,37 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+// Import components
 import Loader from './components/ui/loading';
+import ProtectedRoute from './components/protected-route';
 
-// PUBLIC ROUTES
+// Import styles
+import './index.css';
+
+// Lazy load public routes
 const Landing = lazy(() => import('@/pages/landing'));
 const Login = lazy(() => import('@/pages/login'));
 const Signup = lazy(() => import('@/pages/signup'));
 const NotFound = lazy(() => import('@/pages/notfound'));
 const ResetPassword = lazy(() => import('@/pages/reset-password'));
 
-// PRIVATE ROUTES
+// Define routes array
+const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
+	[
+		{ path: '/', element: <Landing />, requiresAuth: false },
+		{ path: '/login', element: <Login />, requiresAuth: false },
+		{ path: '/signup', element: <Signup />, requiresAuth: false },
+		{
+			path: '/reset-password/:token',
+			element: <ResetPassword />,
+			requiresAuth: false,
+		},
+		{ path: '/profile', element: <>private profile</>, requiresAuth: true },
+		{ path: '*', element: <NotFound />, requiresAuth: false },
+	];
+
 // const Dashboard = lazy(() => import('@/pages/dashboard'));
 // const Dashboard2 = lazy(() => import('@/pages/dashboard2'));
-
-import './index.css';
-import ProtectedRoute from './components/protected-route';
 
 function App() {
 	return (
@@ -28,25 +44,23 @@ function App() {
 				}
 			>
 				<Routes>
-					<Route index element={<Landing />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/signup' element={<Signup />} />
 					{/* <Route path='/'>
 						<Route path='/dashboard' element={<Dashboard />} />
 						<Route path='/dashboard2' element={<Dashboard2 />} />
 					</Route> */}
-					<Route path='/reset-password/:token' element={<ResetPassword />} />
-
-					<Route
-						path='/profile'
-						element={
-							<ProtectedRoute>
-								<>private profile</>
-							</ProtectedRoute>
-						}
-					/>
-
-					<Route path='*' element={<NotFound />} />
+					{routes.map(({ path, element, requiresAuth }) => (
+						<Route
+							key={path}
+							path={path}
+							element={
+								requiresAuth ? (
+									<ProtectedRoute>{element}</ProtectedRoute>
+								) : (
+									element
+								)
+							}
+						/>
+					))}
 				</Routes>
 			</Suspense>
 		</>
