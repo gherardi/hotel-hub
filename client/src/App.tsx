@@ -14,6 +14,9 @@ const Login = lazy(() => import('@/pages/login'));
 const Signup = lazy(() => import('@/pages/signup'));
 const NotFound = lazy(() => import('@/pages/notfound'));
 const ResetPassword = lazy(() => import('@/pages/reset-password'));
+const Dashboard = lazy(() => import('@/pages/dashboard'));
+const Dashboard4 = lazy(() => import('@/pages/dashboard-4'));
+const Settings = lazy(() => import('@/pages/settings'));
 
 // Define routes array
 const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
@@ -26,7 +29,10 @@ const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
 			element: <ResetPassword />,
 			requiresAuth: false,
 		},
-		{ path: '/profile', element: <>private profile</>, requiresAuth: true },
+
+		{ path: '/settings', element: <Settings />, requiresAuth: true },
+		{ path: '/dashboard', element: <Dashboard />, requiresAuth: true },
+		{ path: '/dashboard-4', element: <Dashboard4 />, requiresAuth: false },
 		{ path: '*', element: <NotFound />, requiresAuth: false },
 	];
 

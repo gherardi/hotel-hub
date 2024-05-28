@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +14,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function UserAvatar() {
+	const navigate = useNavigate();
+	function handleNavigate(path: string) {
+		navigate(path);
+	}
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -33,12 +40,12 @@ export function UserAvatar() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<DropdownMenuItem>
-						Profile
+					<DropdownMenuItem onClick={() => handleNavigate('/settings')}>
+						Profilo
 						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
-						impostazioni
+						Impostazioni
 						<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>

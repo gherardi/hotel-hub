@@ -9,9 +9,9 @@ export default function Dashboard() {
 	return (
 		<>
 			<Navbar />
-			<div className='h-[--hero-height] px-8 gap-5 [&>*]:gap-5 space-y-5'>
+			<main className='h-[--hero-height] px-8 gap-5 [&>*]:gap-5 space-y-5 bg-muted/40'>
 				<div className='flex items-center justify-between pt-5'>
-					<h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+					<h1 className='text-3xl font-bold tracking-'>Dashboard</h1>
 					<div className='flex items-center space-x-2'>
 						<CalendarDateRangePicker />
 					</div>
@@ -168,7 +168,7 @@ export default function Dashboard() {
 						</Card>
 					</div>
 				</div>
-			</div>
+			</main>
 		</>
 	);
 }
