@@ -15,12 +15,14 @@ export default function Hero() {
 								: 'linear-gradient(to left, #565656 0%, #121212 100%)',
 					}}
 				>
-					Scopri il nuovo modo di gestire le tue prenotazioni in albergo.
+					La soluzione definitiva per la gestione delle prenotazioni
 				</span>
 			</h1>
-			<p className='md:text-center md:w-1/2 mx-auto text-balance leading-6 [&:not(:first-child)]:mt-6 text-lg text-muted-foreground'>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, vel
-				cupiditate eum quidem accusantium unde tempore accusamus.
+			<p className='md:text-center text-balance md:w-2/3 mx-auto leading-6 [&:not(:first-child)]:mt-6 text-lg text-muted-foreground'>
+				Hotel Hub è la piattaforma ideale per semplificare la gestione delle
+				prenotazioni e delle camere. Migliora l'efficienza operativa e offri
+				un'esperienza eccezionale ai tuoi ospiti con le nostre funzionalità
+				avanzate.
 			</p>
 			<div className='flex md:justify-center items-center gap-x-2.5 mt-4 text-muted-foreground'>
 				<div
