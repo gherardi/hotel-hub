@@ -1,5 +1,4 @@
-**status:** backend/frontend refactoring in progress
-
+**status:** building / in progress
 **presentazione:** [link](https://www.canva.com/design/DAGE_h_6Ofc/zzbpHPs599Tl1z9Ik-fcqA/view?utm_content=DAGE_h_6Ofc&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 # HotelHub
