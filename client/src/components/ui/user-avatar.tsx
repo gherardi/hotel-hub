@@ -19,6 +19,11 @@ export function UserAvatar() {
 		navigate(path);
 	}
 
+	function handleLogout() {
+		localStorage.removeItem('token');
+		window.location.reload();
+	}
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -44,13 +49,13 @@ export function UserAvatar() {
 						Profilo
 						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 					</DropdownMenuItem>
-					<DropdownMenuItem>
+					<DropdownMenuItem onClick={() => handleNavigate('/settings')}>
 						Impostazioni
 						<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>
+				<DropdownMenuItem onClick={handleLogout}>
 					Log out
 					<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 				</DropdownMenuItem>

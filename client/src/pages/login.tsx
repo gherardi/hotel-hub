@@ -105,7 +105,7 @@ function LoginForm() {
 		setToken(token);
 
 		setTimeout(() => {
-			navigate('/profile', { replace: true });
+			navigate('/dashboard', { replace: true });
 		}, 2000);
 	}
 
