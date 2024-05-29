@@ -1,29 +1,45 @@
-import Navbar from '@/components/ui/navbar';
-import { CalendarDateRangePicker } from '@/components/ui/date-range-picker';
-import { Activity, CreditCard, DollarSign, Users } from 'lucide-react';
+import PageLayout from '@/layouts/page-layout';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { CalendarDateRangePicker } from '@/components/ui/date-range-picker';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
 
 export default function Dashboard() {
 	return (
-		<>
-			<Navbar />
-			<main className='h-[--hero-height] px-8 gap-5 [&>*]:gap-5 space-y-5 bg-muted/40'>
-				<div className='flex items-center justify-between pt-5'>
-					<h1 className='text-3xl font-bold tracking-'>Dashboard</h1>
-					<div className='flex items-center space-x-2'>
-						<CalendarDateRangePicker />
-					</div>
+		<PageLayout>
+			<div className='flex items-center justify-between space-y-2'>
+				<h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+				<div className='flex items-center space-x-2'>
+					<CalendarDateRangePicker />
+					<Button>Download</Button>
 				</div>
+			</div>
 
-				<div className='grid grid-cols-4'>
+			<div className='space-y-4 pb-8 md:pb-0'>
+				<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
 					<Card>
 						<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 							<CardTitle className='text-sm font-medium'>
-								Incasso totale
+								Total Revenue
 							</CardTitle>
-							<DollarSign className='h-4 w-4 text-muted-foreground' />
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								fill='none'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								className='h-4 w-4 text-muted-foreground'
+							>
+								<path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
+							</svg>
 						</CardHeader>
 						<CardContent>
 							<div className='text-2xl font-bold'>$45,231.89</div>
@@ -35,12 +51,25 @@ export default function Dashboard() {
 					<Card>
 						<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 							<CardTitle className='text-sm font-medium'>
-								Prenotazioni
+								Subscriptions
 							</CardTitle>
-							<Users className='h-4 w-4 text-muted-foreground' />
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								fill='none'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								className='h-4 w-4 text-muted-foreground'
+							>
+								<path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
+								<circle cx='9' cy='7' r='4' />
+								<path d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' />
+							</svg>
 						</CardHeader>
 						<CardContent>
-							<div className='text-2xl font-bold'>2350</div>
+							<div className='text-2xl font-bold'>+2350</div>
 							<p className='text-xs text-muted-foreground'>
 								+180.1% from last month
 							</p>
@@ -48,10 +77,20 @@ export default function Dashboard() {
 					</Card>
 					<Card>
 						<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-							<CardTitle className='text-sm font-medium'>
-								Prenotazioni all'attivo
-							</CardTitle>
-							<CreditCard className='h-4 w-4 text-muted-foreground' />
+							<CardTitle className='text-sm font-medium'>Sales</CardTitle>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								fill='none'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								className='h-4 w-4 text-muted-foreground'
+							>
+								<rect width='20' height='14' x='2' y='5' rx='2' />
+								<path d='M2 10h20' />
+							</svg>
 						</CardHeader>
 						<CardContent>
 							<div className='text-2xl font-bold'>+12,234</div>
@@ -60,13 +99,21 @@ export default function Dashboard() {
 							</p>
 						</CardContent>
 					</Card>
-
 					<Card>
 						<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-							<CardTitle className='text-sm font-medium'>
-								Tasso di occupazione
-							</CardTitle>
-							<Activity className='h-4 w-4 text-muted-foreground' />
+							<CardTitle className='text-sm font-medium'>Active Now</CardTitle>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								fill='none'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								className='h-4 w-4 text-muted-foreground'
+							>
+								<path d='M22 12h-4l-3 9L9 3l-3 9H2' />
+							</svg>
 						</CardHeader>
 						<CardContent>
 							<div className='text-2xl font-bold'>+573</div>
@@ -76,99 +123,28 @@ export default function Dashboard() {
 						</CardContent>
 					</Card>
 				</div>
-
-				<div className='grid grid-cols-3 '>
-					<div className='col-span-2 bg-foreground'>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-						voluptatem asperiores blanditiis voluptatibus aspernatur labore
-						suscipit explicabo architecto maiores deserunt?
-					</div>
-					<div className=''>
-						<Card>
-							<CardHeader>
-								<CardTitle className='text-sm'>Recent Sales</CardTitle>
-							</CardHeader>
-							<CardContent className='grid gap-8'>
-								<div className='flex items-center gap-4'>
-									<Avatar className='hidden h-9 w-9 sm:flex'>
-										<AvatarImage src='/avatars/01.png' alt='Avatar' />
-										<AvatarFallback className='text-xs'>OM</AvatarFallback>
-									</Avatar>
-									<div className='grid gap-1'>
-										<p className='text-sm font-medium leading-none'>
-											Olivia Martin
-										</p>
-										<p className='text-sm text-muted-foreground'>
-											olivia.martin@email.com
-										</p>
-									</div>
-									<div className='ml-auto font-medium'>+$1,999.00</div>
-								</div>
-								<div className='flex items-center gap-4'>
-									<Avatar className='hidden h-9 w-9 sm:flex'>
-										<AvatarImage src='/avatars/02.png' alt='Avatar' />
-										<AvatarFallback className='text-xs'>JL</AvatarFallback>
-									</Avatar>
-									<div className='grid gap-1'>
-										<p className='text-sm font-medium leading-none'>
-											Jackson Lee
-										</p>
-										<p className='text-sm text-muted-foreground'>
-											jackson.lee@email.com
-										</p>
-									</div>
-									<div className='ml-auto font-medium'>+$39.00</div>
-								</div>
-								<div className='flex items-center gap-4'>
-									<Avatar className='hidden h-9 w-9 sm:flex'>
-										<AvatarImage src='/avatars/03.png' alt='Avatar' />
-										<AvatarFallback className='text-xs'>IN</AvatarFallback>
-									</Avatar>
-									<div className='grid gap-1'>
-										<p className='text-sm font-medium leading-none'>
-											Isabella Nguyen
-										</p>
-										<p className='text-sm text-muted-foreground'>
-											isabella.nguyen@email.com
-										</p>
-									</div>
-									<div className='ml-auto font-medium'>+$299.00</div>
-								</div>
-								<div className='flex items-center gap-4'>
-									<Avatar className='hidden h-9 w-9 sm:flex'>
-										<AvatarImage src='/avatars/04.png' alt='Avatar' />
-										<AvatarFallback className='text-xs'>WK</AvatarFallback>
-									</Avatar>
-									<div className='grid gap-1'>
-										<p className='text-sm font-medium leading-none'>
-											William Kim
-										</p>
-										<p className='text-sm text-muted-foreground'>
-											will@email.com
-										</p>
-									</div>
-									<div className='ml-auto font-medium'>+$99.00</div>
-								</div>
-								<div className='flex items-center gap-4'>
-									<Avatar className='hidden h-9 w-9 sm:flex'>
-										<AvatarImage src='/avatars/05.png' alt='Avatar' />
-										<AvatarFallback className='text-xs'>SD</AvatarFallback>
-									</Avatar>
-									<div className='grid gap-1'>
-										<p className='text-sm font-medium leading-none'>
-											Sofia Davis
-										</p>
-										<p className='text-sm text-muted-foreground'>
-											sofia.davis@email.com
-										</p>
-									</div>
-									<div className='ml-auto font-medium'>+$39.00</div>
-								</div>
-							</CardContent>
-						</Card>
-					</div>
+				<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
+					<Card className='col-span-4'>
+						<CardHeader>
+							<CardTitle>Overview</CardTitle>
+						</CardHeader>
+						<CardContent className='pl-2'>
+							{/* <Overview /> */}
+							overview component
+						</CardContent>
+					</Card>
+					<Card className='col-span-3'>
+						<CardHeader>
+							<CardTitle>Recent Sales</CardTitle>
+							<CardDescription>You made 265 sales this month.</CardDescription>
+						</CardHeader>
+						<CardContent>
+							{/* <RecentSales /> */}
+							recent sales component
+						</CardContent>
+					</Card>
 				</div>
-			</main>
-		</>
+			</div>
+		</PageLayout>
 	);
 }

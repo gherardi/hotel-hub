@@ -11,7 +11,7 @@ import { CalendarDateRangePicker } from './components/date-range-picker';
 import { MainNav } from './components/main-nav';
 import { Overview } from './components/overview';
 import { RecentSales } from './components/recent-sales';
-// import { Search } from './components/search';
+import { Search } from './components/search';
 import TeamSwitcher from './components/team-switcher';
 import { UserAvatar } from './components/user-nav';
 
@@ -36,13 +36,13 @@ export default function Dashboard() {
 					className='hidden dark:block'
 				/>
 			</div> */}
-			<div className='hidden flex-col md:flex'>
+			<div className='flex-col flex'>
 				<div className='border-b'>
 					<div className='flex h-16 items-center px-4'>
 						<TeamSwitcher />
 						<div className='ml-auto flex items-center space-x-4'>
 							<MainNav className='ml-auto' />
-							{/* <Search /> */}
+							<Search />
 							<UserAvatar />
 						</div>
 					</div>
@@ -189,7 +189,7 @@ export default function Dashboard() {
 											You made 265 sales this month.
 										</CardDescription>
 									</CardHeader>
-									<CardContent>
+									<CardContent className='w-full'>
 										<RecentSales />
 									</CardContent>
 								</Card>

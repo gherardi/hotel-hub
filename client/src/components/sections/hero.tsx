@@ -15,7 +15,7 @@ export default function Hero() {
 								: 'linear-gradient(to left, #565656 0%, #121212 100%)',
 					}}
 				>
-					La soluzione definitiva per la gestione delle prenotazioni
+					La soluzione definitiva per la gestione delle prenotazioni.
 				</span>
 			</h1>
 			<p className='md:text-center text-balance md:w-2/3 mx-auto leading-6 [&:not(:first-child)]:mt-6 text-lg text-muted-foreground'>
