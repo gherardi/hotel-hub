@@ -2,7 +2,6 @@ import { RequestHandler, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { merge, get } from 'lodash';
-// import { promisify } from 'util';
 
 import { Tables } from '../types/database.types';
 import supabase from '../services/supabase-client';
@@ -29,15 +28,26 @@ const createSendToken = (user: Tables<'users'>, res: Response) => {
 		// ),
 	});
 
+	user.password = '';
+
 	res.status(200).json({
 		status: 'success',
 		token,
-		isAdmin: user.is_admin,
+		data: { user },
 	});
 };
 
 export const signup = handleAsyncError(async (req, res, next) => {
-	const { first_name, last_name, email, password, hotel_id } = req.body;
+	// TODO: validateLogin middleware per validare tutti questi campi
+
+	const { first_name, last_name, email, password, hotel_code } = req.body;
+	const { data: hotel } = await supabase
+		.from('hotels')
+		.select()
+		.eq('code', hotel_code)
+		.single<Tables<'hotels'>>();
+
+	if (!hotel) return next(new ApplicationError('Hotel not found', 404));
 
 	const hash = await bcrypt.hash(password, Number(env.SALT));
 
@@ -48,7 +58,7 @@ export const signup = handleAsyncError(async (req, res, next) => {
 			last_name,
 			email,
 			password: hash,
-			...(hotel_id ? hotel_id : null),
+			hotel_id: hotel.id,
 		})
 		.select()
 		.single<Tables<'users'>>();
@@ -66,13 +76,16 @@ export const signup = handleAsyncError(async (req, res, next) => {
 });
 
 export const login = handleAsyncError(async (req, res, next) => {
+	// TODO: validateLogin middleware per validare tutti questi campi
 	const { email, password } = req.body;
 
 	const { data: user, error } = await supabase
 		.from('users')
 		.select('*')
 		.eq('email', email)
-		.single<Tables<'users'>>();
+		.maybeSingle<Tables<'users'>>();
+
+	console.log('passato');
 
 	if (error) return next(new ApplicationError(error.message));
 

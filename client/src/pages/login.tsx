@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -18,11 +18,10 @@ import {
 } from '@/components/ui/form';
 
 import { Toaster } from '@/components/ui/toaster';
-// import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
-import { useAuth } from '@/components/auth-provider';
+import { useLogin } from '@/hooks/useLogin';
 
-const loginSchema = z.object({
+// eslint-disable-next-line react-refresh/only-export-components
+export const loginSchema = z.object({
 	email: z.string().email({ message: 'Inserisci un indirizzo email valido' }),
 	password: z.string().min(8, {
 		message: 'La password deve essere di almeno 8 caratteri',
@@ -67,11 +66,6 @@ export default function Login() {
 }
 
 function LoginForm() {
-	const navigate = useNavigate();
-	const { toast } = useToast();
-
-	const { setToken } = useAuth();
-
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
@@ -80,38 +74,14 @@ function LoginForm() {
 		},
 	});
 
-	async function onSubmit(values: z.infer<typeof loginSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
-		await new Promise((res) => setTimeout(res, 2000));
-
-		// if (Math.random() > 0.5) {
-		// 	toast({
-		// 		variant: 'destructive',
-		// 		title: 'Uh oh! Qualcosa è andato storto.',
-		// 		description: "C'è stato un problema con la tua richiesta.",
-		// 		action: <ToastAction altText='Try again'>Riprova</ToastAction>,
-		// 	});
-		// 	return;
-		// }
-		toast({
-			title: 'Accesso effettuato',
-			description: 'Login avvenuto con successo.',
-		});
-
-		const token = crypto.randomUUID();
-		localStorage.setItem('token', token);
-		setToken(token);
-
-		setTimeout(() => {
-			navigate('/dashboard', { replace: true });
-		}, 2000);
-	}
+	const { mutate, isPending } = useLogin();
 
 	return (
 		<Form {...form}>
-			<form className='grid gap-4' onSubmit={form.handleSubmit(onSubmit)}>
+			<form
+				className='grid gap-4'
+				onSubmit={form.handleSubmit((data) => mutate(data))}
+			>
 				<FormField
 					control={form.control}
 					name='email'
@@ -122,7 +92,7 @@ function LoginForm() {
 								<Input
 									type='email'
 									placeholder='email@example.com'
-									disabled={form.formState.isSubmitting}
+									disabled={isPending}
 									{...field}
 								/>
 							</FormControl>
@@ -149,7 +119,7 @@ function LoginForm() {
 								<Input
 									type='password'
 									placeholder='********'
-									disabled={form.formState.isSubmitting}
+									disabled={isPending}
 									{...field}
 								/>
 							</FormControl>
@@ -160,9 +130,9 @@ function LoginForm() {
 				<Button
 					type='submit'
 					className='w-full'
-					disabled={form.formState.isSubmitting}
+					disabled={isPending}
 				>
-					{form.formState.isSubmitting ? (
+					{isPending ? (
 						<>
 							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
 							Accesso in corso

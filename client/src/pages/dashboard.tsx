@@ -34,7 +34,7 @@ export default function Dashboard() {
 							overview component
 						</CardContent>
 					</Card>
-					<Card className='col-span-3'>
+					<Card className='col-span-4 lg:col-span-3'>
 						<CardHeader>
 							<CardTitle>Recent Sales</CardTitle>
 							<CardDescription>You made 265 sales this month.</CardDescription>

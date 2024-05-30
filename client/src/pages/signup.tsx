@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
 import Header from '@/components/sections/header';
@@ -19,13 +19,10 @@ import {
 } from '@/components/ui/form';
 
 import { Toaster } from '@/components/ui/toaster';
-// import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
+import { useSignup } from '@/hooks/useSignup';
 
-import { realisticConfetti } from '@/utils/confetti-animation';
-import { useAuth } from '@/components/auth-provider';
-
-const signupSchema = z.object({
+// eslint-disable-next-line react-refresh/only-export-components
+export const signupSchema = z.object({
 	first_name: z
 		.string()
 		.min(2, { message: 'Il nome deve essere almeno di 2 caratteri' }),
@@ -37,7 +34,7 @@ const signupSchema = z.object({
 	password: z.string().min(8, {
 		message: 'La password deve essere di almeno 8 caratteri',
 	}),
-	hotel_id: z
+	hotel_code: z
 		.string()
 		.startsWith('HOTEL-', { message: 'Codice hotel non valido' }),
 });
@@ -73,11 +70,6 @@ export default function Signup() {
 }
 
 function SignupForm() {
-	const navigate = useNavigate();
-	const { setToken } = useAuth();
-
-	const { toast } = useToast();
-
 	const form = useForm<z.infer<typeof signupSchema>>({
 		resolver: zodResolver(signupSchema),
 		defaultValues: {
@@ -85,32 +77,18 @@ function SignupForm() {
 			last_name: 'Gherardi',
 			email: 'gherardivictor@gmail.com',
 			password: 'qwerty123.',
-			hotel_id: 'HOTEL-DER',
+			hotel_code: 'HOTEL-DER',
 		},
 	});
 
-	async function onSubmit(data: z.infer<typeof signupSchema>) {
-		await new Promise((res) => setTimeout(res, 2000));
-		console.log(data);
-		toast({
-			title: 'Account creato',
-			description: 'Registrazione avvenuta con successo.',
-		});
-
-		realisticConfetti();
-
-		const token = crypto.randomUUID();
-		localStorage.setItem('token', token);
-		setToken(token);
-
-		setTimeout(() => {
-			navigate('/dashboard', { replace: true});
-		}, 2000);
-	}
+	const { mutate, isPending } = useSignup();
 
 	return (
 		<Form {...form}>
-			<form className='grid gap-4' onSubmit={form.handleSubmit(onSubmit)}>
+			<form
+				className='grid gap-4'
+				onSubmit={form.handleSubmit((data) => mutate(data))}
+			>
 				<div className='grid grid-cols-2 gap-x-4'>
 					<FormField
 						control={form.control}
@@ -122,7 +100,7 @@ function SignupForm() {
 									<Input
 										type='text'
 										placeholder='Mario'
-										disabled={form.formState.isSubmitting}
+										disabled={isPending}
 										{...field}
 									/>
 								</FormControl>
@@ -140,7 +118,7 @@ function SignupForm() {
 									<Input
 										type='text'
 										placeholder='Rossi'
-										disabled={form.formState.isSubmitting}
+										disabled={isPending}
 										{...field}
 									/>
 								</FormControl>
@@ -160,7 +138,7 @@ function SignupForm() {
 								<Input
 									type='email'
 									placeholder='email@example.com'
-									disabled={form.formState.isSubmitting}
+									disabled={isPending}
 									{...field}
 								/>
 							</FormControl>
@@ -179,7 +157,7 @@ function SignupForm() {
 								<Input
 									type='password'
 									placeholder='********'
-									disabled={form.formState.isSubmitting}
+									disabled={isPending}
 									{...field}
 								/>
 							</FormControl>
@@ -190,7 +168,7 @@ function SignupForm() {
 
 				<FormField
 					control={form.control}
-					name='hotel_id'
+					name='hotel_code'
 					render={({ field }) => (
 						<FormItem className='grid gap-2 space-y-0'>
 							<FormLabel>Codice hotel</FormLabel>
@@ -198,7 +176,7 @@ function SignupForm() {
 								<Input
 									type='text'
 									placeholder='HOTEL-DE3F'
-									disabled={form.formState.isSubmitting}
+									disabled={isPending}
 									{...field}
 								/>
 							</FormControl>
@@ -207,12 +185,8 @@ function SignupForm() {
 					)}
 				/>
 
-				<Button
-					type='submit'
-					className='w-full'
-					disabled={form.formState.isSubmitting}
-				>
-					{form.formState.isSubmitting ? (
+				<Button type='submit' className='w-full' disabled={isPending}>
+					{isPending ? (
 						<>
 							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
 							Registrazione in corso
