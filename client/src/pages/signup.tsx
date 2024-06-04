@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
-
-import Header from '@/components/sections/header';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 
+import HomeLayout from '@/layouts/home-layout';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -43,29 +41,26 @@ export const signupSchema = z.object({
 
 export default function Signup() {
 	return (
-		<>
-			<Header />
-			<section className='w-full h-[--hero-height] overflow-hidden container'>
-				<div className='flex items-center justify-center py-12'>
-					<div className='mx-auto grid w-full md:w-[400px] gap-6'>
-						<div className='grid gap-2'>
-							<h1 className='text-3xl font-bold'>Registrazione</h1>
-							<p className='leading-5 text-muted-foreground'>
-								Inserisci le tue informazioni qui sotto per creare un account
-							</p>
-						</div>
-						<SignupForm />
-						<div className='mt-4 text-center text-sm'>
-							Hai già un account?{' '}
-							<Link to='/login' className='underline'>
-								Accedi
-							</Link>
-						</div>
+		<HomeLayout>
+			<div className='flex items-center justify-center pt-12'>
+				<div className='mx-auto grid w-full md:w-[480px] gap-6'>
+					<div className='grid gap-2'>
+						<h1 className='text-3xl font-bold'>Registrazione</h1>
+						<p className='leading-5 text-muted-foreground'>
+							Inserisci le tue informazioni qui sotto per creare un account
+						</p>
 					</div>
-					<Toaster />
+					<SignupForm />
+					<div className='mt-4 text-center text-sm'>
+						Hai già un account?{' '}
+						<Link to='/login' className='underline'>
+							Accedi
+						</Link>
+					</div>
 				</div>
-			</section>
-		</>
+				<Toaster />
+			</div>
+		</HomeLayout>
 	);
 }
 
@@ -94,7 +89,7 @@ function SignupForm() {
 						control={form.control}
 						name='first_name'
 						render={({ field }) => (
-							<FormItem className='grid gap-2 space-y-0 place-content-start'>
+							<FormItem className='space-y-1.5 place-content-start'>
 								<FormLabel>Nome</FormLabel>
 								<FormControl>
 									<Input
@@ -112,7 +107,7 @@ function SignupForm() {
 						control={form.control}
 						name='last_name'
 						render={({ field }) => (
-							<FormItem className='grid gap-2 space-y-0 place-content-start'>
+							<FormItem className='space-y-1.5 place-content-start'>
 								<FormLabel>Cognome</FormLabel>
 								<FormControl>
 									<Input

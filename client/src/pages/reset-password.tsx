@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { Loader2 } from 'lucide-react';
 
-import Header from '@/components/sections/header';
+import HomeLayout from '@/layouts/home-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
@@ -21,14 +23,12 @@ import {
 	InputOTPSlot,
 } from '@/components/ui/input-otp';
 
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { realisticConfetti } from '@/utils/confetti-animation';
 import { isValidUUID } from '@/utils/helpers';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
 
 const resetPasswordSchema = z.object({
 	password: z.string().min(8, {
@@ -55,23 +55,20 @@ export default function ResetPassword() {
 	}, [isValidToken, toast]);
 
 	return (
-		<>
-			<Header />
-			<section className='w-full h-[--hero-height] overflow-hidden container'>
-				<div className='flex items-center justify-center py-12'>
-					<div className='mx-auto grid w-full md:w-[400px] gap-6'>
-						<div className='grid gap-2'>
-							<h1 className='text-3xl font-bold'>Modifica password</h1>
-							<p className='leading-5 text-muted-foreground'>
-								Inserisci qui la tua nuova password
-							</p>
-						</div>
-						<ResetpasswordForm isValidToken={isValidToken} />
+		<HomeLayout>
+			<div className='flex items-center justify-center py-12'>
+				<div className='mx-auto grid w-full md:w-[400px] gap-6'>
+					<div className='grid gap-2'>
+						<h1 className='text-3xl font-bold'>Modifica password</h1>
+						<p className='leading-5 text-muted-foreground'>
+							Inserisci qui la tua nuova password
+						</p>
 					</div>
-					<Toaster />
+					<ResetpasswordForm isValidToken={isValidToken} />
 				</div>
-			</section>
-		</>
+				<Toaster />
+			</div>
+		</HomeLayout>
 	);
 }
 
@@ -81,7 +78,7 @@ export function ResetpasswordForm({ isValidToken }: { isValidToken: boolean }) {
 	const form = useForm<z.infer<typeof resetPasswordSchema>>({
 		resolver: zodResolver(resetPasswordSchema),
 		defaultValues: {
-			password: 'password-resettata',
+			password: '',
 		},
 	});
 

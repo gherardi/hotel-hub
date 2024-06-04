@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Mail } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
 
-import Header from '@/components/sections/header';
+import HomeLayout from '@/layouts/home-layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -30,15 +30,14 @@ export const loginSchema = z.object({
 
 export default function Login() {
 	return (
-		<>
-			<Header />
-			<section className='w-full lg:grid h-[--hero-height] lg:grid-cols-2 overflow-hidden container'>
+		<HomeLayout>
+			<div className='lg:grid lg:grid-cols-2 h-full'>
 				<div className='hidden bg-muted lg:block'>
 					<img
 						src='/placeholder.svg'
 						alt='Image'
-						width='1920'
-						height='1080'
+						// width='1920'
+						// height='1080'
 						className='h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
 					/>
 				</div>
@@ -60,8 +59,8 @@ export default function Login() {
 					</div>
 					<Toaster />
 				</div>
-			</section>
-		</>
+			</div>
+		</HomeLayout>
 	);
 }
 
@@ -127,11 +126,7 @@ function LoginForm() {
 						</FormItem>
 					)}
 				/>
-				<Button
-					type='submit'
-					className='w-full'
-					disabled={isPending}
-				>
+				<Button type='submit' className='w-full' disabled={isPending}>
 					{isPending ? (
 						<>
 							<Loader2 className='mr-2 h-4 w-4 animate-spin' />

@@ -12,7 +12,7 @@ import './index.css';
 const Landing = lazy(() => import('@/pages/landing'));
 const Login = lazy(() => import('@/pages/login'));
 const Signup = lazy(() => import('@/pages/signup'));
-const NotFound = lazy(() => import('@/pages/notfound'));
+const NotFound = lazy(() => import('@/pages/not-found'));
 const ResetPassword = lazy(() => import('@/pages/reset-password'));
 
 const Dashboard = lazy(() => import('@/pages/dashboard'));
@@ -26,6 +26,11 @@ const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
 		{ path: '/', element: <Landing />, requiresAuth: false },
 		{ path: '/login', element: <Login />, requiresAuth: false },
 		{ path: '/signup', element: <Signup />, requiresAuth: false },
+		{
+			path: '/forgot-password',
+			element: <>forgot password</>,
+			requiresAuth: false,
+		},
 		{
 			path: '/reset-password/:token',
 			element: <ResetPassword />,

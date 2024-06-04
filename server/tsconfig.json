@@ -32,5 +32,6 @@
 		// "lib": ["es2022", "dom", "dom.iterable"],
 		/* If your code doesn't run in the DOM: */
 		"lib": ["es2022"]
-	}
+	},
+	"include": ["src/**/*"]
 }
