@@ -1,11 +1,16 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { useFetchSummaryCards } from '@/hooks/useFetchSummaryCards';
 
 export function SummaryCards() {
+	const { data, isPending } = useFetchSummaryCards();
+
+	// console.log(data[0].data.length);
+
 	return (
-		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
 			<Card>
 				<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-					<CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
+					<CardTitle className='text-sm font-medium'>Incasso Totale</CardTitle>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -20,15 +25,25 @@ export function SummaryCards() {
 					</svg>
 				</CardHeader>
 				<CardContent>
-					<div className='text-2xl font-bold'>$45,231.89</div>
-					<p className='text-xs text-muted-foreground'>
+					<div className='text-2xl font-bold'>
+						€
+						{isPending
+							? 'loading...'
+							: data
+							? data[0].data.reduce(
+									(acc: number, next: { cost: number }) => acc + next.cost,
+									0
+							)
+							: 'error'}
+					</div>
+					{/* <p className='text-xs text-muted-foreground'>
 						+20.1% from last month
-					</p>
+					</p> */}
 				</CardContent>
 			</Card>
 			<Card>
 				<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-					<CardTitle className='text-sm font-medium'>Subscriptions</CardTitle>
+					<CardTitle className='text-sm font-medium'>Prenotazioni</CardTitle>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -45,15 +60,17 @@ export function SummaryCards() {
 					</svg>
 				</CardHeader>
 				<CardContent>
-					<div className='text-2xl font-bold'>+2350</div>
-					<p className='text-xs text-muted-foreground'>
+					<div className='text-2xl font-bold'>
+						{isPending ? 'loading...' : data ? data[0].data.length : 'error'}
+					</div>
+					{/* <p className='text-xs text-muted-foreground'>
 						+180.1% from last month
-					</p>
+					</p> */}
 				</CardContent>
 			</Card>
-			<Card>
+			{/* <Card>
 				<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-					<CardTitle className='text-sm font-medium'>Sales</CardTitle>
+					<CardTitle className='text-sm font-medium'>Check in</CardTitle>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -72,10 +89,12 @@ export function SummaryCards() {
 					<div className='text-2xl font-bold'>+12,234</div>
 					<p className='text-xs text-muted-foreground'>+19% from last month</p>
 				</CardContent>
-			</Card>
+			</Card> */}
 			<Card>
 				<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-					<CardTitle className='text-sm font-medium'>Active Now</CardTitle>
+					<CardTitle className='text-sm font-medium'>
+						Tasso di occupazione
+					</CardTitle>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -91,7 +110,7 @@ export function SummaryCards() {
 				</CardHeader>
 				<CardContent>
 					<div className='text-2xl font-bold'>+573</div>
-					<p className='text-xs text-muted-foreground'>+201 since last hour</p>
+					{/* <p className='text-xs text-muted-foreground'>+201 since last hour</p> */}
 				</CardContent>
 			</Card>
 		</div>

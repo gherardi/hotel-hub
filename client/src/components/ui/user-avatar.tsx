@@ -46,7 +46,9 @@ export function UserAvatar() {
 				<DropdownMenuLabel className='font-normal'>
 					<div className='flex flex-col space-y-1 py-2'>
 						<p className='text-sm font-medium leading-none'>
-							{isPending ? '' : data.data.first_name + data.data.last_name}
+							{isPending
+								? ''
+								: data.data.first_name + ' ' + data.data.last_name}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
 							{isPending ? '' : data.data.email}

@@ -14,9 +14,10 @@ const Login = lazy(() => import('@/pages/login'));
 const Signup = lazy(() => import('@/pages/signup'));
 const NotFound = lazy(() => import('@/pages/notfound'));
 const ResetPassword = lazy(() => import('@/pages/reset-password'));
+
 const Dashboard = lazy(() => import('@/pages/dashboard'));
-const Dashboard4 = lazy(() => import('@/pages/dashboard-4'));
-const Dashboard2 = lazy(() => import('@/pages/dashboard2'));
+const Bookings = lazy(() => import('@/pages/bookings'));
+const Rooms = lazy(() => import('@/pages/rooms'));
 const Settings = lazy(() => import('@/pages/settings'));
 
 // Define routes array
@@ -33,13 +34,11 @@ const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
 
 		{ path: '/settings', element: <Settings />, requiresAuth: true },
 		{ path: '/dashboard', element: <Dashboard />, requiresAuth: true },
-		{ path: '/dashboard-2', element: <Dashboard2 />, requiresAuth: false },
-		{ path: '/dashboard-4', element: <Dashboard4 />, requiresAuth: false },
+		{ path: '/bookings', element: <Bookings />, requiresAuth: true },
+		{ path: '/rooms', element: <Rooms />, requiresAuth: true },
+
 		{ path: '*', element: <NotFound />, requiresAuth: false },
 	];
-
-// const Dashboard = lazy(() => import('@/pages/dashboard'));
-// const Dashboard2 = lazy(() => import('@/pages/dashboard2'));
 
 function App() {
 	return (
@@ -52,10 +51,6 @@ function App() {
 				}
 			>
 				<Routes>
-					{/* <Route path='/'>
-						<Route path='/dashboard' element={<Dashboard />} />
-						<Route path='/dashboard2' element={<Dashboard2 />} />
-					</Route> */}
 					{routes.map(({ path, element, requiresAuth }) => (
 						<Route
 							key={path}

@@ -16,7 +16,7 @@ export default function header() {
 			<div className='space-x-4'>
 				{token ? (
 					<Button variant={'outline'} asChild size='sm'>
-						<Link to='/dashboard'>
+						<Link to='/dashboard' reloadDocument={true}>
 							Dashboard
 						</Link>
 					</Button>

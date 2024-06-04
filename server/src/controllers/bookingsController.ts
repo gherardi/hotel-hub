@@ -1,24 +1,26 @@
 import { merge, get } from 'lodash';
 
-import supabase from '../services/supabase-client';
 import ApplicationError from '../utils/applicationError';
 import handleAsyncError from '../utils/handleAsyncError';
+import { Tables } from '../types/database.types';
+import supabase from '../services/supabase-client';
 
 export const getOurbookings = handleAsyncError(async (req, res, next) => {
-	// const user = get(req, 'user') as unknown as User;
+	const user = get(req, 'user') as unknown as Tables<'users'>;
 
-	// const { hotel_id } = user;
-	// const { data, error } = await supabase
-	// 	.from('bookings')
-	// 	.select(`*, rooms (*)`)
-	// 	.eq('hotel_id', hotel_id);
+	const { hotel_id } = user;
+	if (!hotel_id)
+		return next(new ApplicationError('No hotel_id found for this user', 400));
 
-	// if (error) return next(new ApplicationError(error.message));
+	const { data, error } = await supabase
+		.from('bookings')
+		// .select(`*, rooms (*)`)
+		.select(`*`)
+		.eq('hotel_id', hotel_id);
 
-	// res.status(200).json({ status: 'success', data });
-	res
-		.status(501)
-		.json({ status: 'success', message: 'route not implemented yet! code: ' });
+	if (error) return next(new ApplicationError(error.message));
+
+	res.status(200).json({ status: 'success', data });
 });
 
 export const createBooking = handleAsyncError(async (req, res, next) => {

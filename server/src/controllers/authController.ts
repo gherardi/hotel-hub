@@ -189,10 +189,6 @@ export const protect = handleAsyncError(async (req, res, next) => {
 	}
 
 	// TODO: 2) Verification token
-	// const decoded = (await promisify(jwt.verify)(
-	// 	token,
-	// 	env.JWT_SECRET
-	// )) as unknown as User;
 
 	jwt.verify(token, env.JWT_SECRET, async function (err: any, decoded: any) {
 		if (err) {
@@ -202,7 +198,7 @@ export const protect = handleAsyncError(async (req, res, next) => {
 		} else {
 			decoded as Tables<'users'>;
 			// Token is successfully verified
-			console.log('Token is valid. Decoded payload:', decoded);
+			// console.log('Token is valid. Decoded payload:', decoded);
 			const { data: user, error } = await supabase
 				.from('users')
 				.select('*')

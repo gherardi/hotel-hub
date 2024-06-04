@@ -24,13 +24,13 @@ export default function Hero() {
 				un'esperienza eccezionale ai tuoi ospiti con le nostre funzionalità
 				avanzate.
 			</p>
-			<div className='flex md:justify-center items-center gap-x-2.5 mt-4 text-muted-foreground'>
+			{/* <div className='flex md:justify-center items-center gap-x-2.5 mt-4 text-muted-foreground'>
 				<div
 					className='h-2 w-2 bg-[#d51616] rounded-full shadow-[#cf1212] mt-0.5'
 					style={{ boxShadow: '0 0 0 4px rgba(213, 21, 21, .27)' }}
 				></div>
 				<p>stato: non disponibile</p>
-			</div>
+			</div> */}
 		</section>
 	);
 }

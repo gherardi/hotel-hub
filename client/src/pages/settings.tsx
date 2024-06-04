@@ -21,7 +21,7 @@ export default function Settings() {
 
 	return (
 		<SettingsLayout>
-			<div className='mx-auto w-full max-w-6xl mt-1.5'>
+			<div className='mx-auto w-full max-w-6xl'>
 				<h2 className='text-3xl font-bold tracking-tight'>Impostazioni</h2>
 			</div>
 

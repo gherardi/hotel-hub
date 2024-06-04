@@ -27,6 +27,18 @@ export default function Navbar() {
 					>
 						Impostazioni
 					</Link>
+					<Link
+						to='/bookings'
+						className='text-muted-foreground transition-colors hover:text-foreground'
+					>
+						Prenotazioni
+					</Link>
+					<Link
+						to='/rooms'
+						className='text-muted-foreground transition-colors hover:text-foreground'
+					>
+						Camere
+					</Link>
 				</nav>
 				{/* SHEETS PER MOBILE, VEDERE ORIGINALE */}
 				<div className='flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4'>
