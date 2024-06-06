@@ -1,14 +1,14 @@
 import express from 'express';
 import * as authController from '../controllers/authController';
-import * as validator from '../middlewares/validator';
+// import * as validator from '../middlewares/validator';
 
 const router = express.Router();
 
-router.post('/signup', validator.name, validator.password, authController.signup);
-router.post('/login', validator.email, validator.password, authController.login);
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
-router.post('/forgotPassword', validator.email, authController.forgotPassword);
-router.patch('/resetPassword/:token', validator.password, authController.resetPassword);
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
 
 export default router;

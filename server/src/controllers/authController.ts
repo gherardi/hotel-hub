@@ -38,8 +38,6 @@ const createSendToken = (user: Tables<'users'>, res: Response) => {
 };
 
 export const signup = handleAsyncError(async (req, res, next) => {
-	// TODO: validateLogin middleware per validare tutti questi campi
-
 	const { first_name, last_name, email, password, hotel_code } = req.body;
 	const { data: hotel } = await supabase
 		.from('hotels')

@@ -30,7 +30,6 @@ app.all('*', (req, res, next) => {
 	);
 });
 
-// GLOBAL ERROR HANDLING MIDDLEWARE
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {

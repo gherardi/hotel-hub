@@ -1,8 +1,7 @@
 import express from 'express';
 import * as authController from '../controllers/authController';
 import * as usersController from '../controllers/usersController';
-
-import * as validator from '../middlewares/validator';
+// import * as validator from '../middlewares/validator';
 
 const router = express.Router();
 
@@ -10,7 +9,7 @@ const router = express.Router();
 
 router.use(authController.protect);
 router.get('/me', usersController.getMe);
-router.patch('/me', validator.name, validator.email, usersController.updateMe);
+router.patch('/me', usersController.updateMe);
 router.get('/dashboard', usersController.dashboard);
 
 router.use(authController.restrictToAdmin);

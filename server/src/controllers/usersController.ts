@@ -10,8 +10,6 @@ import { Tables } from '../types/database.types';
 
 dotenv.config();
 
-// import { User } from '../types/User';
-
 // export const existingEmails = async (req, res, next) => {
 // 	try {
 // 		const { email } = req.params;
