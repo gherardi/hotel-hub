@@ -22,12 +22,6 @@ export default function Navbar() {
 						Dashboard
 					</Link>
 					<Link
-						to='/settings'
-						className='text-muted-foreground transition-colors hover:text-foreground'
-					>
-						Impostazioni
-					</Link>
-					<Link
 						to='/bookings'
 						className='text-muted-foreground transition-colors hover:text-foreground'
 					>

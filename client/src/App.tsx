@@ -37,10 +37,11 @@ const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
 			requiresAuth: false,
 		},
 
-		{ path: '/settings', element: <Settings />, requiresAuth: true },
 		{ path: '/dashboard', element: <Dashboard />, requiresAuth: true },
 		{ path: '/bookings', element: <Bookings />, requiresAuth: true },
 		{ path: '/rooms', element: <Rooms />, requiresAuth: true },
+		
+		{ path: '/profile', element: <Settings />, requiresAuth: true },
 
 		{ path: '*', element: <NotFound />, requiresAuth: false },
 	];

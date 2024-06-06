@@ -12,33 +12,51 @@ export type Database = {
       bookings: {
         Row: {
           created_at: string
-          customer_first_name: string
-          customer_last_name: string
+          customer_fullname: string
           end_date: string
           hotel_id: string
           id: string
+          isPaid: boolean
+          num_guests: number
+          num_nights: number
+          observations: string | null
           room_id: string
+          room_price: number
           start_date: string
+          status: string
+          total_price: number
         }
         Insert: {
           created_at?: string
-          customer_first_name: string
-          customer_last_name: string
+          customer_fullname: string
           end_date: string
           hotel_id: string
           id?: string
+          isPaid?: boolean
+          num_guests: number
+          num_nights: number
+          observations?: string | null
           room_id: string
+          room_price: number
           start_date: string
+          status?: string
+          total_price: number
         }
         Update: {
           created_at?: string
-          customer_first_name?: string
-          customer_last_name?: string
+          customer_fullname?: string
           end_date?: string
           hotel_id?: string
           id?: string
+          isPaid?: boolean
+          num_guests?: number
+          num_nights?: number
+          observations?: string | null
           room_id?: string
+          room_price?: number
           start_date?: string
+          status?: string
+          total_price?: number
         }
         Relationships: [
           {
@@ -59,16 +77,19 @@ export type Database = {
       }
       hotels: {
         Row: {
+          code: string
           created_at: string
           id: string
           name: string
         }
         Insert: {
+          code: string
           created_at?: string
           id?: string
           name: string
         }
         Update: {
+          code?: string
           created_at?: string
           id?: string
           name?: string
@@ -77,27 +98,27 @@ export type Database = {
       }
       rooms: {
         Row: {
-          capacity: string
+          capacity: number
           created_at: string
           hotel_id: string
           id: string
-          number: number
+          name: string
           price: number
         }
         Insert: {
-          capacity: string
+          capacity: number
           created_at?: string
           hotel_id: string
           id?: string
-          number: number
+          name: string
           price: number
         }
         Update: {
-          capacity?: string
+          capacity?: number
           created_at?: string
           hotel_id?: string
           id?: string
-          number?: number
+          name?: string
           price?: number
         }
         Relationships: [
@@ -162,7 +183,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      capacity: "SIngle" | "Double" | "Triple" | "Quadruple"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never

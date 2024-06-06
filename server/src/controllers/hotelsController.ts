@@ -32,7 +32,7 @@ export const getHotel = handleAsyncError(async (req, res, next) => {
 
 export const createHotel = handleAsyncError(async (req, res, next) => {
 	// name are required
-	const { name } = req.body;
+	const { name, code } = req.body;
 
 	if (!name) {
 		return next(new ApplicationError('Name is required', 400));
@@ -40,7 +40,7 @@ export const createHotel = handleAsyncError(async (req, res, next) => {
 
 	const { data, error } = await supabase
 		.from('hotels')
-		.insert({ name })
+		.insert({ name, code })
 		.select('*')
 		.single<Tables<'hotels'>>();
 

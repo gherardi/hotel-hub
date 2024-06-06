@@ -57,14 +57,14 @@ export function UserAvatar() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<DropdownMenuItem onClick={() => handleNavigate('/settings')}>
+					<DropdownMenuItem onClick={() => handleNavigate('/profile')}>
 						Profilo
 						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 					</DropdownMenuItem>
-					<DropdownMenuItem onClick={() => handleNavigate('/settings')}>
+					{/* <DropdownMenuItem onClick={() => handleNavigate('/settings')}>
 						Impostazioni
 						<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-					</DropdownMenuItem>
+					</DropdownMenuItem> */}
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={handleLogout}>

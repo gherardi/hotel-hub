@@ -4,8 +4,6 @@ import { useFetchSummaryCards } from '@/hooks/useFetchSummaryCards';
 export function SummaryCards() {
 	const { data, isPending } = useFetchSummaryCards();
 
-	// console.log(data[0].data.length);
-
 	return (
 		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
 			<Card>
@@ -31,7 +29,8 @@ export function SummaryCards() {
 							? 'loading...'
 							: data
 							? data[0].data.reduce(
-									(acc: number, next: { cost: number }) => acc + next.cost,
+									(acc: number, next: { cost: number; total_price: number }) =>
+										acc + next.total_price,
 									0
 							)
 							: 'error'}

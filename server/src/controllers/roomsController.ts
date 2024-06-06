@@ -21,17 +21,19 @@ export const getOurRooms = handleAsyncError(async (req, res, next) => {
 });
 
 export const createRoom = handleAsyncError(async (req, res, next) => {
-	const { capacity, price, number } = req.body;
-	const { hotel_id } = get(req, 'user', {} as Tables<'users'>) as {
-		hotel_id: string;
-	};
+	const { capacity, price, name } = req.body;
+	const { hotel_id } = get(req, 'user', {} as Tables<'users'>);
+
+	console.log('CREANDO CAMERA', capacity, price, name, hotel_id);
+
+	if (!hotel_id) return next(new ApplicationError('Hotel not found', 404));
 
 	const { data, error } = await supabase
 		.from('rooms')
 		.insert({
-			capacity,
+			name,
 			price,
-			number,
+			capacity,
 			hotel_id,
 		})
 		.select()

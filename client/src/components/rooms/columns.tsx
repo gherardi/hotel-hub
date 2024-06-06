@@ -14,7 +14,7 @@ export const columns: ColumnDef<Room>[] = [
 		header: 'Data Creazione',
 		cell: ({ row }) => {
 			const date = new Date(row.getValue('created_at'));
-			return <div>{date.toLocaleString()}</div>;
+			return <div>{date.toLocaleDateString()}</div>;
 		}
 	},
 	{
