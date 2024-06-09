@@ -8,10 +8,9 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
 	return (
 		<>
 			<Header />
-			<main className='h-[--hero-height] overflow-hidden container bg-[pink]'>
+			<main className='h-[--hero-height] overflow-hidden container'>
 				{children}
 			</main>
 		</>
 	);
 }
-// w-full h-[--hero-height] lg:grid lg:grid-cols-2'>

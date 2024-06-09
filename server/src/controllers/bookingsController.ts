@@ -24,15 +24,8 @@ export const getOurbookings = handleAsyncError(async (req, res, next) => {
 });
 
 export const createBooking = handleAsyncError(async (req, res, next) => {
-	// const {
-	// 	customer_first_name,
-	// 	customer_last_name,
-	// 	start_date,
-	// 	end_date,
-	// 	room_id,
-	// } = req.body;
-
-	// const { id: created_by, hotel_id } = req.user;
+	const { customer_fullname, price, name } = req.body;
+	const { hotel_id } = get(req, 'user', {} as Tables<'users'>);
 
 	// // calculate the days between start and end
 	// const nights = Math.floor(

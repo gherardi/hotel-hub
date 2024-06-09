@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 // Import components
 import Loader from './components/ui/loading';
 import ProtectedRoute from './components/protected-route';
+import { Toaster } from '@/components/ui/toaster';
 
 // Import styles
 import './index.css';
@@ -18,7 +19,7 @@ const ResetPassword = lazy(() => import('@/pages/reset-password'));
 const Dashboard = lazy(() => import('@/pages/dashboard'));
 const Bookings = lazy(() => import('@/pages/bookings'));
 const Rooms = lazy(() => import('@/pages/rooms'));
-const Settings = lazy(() => import('@/pages/settings'));
+const Profile = lazy(() => import('@/pages/profile'));
 
 // Define routes array
 const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
@@ -40,8 +41,8 @@ const routes: { path: string; element: JSX.Element; requiresAuth: boolean }[] =
 		{ path: '/dashboard', element: <Dashboard />, requiresAuth: true },
 		{ path: '/bookings', element: <Bookings />, requiresAuth: true },
 		{ path: '/rooms', element: <Rooms />, requiresAuth: true },
-		
-		{ path: '/profile', element: <Settings />, requiresAuth: true },
+
+		{ path: '/profile', element: <Profile />, requiresAuth: true },
 
 		{ path: '*', element: <NotFound />, requiresAuth: false },
 	];
@@ -71,6 +72,7 @@ function App() {
 						/>
 					))}
 				</Routes>
+				<Toaster />
 			</Suspense>
 		</>
 	);

@@ -21,6 +21,7 @@ export default {
 		},
 		fontFamily: {
 			sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+			mono: [...defaultTheme.fontFamily.mono],
 		},
 		extend: {
 			colors: {

@@ -20,6 +20,10 @@ export const columns: ColumnDef<Room>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Numero',
+		cell: ({ row }) => {
+
+      return <div >{row.getValue("name")}</div>
+    },
 	},
 	{
 		accessorKey: 'price',
@@ -31,7 +35,7 @@ export const columns: ColumnDef<Room>[] = [
         currency: "EUR",
       }).format(amount)
 
-      return <div className='font-medium'>{formatted}</div>
+      return <div className='font-mono text-[16px]'>{formatted}</div>
     },
 	},
 	{

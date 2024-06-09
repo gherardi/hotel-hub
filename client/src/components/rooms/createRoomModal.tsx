@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 // import { Mail } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { BASE_URL } from '@/config';
 import { useAuth } from '../auth-provider';
+import { useState } from 'react';
 
 const roomSchema = z.object({
 	name: z
@@ -50,14 +51,14 @@ const roomSchema = z.object({
 });
 
 export default function CreateRoomModal() {
+	const queryClient = useQueryClient();
 	const { token } = useAuth();
+
+	const [isOpen, setIsOpen] = useState(false);
+
 	const form = useForm<z.infer<typeof roomSchema>>({
 		resolver: zodResolver(roomSchema),
-		defaultValues: {
-			name: '005',
-			price: 95,
-			capacity: 2,
-		},
+		defaultValues: { name: '', price: 0, capacity: 0 },
 	});
 
 	const { mutate, isPending } = useMutation({
@@ -77,13 +78,15 @@ export default function CreateRoomModal() {
 		},
 		onSuccess: (data) => {
 			console.log(data);
+			queryClient.invalidateQueries({ queryKey: ['rooms'] });
+			setIsOpen(false);
 		},
 		onError: (error: Error) => {
 			console.log('errore:', error.message);
 		},
 	});
 	return (
-		<AlertDialog>
+		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 			<AlertDialogTrigger asChild>
 				<Button size='sm'>Nuova camera</Button>
 			</AlertDialogTrigger>
@@ -108,7 +111,7 @@ export default function CreateRoomModal() {
 									<FormControl>
 										<Input
 											type='text'
-											placeholder='00x'
+											placeholder='es. 101, 102, 103, ecc.'
 											disabled={isPending}
 											{...field}
 										/>
@@ -127,7 +130,6 @@ export default function CreateRoomModal() {
 									<FormControl>
 										<Input
 											type='number'
-											min={0}
 											disabled={isPending}
 											{...field}
 										/>
@@ -144,12 +146,7 @@ export default function CreateRoomModal() {
 								<FormItem className='grid gap-2 space-y-0'>
 									<FormLabel>Capacità</FormLabel>
 									<FormControl>
-										<Input
-											type='number'
-											min={1}
-											disabled={isPending}
-											{...field}
-										/>
+										<Input type='number' disabled={isPending} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
