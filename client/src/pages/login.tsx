@@ -17,10 +17,8 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 
-import { Toaster } from '@/components/ui/toaster';
 import { useLogin } from '@/hooks/useLogin';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const loginSchema = z.object({
 	email: z.string().email({ message: 'Inserisci un indirizzo email valido' }),
 	password: z.string().min(8, {
@@ -57,7 +55,6 @@ export default function Login() {
 							</Link>
 						</div>
 					</div>
-					<Toaster />
 				</div>
 			</div>
 		</HomeLayout>
@@ -73,7 +70,7 @@ function LoginForm() {
 		},
 	});
 
-	const { mutate, isPending } = useLogin();
+	const { mutate, isPending: isLoggingIn } = useLogin();
 
 	return (
 		<Form {...form}>
@@ -91,7 +88,7 @@ function LoginForm() {
 								<Input
 									type='email'
 									placeholder='email@example.com'
-									disabled={isPending}
+									disabled={isLoggingIn}
 									{...field}
 								/>
 							</FormControl>
@@ -118,7 +115,7 @@ function LoginForm() {
 								<Input
 									type='password'
 									placeholder='********'
-									disabled={isPending}
+									disabled={isLoggingIn}
 									{...field}
 								/>
 							</FormControl>
@@ -126,22 +123,16 @@ function LoginForm() {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='w-full' disabled={isPending}>
-					{isPending ? (
-						<>
-							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-							Accesso in corso
-						</>
-					) : (
-						<>
-							<Mail className='mr-2 h-4 w-4' />
-							Accedi con l'email
-						</>
-					)}
+				<Button type='submit' className='w-full' disabled={isLoggingIn}>
+					{isLoggingIn && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+					{isLoggingIn && 'Accesso in corso...'}
+
+					{!isLoggingIn && <Mail className='mr-2 h-4 w-4' />}
+					{!isLoggingIn && "Accedi con l'email"}
 				</Button>
-				<Button variant='outline' className='w-full hidden'>
+				{/* <Button variant='outline' className='w-full'>
 					Accedi con Google
-				</Button>
+				</Button> */}
 			</form>
 		</Form>
 	);

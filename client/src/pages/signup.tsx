@@ -15,11 +15,8 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-
-import { Toaster } from '@/components/ui/toaster';
 import { useSignup } from '@/hooks/useSignup';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const signupSchema = z.object({
 	first_name: z
 		.string()
@@ -36,8 +33,6 @@ export const signupSchema = z.object({
 		.string()
 		.startsWith('HOTEL-', { message: 'Codice hotel non valido' }),
 });
-
-// TODO: METTERE PARTE SE EMAIL è GIA REGISTRATA E MAGARI QUANTO è STRONG LA PASSWORD
 
 export default function Signup() {
 	return (
@@ -58,7 +53,6 @@ export default function Signup() {
 						</Link>
 					</div>
 				</div>
-				<Toaster />
 			</div>
 		</HomeLayout>
 	);
@@ -76,7 +70,7 @@ function SignupForm() {
 		},
 	});
 
-	const { mutate, isPending } = useSignup();
+	const { mutate, isPending: isSigningUp } = useSignup();
 
 	return (
 		<Form {...form}>
@@ -95,7 +89,7 @@ function SignupForm() {
 									<Input
 										type='text'
 										placeholder='Mario'
-										disabled={isPending}
+										disabled={isSigningUp}
 										{...field}
 									/>
 								</FormControl>
@@ -113,7 +107,7 @@ function SignupForm() {
 									<Input
 										type='text'
 										placeholder='Rossi'
-										disabled={isPending}
+										disabled={isSigningUp}
 										{...field}
 									/>
 								</FormControl>
@@ -133,7 +127,7 @@ function SignupForm() {
 								<Input
 									type='email'
 									placeholder='email@example.com'
-									disabled={isPending}
+									disabled={isSigningUp}
 									{...field}
 								/>
 							</FormControl>
@@ -152,7 +146,7 @@ function SignupForm() {
 								<Input
 									type='password'
 									placeholder='********'
-									disabled={isPending}
+									disabled={isSigningUp}
 									{...field}
 								/>
 							</FormControl>
@@ -171,7 +165,7 @@ function SignupForm() {
 								<Input
 									type='text'
 									placeholder='HOTEL-DE3F'
-									disabled={isPending}
+									disabled={isSigningUp}
 									{...field}
 								/>
 							</FormControl>
@@ -180,19 +174,15 @@ function SignupForm() {
 					)}
 				/>
 
-				<Button type='submit' className='w-full' disabled={isPending}>
-					{isPending ? (
-						<>
-							<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-							Registrazione in corso
-						</>
-					) : (
-						<>Crea un account</>
-					)}
+				<Button type='submit' className='w-full' disabled={isSigningUp}>
+					{isSigningUp && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+					{isSigningUp && 'Registrazione in corso...'}
+
+					{!isSigningUp && 'Crea un account'}
 				</Button>
-				<Button variant='outline' className='w-full hidden'>
+				{/* <Button variant='outline' className='w-full hidden'>
 					Accedi con Google
-				</Button>
+				</Button> */}
 			</form>
 		</Form>
 	);

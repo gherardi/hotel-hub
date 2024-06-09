@@ -1,5 +1,4 @@
 import { useAuth } from '@/components/auth-provider';
-// import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import { signupSchema } from '@/pages/signup';
 import { realisticConfetti } from '@/utils/confetti-animation';
@@ -45,15 +44,12 @@ export function useSignup() {
 			}, 1500);
 		},
 		onError: (error: Error) => {
-			console.log('errore', error.message);
+			console.log('ERRORE: ', error.message);
 
 			toast({
 				variant: 'destructive',
 				title: 'Uh oh! Qualcosa è andato storto.',
-				description: error.message
-					? error.message
-					: "C'è stato un problema con la tua richiesta.",
-				// action: <ToastAction altText='Try again'>Riprova</ToastAction>,
+				description: "C'è stato un problema con la tua richiesta.",
 			});
 		},
 	});
