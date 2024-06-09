@@ -1,20 +1,20 @@
 import { useAuth } from '@/components/auth-provider';
 import { useToast } from '@/components/ui/use-toast';
-import { profileSchema } from '@/pages/profile';
+import { bookingSchema } from '@/components/bookings/createBookingForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
 import { BASE_URL } from '@/config';
 
-export function useUpdateProfile() {
-  const { toast } = useToast();
-  const { token } = useAuth();
-  const queryClient = useQueryClient();
+export function useCreateBooking() {
+	const { toast } = useToast();
+	const { token } = useAuth();
+	const queryClient = useQueryClient();
 
-	const { mutate, isPending } = useMutation({
-		mutationFn: async (data: z.infer<typeof profileSchema>) => {
-			const response = await fetch(`${BASE_URL}/users/me`, {
-				method: 'PATCH',
+	const { mutate, isPending, isSuccess } = useMutation({
+		mutationFn: async (data: z.infer<typeof bookingSchema>) => {
+			const response = await fetch(`${BASE_URL}/bookings`, {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
@@ -26,13 +26,13 @@ export function useUpdateProfile() {
 			return resData;
 		},
 		onSuccess: () => {
-      queryClient.invalidateQueries({
-				queryKey: ['profilo', 'profile'],
+			queryClient.invalidateQueries({
+				queryKey: ['bookings'],
 			});
 
 			toast({
 				title: 'Successo',
-				description: 'Profilo aggiornato con successo!',
+				description: 'Prenotazione creata con successo!',
 			});
 		},
 		onError: (error: Error) => {
@@ -46,5 +46,5 @@ export function useUpdateProfile() {
 		},
 	});
 
-	return { mutate, isPending };
+	return { mutate, isPending, isSuccess };
 }

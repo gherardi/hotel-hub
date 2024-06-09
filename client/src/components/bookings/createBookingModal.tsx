@@ -37,7 +37,7 @@ import { cn } from '@/lib/utils';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Calendar } from '../ui/calendar';
 
-const bookingSchema = z.object({
+export const bookingSchema = z.object({
 	customer_fullname: z.string(),
 	dates: z.object(),
 
