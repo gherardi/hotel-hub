@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 
 import HomeLayout from '@/layouts/home-layout';
-import { Toaster } from '@/components/ui/toaster';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import {
@@ -22,9 +22,6 @@ import {
 	InputOTPSeparator,
 	InputOTPSlot,
 } from '@/components/ui/input-otp';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { realisticConfetti } from '@/utils/confetti-animation';
 import { isValidUUID } from '@/utils/helpers';
 import { Input } from '@/components/ui/input';
@@ -66,7 +63,6 @@ export default function ResetPassword() {
 					</div>
 					<ResetpasswordForm isValidToken={isValidToken} />
 				</div>
-				<Toaster />
 			</div>
 		</HomeLayout>
 	);
