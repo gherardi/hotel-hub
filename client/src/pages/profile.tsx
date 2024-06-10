@@ -33,6 +33,9 @@ export const profileSchema = z.object({
 		.string()
 		.min(2, { message: 'Il cognome deve essere almeno di 2 caratteri' }),
 	email: z.string().email({ message: 'Inserisci un indirizzo email valido' }),
+	hotel_code: z
+		.string()
+		.min(2, { message: 'Il codice hotel deve essere almeno di 2 caratteri' }),
 });
 
 export default function Profile() {
@@ -44,6 +47,7 @@ export default function Profile() {
 			first_name: '',
 			last_name: '',
 			email: '',
+			hotel_code: '',
 		},
 	});
 
@@ -59,7 +63,11 @@ export default function Profile() {
 
 			for (const key in data) {
 				const value = data[key];
-				form.setValue(key as 'first_name' | 'last_name' | 'email', value);
+				if (value?.code) {
+					form.setValue('hotel_code', value.code);
+				} else {
+					form.setValue(key as 'first_name' | 'last_name' | 'email', value);
+				}
 			}
 			return data;
 		},
@@ -70,6 +78,7 @@ export default function Profile() {
 		form.setValue('first_name', 'caricamento...');
 		form.setValue('last_name', 'caricamento...');
 		form.setValue('email', 'caricamento...');
+		form.setValue('hotel_code', 'caricamento...');
 	}
 
 	const { mutate, isPending: isUpdating } = useUpdateProfile();
@@ -87,10 +96,9 @@ export default function Profile() {
 				<div className='grid gap-6'>
 					<Card>
 						<CardHeader>
-							<CardTitle>Plugins Directory</CardTitle>
+							<CardTitle>Le tue informazioni</CardTitle>
 							<CardDescription>
-								The directory within your project, in which your plugins are
-								located.
+								Modifica le tue informazioni personali e la tua email qui.
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
@@ -154,7 +162,26 @@ export default function Profile() {
 										)}
 									/>
 
-									<div>
+									<FormField
+										control={form.control}
+										name='hotel_code'
+										render={({ field }) => (
+											<FormItem className='grid gap-2 space-y-0'>
+												<FormLabel>Codice hotel</FormLabel>
+												<FormControl>
+													<Input
+														type='text'
+														placeholder=''
+														disabled={true}
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+
+									<div className='text-right'>
 										<Button type='submit' disabled={isUpdating}>
 											Salva
 										</Button>

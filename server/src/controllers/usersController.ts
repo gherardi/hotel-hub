@@ -32,7 +32,7 @@ export const getMe = handleAsyncError(async (req, res, next) => {
 
 	const { data, error } = await supabase
 		.from('users')
-		.select('*')
+		.select('*, hotels(id, code)')
 		.eq('id', user.id)
 		.single<Tables<'users'>>();
 

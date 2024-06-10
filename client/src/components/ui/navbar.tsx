@@ -1,9 +1,11 @@
 import { UserAvatar } from '@/components/ui/user-avatar';
-// import { MainNav } from '@/components/ui/main-nav';
 import { Hotel } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 export default function Navbar() {
+	const pathname = location.pathname;
+
 	return (
 		<>
 			<header className='sticky top-0 flex h-[--header-height] items-center gap-4 border-b bg-background px-4 md:px-8'>
@@ -17,19 +19,28 @@ export default function Navbar() {
 					</Link>
 					<Link
 						to='/dashboard'
-						className='text-muted-foreground transition-colors hover:text-foreground'
+						className={cn(
+							'text-muted-foreground transition-colors hover:text-foreground',
+							pathname === '/dashboard' ? 'text-semibold' : ''
+						)}
 					>
 						Dashboard
 					</Link>
 					<Link
 						to='/bookings'
-						className='text-muted-foreground transition-colors hover:text-foreground'
+						className={cn(
+							'text-muted-foreground transition-colors hover:text-foreground',
+							pathname === '/bookings' ? 'text-semibold' : ''
+						)}
 					>
 						Prenotazioni
 					</Link>
 					<Link
 						to='/rooms'
-						className='text-muted-foreground transition-colors hover:text-foreground'
+						className={cn(
+							'text-muted-foreground transition-colors hover:text-foreground',
+							pathname === '/rooms' ? 'text-semibold' : ''
+						)}
 					>
 						Camere
 					</Link>

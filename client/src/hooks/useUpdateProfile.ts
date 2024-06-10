@@ -25,9 +25,11 @@ export function useUpdateProfile() {
 			if (resData.status !== 'success') throw new Error(resData.message);
 			return resData;
 		},
-		onSuccess: () => {
+		onSuccess: (data) => {
+			console.log(data);
+			console.log("invalidate queries");
       queryClient.invalidateQueries({
-				queryKey: ['profilo', 'profile'],
+				queryKey: ['profile', 'profilo'],
 			});
 
 			toast({
