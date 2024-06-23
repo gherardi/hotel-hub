@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 				</AuthProvider>
 			</ThemeProvider>
 			{/* QUERY CLIENT DEV TOOLS */}
-			<ReactQueryDevtools initialIsOpen={false} />
+			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 		</QueryClientProvider>
 	</React.StrictMode>
 );

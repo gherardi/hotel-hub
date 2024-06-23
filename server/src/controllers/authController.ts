@@ -39,16 +39,22 @@ const createSendToken = (user: Tables<'users'>, res: Response) => {
 
 export const signup = handleAsyncError(async (req, res, next) => {
 	const { first_name, last_name, email, password, hotel_code } = req.body;
-	const { data: hotel } = await supabase
+	console.log(first_name, last_name, email, password, hotel_code);
+	const { data: hotel, error: hotelError } = await supabase
 		.from('hotels')
 		.select()
 		.eq('code', hotel_code)
-		.single<Tables<'hotels'>>();
+		.maybeSingle<Tables<'hotels'>>();
 
+	if (hotelError)
+		return next(new ApplicationError('no hotel found with that code', 404));
 	if (!hotel) return next(new ApplicationError('Hotel not found', 404));
+
+	console.log(hotel);
 
 	const hash = await bcrypt.hash(password, Number(env.SALT));
 
+	console.log('passato');
 	const { data: user, error } = await supabase
 		.from('users')
 		.insert({

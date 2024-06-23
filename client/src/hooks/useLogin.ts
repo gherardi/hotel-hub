@@ -35,7 +35,7 @@ export function useLogin() {
 			});
 
 			setTimeout(() => {
-				navigate('/dashboard', { replace: true, state: { from: '/' } });
+				navigate('/bookings', { replace: true, state: { from: '/' } });
 			}, 1500);
 		},
 		onError: (error: Error) => {

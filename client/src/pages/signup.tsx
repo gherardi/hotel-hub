@@ -66,7 +66,7 @@ function SignupForm() {
 			last_name: 'Gherardi',
 			email: 'gherardivictor@gmail.com',
 			password: 'qwerty123.',
-			hotel_code: 'HOTEL-DER',
+			hotel_code: 'HOTEL_PALEO',
 		},
 	});
 
