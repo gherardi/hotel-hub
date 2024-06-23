@@ -1,15 +1,20 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
-export type Room = {
+import Actions from './actions';
+
+export type Booking = {
 	id: string;
-	name: string; // code
 	created_at: string;
-	price: number;
-	hotel_id: string;
-	capacity: number;
+	customer_fullname: string;
+	start_date: string;
+	end_date: string;
+	num_guests: string;
+	num_nights: string;
+	room_price: string;
+	total_price: string;
 };
 
-export const columns: ColumnDef<Room>[] = [
+export const columns: ColumnDef<Booking>[] = [
 	{
 		id: 'select',
 		header: ({ table }) => (
@@ -40,7 +45,7 @@ export const columns: ColumnDef<Room>[] = [
 		header: 'Data Creazione',
 		cell: ({ row }) => {
 			const date = new Date(row.getValue('created_at'));
-			return <div>{date.toLocaleDateString()}</div>;
+			return <div className='text-nowrap'>{date.toLocaleDateString()}</div>;
 		},
 	},
 	{
@@ -50,7 +55,7 @@ export const columns: ColumnDef<Room>[] = [
 			const fullname = (
 				row.getValue('customer_fullname') as string
 			).toLowerCase();
-			return <div className='capitalize'>{fullname}</div>;
+			return <div className='text-nowrap capitalize'>{fullname}</div>;
 		},
 	},
 	{
@@ -58,7 +63,7 @@ export const columns: ColumnDef<Room>[] = [
 		header: 'Arrivo',
 		cell: ({ row }) => {
 			const date = new Date(row.getValue('start_date'));
-			return <div>{date.toLocaleDateString()}</div>;
+			return <div className='text-nowrap'>{date.toLocaleDateString()}</div>;
 		},
 	},
 	{
@@ -66,14 +71,7 @@ export const columns: ColumnDef<Room>[] = [
 		header: 'Partenza',
 		cell: ({ row }) => {
 			const date = new Date(row.getValue('end_date'));
-			return <div>{date.toLocaleDateString()}</div>;
-		},
-	},
-	{
-		accessorKey: 'num_guests',
-		header: 'Ospiti',
-		cell: ({ row }) => {
-			return <div>{row.getValue('num_guests')} ospite/i</div>;
+			return <div className='text-nowrap'>{date.toLocaleDateString()}</div>;
 		},
 	},
 	{
@@ -83,6 +81,16 @@ export const columns: ColumnDef<Room>[] = [
 			return <div className=''>{row.getValue('num_nights')}</div>;
 		},
 	},
+	{
+		accessorKey: 'num_guests',
+		header: 'Ospiti',
+		cell: ({ row }) => {
+			return (
+				<div className='text-nowrap'>{row.getValue('num_guests')} ospite/i</div>
+			);
+		},
+	},
+
 	{
 		accessorKey: 'room_price',
 		header: 'Prezzo/notte',
@@ -109,8 +117,20 @@ export const columns: ColumnDef<Room>[] = [
 			return <div className='font-medium'>{formatted}</div>;
 		},
 	},
-	// {
-	// 	accessorKey: 'capacity',
-	// 	header: 'Capacità',
-	// },
+	{
+		accessorKey: 'observations',
+		header: 'Note',
+		cell: ({ row }) => {
+			return <div className='text-nowrap'>{row.getValue('observations')}</div>;
+		},
+	},
+	{
+		id: 'actions',
+		enableHiding: false,
+		cell: ({ row }) => {
+			const booking = row.original;
+
+			return <Actions booking={booking} />;
+		},
+	},
 ];

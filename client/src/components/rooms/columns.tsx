@@ -1,19 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Actions from './actions';
+
 export type Room = {
 	id: string;
-	name: string;
 	created_at: string;
+	name: string;
 	price: number;
 	hotel_id: string;
 	capacity: number;
@@ -129,27 +123,7 @@ export const columns: ColumnDef<Room>[] = [
 		cell: ({ row }) => {
 			const room = row.original;
 
-			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant={'ghost'} className='h-8 w-8 p-0'>
-							<span className='sr-only'>Open menu</span>
-							<MoreHorizontal className='h-4 w-4' />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end'>
-						<DropdownMenuLabel>Azioni</DropdownMenuLabel>
-						<DropdownMenuItem
-							onClick={() => navigator.clipboard.writeText(room.id)}
-						>
-							Copia id camera
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem>Modifica</DropdownMenuItem>
-						<DropdownMenuItem>Elimina</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			);
+			return <Actions room={room} />;
 		},
 	},
 ];

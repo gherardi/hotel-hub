@@ -13,7 +13,7 @@ export function ThemeToggler() {
 				onCheckedChange={(e) => setTheme(e ? 'dark' : 'light')}
 			/>
 			<Label htmlFor='airplane-mode' className='hidden md:block'>
-				Dark Mode
+				Mod. Scura
 			</Label>
 		</div>
 	);

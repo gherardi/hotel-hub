@@ -46,11 +46,11 @@ export const createRoom = handleAsyncError(async (req, res, next) => {
 
 export const updateRoom = handleAsyncError(async (req, res, next) => {
 	const { id } = req.params;
-	const { type, price, number } = req.body;
+	const { name, price, capacity } = req.body;
 
 	const { data, error } = await supabase
 		.from('rooms')
-		.update({ type, price, number })
+		.update({ name, price, capacity })
 		.eq('id', id as string)
 		.select()
 		.maybeSingle();

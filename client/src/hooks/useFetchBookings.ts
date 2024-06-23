@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useAuth } from '@/components/auth-provider';
 import { useToast } from '@/components/ui/use-toast';
-import { Room } from '@/components/rooms/columns';
+import { Booking } from '@/components/bookings/columns';
 
 import { BASE_URL } from '@/config';
 
@@ -10,7 +10,7 @@ export function useFetchBookings() {
 	const { token } = useAuth();
 	const { toast } = useToast();
 
-	const { isPending, error, data } = useQuery<Room[]>({
+	const { isPending, error, data } = useQuery<Booking[]>({
 		queryKey: ['bookings'],
 		queryFn: async () => {
 			const response = await fetch(`${BASE_URL}/bookings`, {

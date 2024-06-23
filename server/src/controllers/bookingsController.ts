@@ -24,40 +24,54 @@ export const getOurbookings = handleAsyncError(async (req, res, next) => {
 });
 
 export const createBooking = handleAsyncError(async (req, res, next) => {
-	const { customer_fullname, price, name } = req.body;
-	const { hotel_id } = get(req, 'user', {} as Tables<'users'>);
+	const user = get(req, 'user') as unknown as Tables<'users'>;
 
-	// // calculate the days between start and end
-	// const nights = Math.floor(
-	// 	(new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24)
-	// );
-	// const {
-	// 	data: { price },
-	// } = await supabase.from('rooms').select('price').eq('id', room_id).single();
+	const { hotel_id } = user;
+	if (!hotel_id)
+		return next(new ApplicationError('No hotel_id found for this user', 400));
 
-	// const total = nights * price;
+	const {
+		customer_fullname,
+		start_date,
+		end_date,
+		room_id,
+		num_guests,
+		observations,
+	} = req.body;
 
-	// const { data, error } = await supabase
-	// 	.from('bookings')
-	// 	.insert({
-	// 		customer_name,
-	// 		start,
-	// 		end,
-	// 		nights,
-	// 		total,
-	// 		user_id,
-	// 		hotel_id,
-	// 		room_id,
-	// 	})
-	// 	.select()
-	// 	.maybeSingle();
+	const nights = Math.floor(
+		(new Date(end_date).getTime() - new Date(start_date).getTime()) / (1000 * 60 * 60 * 24)
+	);
 
-	// if (error) return next(new ApplicationError(error.message));
+	const { data: room } = await supabase
+		.from('rooms')
+		.select('*')
+		.eq('id', room_id)
+		.single();
 
-	// res.status(201).json({ status: 'success', data });
-	res
-		.status(501)
-		.json({ status: 'success', message: 'route not implemented yet! code: ' });
+	const pricePerNight = room?.price ? room.price : 0;
+	const totalPrice = nights * pricePerNight;
+
+	const { data, error } = await supabase
+		.from('bookings')
+		.insert({
+			customer_fullname,
+			start_date,
+			end_date,
+			num_guests,
+			num_nights: nights,
+			room_id,
+			room_price: pricePerNight,
+			total_price: totalPrice,
+			hotel_id,
+			observations
+		})
+		.select()
+		.maybeSingle();
+
+	if (error) return next(new ApplicationError(error.message));
+
+	res.status(201).json({ status: 'success', data });
 });
 
 export const updateBooking = handleAsyncError(async (req, res, next) => {
@@ -96,20 +110,17 @@ export const updateBooking = handleAsyncError(async (req, res, next) => {
 });
 
 export const deleteBooking = handleAsyncError(async (req, res, next) => {
-	// const { id } = req.params;
-	// const { data, error } = await supabase
-	// 	.from('bookings')
-	// 	.delete()
-	// 	.eq('id', id)
-	// 	.select()
-	// 	.single();
+	const { id } = req.params;
 
-	// if (error) return next(new ApplicationError(error.message));
-	// if (!data)
-	// 	return next(new ApplicationError('No booking found with that ID', 404));
+	const { data, error } = await supabase
+		.from('bookings')
+		.delete()
+		.eq('id', id as string)
+		.select()
+		.maybeSingle();
 
-	// res.status(200).json({ status: 'success', data });
-	res
-		.status(501)
-		.json({ status: 'success', message: 'route not implemented yet! code: ' });
+	if (error) return next(new ApplicationError(error.message));
+	if (!data) return next(new ApplicationError('Booking not found', 404));
+
+	res.status(200).json({ status: 'success', data });
 });

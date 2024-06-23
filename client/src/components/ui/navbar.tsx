@@ -44,6 +44,15 @@ export default function Navbar() {
 					>
 						Camere
 					</Link>
+					<Link
+						to='/profile'
+						className={cn(
+							'text-muted-foreground transition-colors hover:text-foreground',
+							pathname === '/profile' ? 'text-semibold' : ''
+						)}
+					>
+						Profilo
+					</Link>
 				</nav>
 				{/* SHEETS PER MOBILE, VEDERE ORIGINALE */}
 				<div className='flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4'>
