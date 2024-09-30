@@ -14,7 +14,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 			await supabase.auth.getSession().then(({ data: { session } }) => {
 				setSession(session);
 				if (session === null) {
-					window.location.href = '/login';
+					window.location.href = '/';
 				}
 			});
 		};
