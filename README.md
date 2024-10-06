@@ -28,6 +28,14 @@ Hotel Hub was developed with the goal of simplifying the day-to-day operations o
 - React Hook Form
 - Zod
 
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`VITE_SUPABASE_URL`
+
+`VITE_SUPABASE_ANON_KEY`
+
 ## Run Locally
 
 Clone the project
@@ -53,11 +61,3 @@ Start the server
 ```bash
   npm run dev
 ```
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`VITE_SUPABASE_URL`
-
-`VITE_SUPABASE_ANON_KEY`
