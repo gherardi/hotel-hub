@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircleUser } from 'lucide-react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,7 +14,6 @@ import {
 import {
 	AlertDialog,
 	AlertDialogAction,
-	// AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
 	AlertDialogFooter,
@@ -21,25 +22,27 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/components/auth/logout';
-import AppHeaderMobile from '@/components/app/header-mobile';
 
-export function Header() {
+export function UserAvatar() {
 	const [open, setOpen] = useState(false);
-
 	const navigate = useNavigate();
 
 	return (
-		<header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
-			<AppHeaderMobile></AppHeaderMobile>
-			<div className='flex-1 w-full'>
-				<form>
-					<div className='relative'></div>
-				</form>
-			</div>
+		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant='secondary' size='icon' className='rounded-full'>
-						<CircleUser className='w-5 h-5' />
+					<Button variant='outline' size='icon' className='rounded-full'>
+						<Avatar>
+							<AvatarImage
+								// src='https://github.com/gherardi.png'
+								// src='https://github.com/shadcgasgsadn.png'
+								alt='user avatar'
+								className='object-cover'
+							/>
+							<AvatarFallback>
+								<CircleUser className='w-5 h-5' />
+							</AvatarFallback>
+						</Avatar>
 						<span className='sr-only'>Toggle user menu</span>
 					</Button>
 				</DropdownMenuTrigger>
@@ -56,8 +59,6 @@ export function Header() {
 					<DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-
-			{/* support dialog */}
 			<AlertDialog open={open} onOpenChange={setOpen}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
@@ -72,6 +73,6 @@ export function Header() {
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>
-		</header>
+		</>
 	);
 }

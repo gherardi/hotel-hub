@@ -25,5 +25,6 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 	if (session === null) {
 		return <Loading />;
 	}
+	
 	if (session) return children;
 }

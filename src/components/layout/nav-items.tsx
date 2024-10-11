@@ -1,4 +1,9 @@
-import { Home, Package, LineChart, Settings } from 'lucide-react';
+import {
+	Home,
+	Package,
+	LineChart,
+	Settings,
+} from 'lucide-react';
 
 export const navItems = [
 	{

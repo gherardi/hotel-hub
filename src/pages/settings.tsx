@@ -9,8 +9,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { Sidebar } from '@/components/app/sidebar';
-import { Header } from '@/components/app/header';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -78,100 +76,92 @@ export default function Settings() {
 	};
 
 	return (
-		<div className='grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
-			<div className='hidden border-r bg-muted/40 md:block'>
-				<Sidebar />
+		<main className='flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6'>
+			<div className='flex items-center'>
+				<h1 className='text-lg font-semibold md:text-2xl'>Profilo</h1>
 			</div>
-			<div className='flex flex-col'>
-				<Header />
-				<main className='flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6'>
-					<div className='flex items-center'>
-						<h1 className='text-lg font-semibold md:text-2xl'>Profilo</h1>
-					</div>
-					<div className='flex-1 rounded-lg'>
-						<Form {...form}>
-							<form
-								className='grid gap-4 sm:max-w-md'
-								onSubmit={form.handleSubmit(onSubmit)}
+			<div className='flex-1 rounded-lg'>
+				<Form {...form}>
+					<form
+						className='grid gap-4 sm:max-w-md'
+						onSubmit={form.handleSubmit(onSubmit)}
+					>
+						<FormField
+							control={form.control}
+							name='first_name'
+							render={({ field }) => (
+								<FormItem className='grid gap-2 space-y-0'>
+									<FormLabel>Nome</FormLabel>
+									<FormControl>
+										<Input
+											type='text'
+											placeholder='John'
+											disabled={form.formState.isSubmitting}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='last_name'
+							render={({ field }) => (
+								<FormItem className='grid gap-2 space-y-0'>
+									<FormLabel>Cognome</FormLabel>
+									<FormControl>
+										<Input
+											type='text'
+											placeholder='Doe'
+											disabled={form.formState.isSubmitting}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem className='grid gap-2 space-y-0'>
+									<FormLabel>Email</FormLabel>
+									<FormControl>
+										<Input
+											type='email'
+											placeholder='email@example.com'
+											disabled={form.formState.isSubmitting}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<div className='mt-2'>
+							<Button
+								type='submit'
+								className='flex items-center ml-auto'
+								disabled={form.formState.isSubmitting}
 							>
-								<FormField
-									control={form.control}
-									name='first_name'
-									render={({ field }) => (
-										<FormItem className='grid gap-2 space-y-0'>
-											<FormLabel>Nome</FormLabel>
-											<FormControl>
-												<Input
-													type='text'
-													placeholder='John'
-													disabled={form.formState.isSubmitting}
-													{...field}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-
-								<FormField
-									control={form.control}
-									name='last_name'
-									render={({ field }) => (
-										<FormItem className='grid gap-2 space-y-0'>
-											<FormLabel>Cognome</FormLabel>
-											<FormControl>
-												<Input
-													type='text'
-													placeholder='Doe'
-													disabled={form.formState.isSubmitting}
-													{...field}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-
-								<FormField
-									control={form.control}
-									name='email'
-									render={({ field }) => (
-										<FormItem className='grid gap-2 space-y-0'>
-											<FormLabel>Email</FormLabel>
-											<FormControl>
-												<Input
-													type='email'
-													placeholder='email@example.com'
-													disabled={form.formState.isSubmitting}
-													{...field}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-
-								<div className='mt-2'>
-									<Button
-										type='submit'
-										className='flex items-center ml-auto'
-										disabled={form.formState.isSubmitting}
-									>
-										{form.formState.isSubmitting ? (
-											<>
-												<Loader2 className='w-4 h-4 mr-2 animate-spin' />{' '}
-												Aggiornamento
-											</>
-										) : (
-											'Salva profilo'
-										)}
-									</Button>
-								</div>
-							</form>
-						</Form>
-					</div>
-				</main>
+								{form.formState.isSubmitting ? (
+									<>
+										<Loader2 className='w-4 h-4 mr-2 animate-spin' />{' '}
+										Aggiornamento
+									</>
+								) : (
+									'Salva profilo'
+								)}
+							</Button>
+						</div>
+					</form>
+				</Form>
 			</div>
-		</div>
+		</main>
 	);
 }

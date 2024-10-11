@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import { routes } from '@/routes';
+import routes from '@/routes';
 import { supabase } from '@/database/supabase-client';
 import { useSessionStore } from '@/stores/session-store';
 import ProtectedRoute from '@/components/auth/protected-route';
+import Layout from '@/layouts/Layout';
 
 export default function App() {
 	const setSession = useSessionStore((state) => state.setSession);
@@ -29,19 +30,25 @@ export default function App() {
 		<ThemeProvider defaultTheme='system' storageKey='ui-theme'>
 			<BrowserRouter>
 				<Routes>
-					{routes.map(({ path, element, requiresAuth }) => (
-						<Route
-							key={path}
-							path={path}
-							element={
-								requiresAuth ? (
-									<ProtectedRoute>{element}</ProtectedRoute>
-								) : (
-									element
-								)
-							}
-						/>
+					{routes.public.map((route) => (
+						<Route key={route.path} path={route.path} element={route.element} />
 					))}
+
+					<Route
+						element={
+							<ProtectedRoute>
+								<Layout />
+							</ProtectedRoute>
+						}
+					>
+						{routes.protected.map((route) => (
+							<Route
+								key={route.path}
+								path={route.path}
+								element={route.element}
+							/>
+						))}
+					</Route>
 				</Routes>
 			</BrowserRouter>
 			<Toaster />

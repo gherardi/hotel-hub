@@ -72,4 +72,8 @@
 	.debug {
 		border: 1px solid red;
 	}
+	nav a[aria-current='page'] {
+		@apply bg-muted text-primary;
+		/* @apply bg-foreground text-background hover:text-background; */
+	}
 }
