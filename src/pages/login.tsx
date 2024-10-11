@@ -1,5 +1,5 @@
 import NavBar from '@/components/landing/navbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import {
@@ -13,16 +13,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/database/supabase-client';
 import {
 	loginSchema,
 	type loginSchemaType,
 } from '@/components/auth/auth-schema';
+import { useLogin } from '@/hooks/useLogin';
 
 export default function Login() {
-	const navigate = useNavigate();
-	const { toast } = useToast();
+	const { login, isLoading } = useLogin();
 
 	const form = useForm<loginSchemaType>({
 		resolver: zodResolver(loginSchema),
@@ -32,27 +30,10 @@ export default function Login() {
 		},
 	});
 
-	const onSubmit = async function (values: loginSchemaType) {
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email: values.email,
-			password: values.password,
+	const onSubmit = function (values: loginSchemaType) {
+		login(values, {
+			onSettled: () => form.reset(),
 		});
-		if (error) {
-			toast({
-				variant: 'destructive',
-				title: 'Errore di autenticazione',
-				description:
-					error.message || "Si è verificato un errore durante l'autenticazione",
-			});
-			return;
-		}
-		if (data) {
-			toast({
-				title: 'Accesso effettuato',
-				description: 'Benvenuto!',
-			});
-			navigate('/bookings');
-		}
 	};
 
 	return (
@@ -82,7 +63,7 @@ export default function Login() {
 												<Input
 													type='email'
 													placeholder='email@example.com'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -101,7 +82,7 @@ export default function Login() {
 												<Input
 													type='password'
 													placeholder='********'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -112,9 +93,9 @@ export default function Login() {
 								<Button
 									type='submit'
 									className='flex items-center w-full mt-2'
-									disabled={form.formState.isSubmitting}
+									disabled={isLoading}
 								>
-									{form.formState.isSubmitting ? (
+									{isLoading ? (
 										<>
 											<Loader2 className='w-4 h-4 mr-2 animate-spin' /> Accesso
 											in corso

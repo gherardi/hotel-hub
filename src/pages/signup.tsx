@@ -1,6 +1,6 @@
 import NavBar from '@/components/landing/navbar';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import {
 	Form,
@@ -11,18 +11,18 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/database/supabase-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
 import {
 	signupSchema,
 	type signupSchemaType,
 } from '@/components/auth/auth-schema';
+import { useSignup } from '@/hooks/useSignup';
 
 export default function Signup() {
-	const navigate = useNavigate();
-	const { toast } = useToast();
+	const { signup, isLoading } = useSignup();
+	// const navigate = useNavigate();
+	// const { toast } = useToast();
 
 	const form = useForm<signupSchemaType>({
 		resolver: zodResolver(signupSchema),
@@ -36,35 +36,9 @@ export default function Signup() {
 	});
 
 	const onSubmit = async function (values: signupSchemaType) {
-		const { data, error } = await supabase.auth.signUp({
-			email: values.email.trim(),
-			password: values.password,
-			options: {
-				data: {
-					first_name: values.first_name.trim(),
-					last_name: values.last_name.trim(),
-				},
-			},
+		signup(values, {
+			onSettled: () => form.reset(),
 		});
-
-		if (error) {
-			toast({
-				variant: 'destructive',
-				title: 'Errore durante la registrazione',
-				description:
-					error.message || "Si è verificato un errore durante l'autenticazione",
-			});
-			return;
-		}
-
-		if (data) {
-			toast({
-				title: 'Link di conferma inviato alla tua mail',
-				description:
-					'Controlla la tua casella di posta e conferma la registrazione',
-			});
-			navigate('/login');
-		}
 	};
 
 	return (
@@ -95,7 +69,7 @@ export default function Signup() {
 												<Input
 													type='text'
 													placeholder='John'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -114,7 +88,7 @@ export default function Signup() {
 												<Input
 													type='text'
 													placeholder='Doe'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -133,7 +107,7 @@ export default function Signup() {
 												<Input
 													type='email'
 													placeholder='email@example.com'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -152,7 +126,7 @@ export default function Signup() {
 												<Input
 													type='password'
 													placeholder='********'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -170,7 +144,7 @@ export default function Signup() {
 												<Input
 													type='password'
 													placeholder='********'
-													disabled={form.formState.isSubmitting}
+													disabled={isLoading}
 													{...field}
 												/>
 											</FormControl>
@@ -182,9 +156,9 @@ export default function Signup() {
 								<Button
 									type='submit'
 									className='flex items-center w-full mt-2'
-									disabled={form.formState.isSubmitting}
+									disabled={isLoading}
 								>
-									{form.formState.isSubmitting ? (
+									{isLoading ? (
 										<>
 											<Loader2 className='w-4 h-4 mr-2 animate-spin' />{' '}
 											Registrazione in corso

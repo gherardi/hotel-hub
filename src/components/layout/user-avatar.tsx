@@ -21,9 +21,10 @@ import {
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { logout } from '@/components/auth/logout';
+import { useLogout } from '@/hooks/useLogout';
 
 export function UserAvatar() {
+	const { logout } = useLogout();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -56,7 +57,7 @@ export function UserAvatar() {
 						Supporto
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+					<DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<AlertDialog open={open} onOpenChange={setOpen}>
