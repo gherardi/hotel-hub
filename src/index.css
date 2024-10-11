@@ -61,7 +61,7 @@
 }
 @layer base {
 	* {
-		@apply transition-colors border-border font-switzer;
+		@apply border-border font-switzer;
 	}
 	body {
 		@apply bg-background text-foreground;
