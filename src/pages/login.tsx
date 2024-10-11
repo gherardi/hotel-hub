@@ -1,4 +1,4 @@
-import NavBar from '@/components/wrapper/navbar';
+import NavBar from '@/components/landing/navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
