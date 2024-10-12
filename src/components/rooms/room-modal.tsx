@@ -45,7 +45,12 @@ export function RoomModal({ open, setOpen }: RoomModalProps) {
 	});
 
 	const onSubmit = function (values: roomSchemaType) {
-		createRoom(values);
+		createRoom(values, {
+			onSuccess: () => {
+				form.reset();
+				setOpen(false);
+			},
+		});
 	};
 
 	return (

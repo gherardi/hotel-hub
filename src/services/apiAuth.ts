@@ -3,6 +3,7 @@ import { supabase } from '@/database/supabase-client';
 import {
 	type signupSchemaType,
 	type loginSchemaType,
+	type updateProfileSchemaType,
 } from '@/components/auth/auth-schema';
 
 export async function signup({
@@ -50,5 +51,18 @@ export async function getCurrentUser() {
 	const { data, error } = await supabase.auth.getUser();
 
 	if (error) throw new Error(error.message);
+	return data?.user;
+}
+
+export async function updateUser(values: updateProfileSchemaType) {
+	const { data, error } = await supabase.auth.updateUser({
+		email: values.email,
+		data: {
+			first_name: values.first_name,
+			last_name: values.last_name,
+		},
+	});
+	if (error) throw new Error(error.message);
+
 	return data?.user;
 }

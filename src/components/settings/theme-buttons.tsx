@@ -8,10 +8,8 @@ export function ThemeButtons() {
 	const { theme, setTheme } = useTheme();
 
 	return (
-		<>
-			<p className='mt-4 mb-2 text-sm text-muted-foreground'>
-				Scegli il tuo tema
-			</p>
+		<div>
+			<p className='mb-2 text-sm text-muted-foreground'>Scegli il tuo tema</p>
 			<div className='flex gap-x-2 text-muted-foreground'>
 				<Button
 					variant='outline'
@@ -50,6 +48,6 @@ export function ThemeButtons() {
 					<span className='pb-0.5'>Sistema</span>
 				</Button>
 			</div>
-		</>
+		</div>
 	);
 }
