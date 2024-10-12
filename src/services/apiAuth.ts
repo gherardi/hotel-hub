@@ -66,3 +66,9 @@ export async function updateUser(values: updateProfileSchemaType) {
 
 	return data?.user;
 }
+
+export async function deleteUser() {
+	// const { error } = await supabase.auth.deleteUser();
+	// if (error) throw new Error(error.message);
+	return null;
+}

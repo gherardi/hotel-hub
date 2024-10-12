@@ -11,7 +11,7 @@ import {
 	bookingSchema,
 	defaultValues,
 	type BookingSchemaType,
-} from '@/components/bookings/bookings-schema';
+} from '@/components/bookings/booking-schema';
 import {
 	Dialog,
 	DialogContent,
