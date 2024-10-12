@@ -1,3 +1,7 @@
+import { useForm } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import {
 	Dialog,
 	DialogContent,
@@ -6,12 +10,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Loader2 } from 'lucide-react';
-
 import {
 	Form,
 	FormControl,
@@ -20,34 +18,23 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/database/supabase-client';
-import { useRoomStore } from '@/stores/room-store';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useCreateRoom } from '@/hooks/useCreateRoom';
+import {
+	roomSchema,
+	type roomSchemaType,
+} from '@/components/rooms/room-schema';
 
-const roomSchema = z
-	.object({
-		code: z.string().length(3),
-		capacity: z.number().min(1).max(10),
-		price: z.number().min(10),
-		discount: z.number(),
-	})
-	.refine((data) => data.discount < data.price, {
-		path: ['discount'],
-		message: 'Lo sconto deve essere minore del prezzo',
-	});
-
-export function RoomForm({
-	open,
-	setOpen,
-}: {
+type RoomModalProps = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
-}) {
-	const { toast } = useToast();
-	const updateRooms = useRoomStore((state) => state.updateRooms);
+};
 
-	const form = useForm<z.infer<typeof roomSchema>>({
+export function RoomModal({ open, setOpen }: RoomModalProps) {
+	const { isCreating, createRoom } = useCreateRoom();
+
+	const form = useForm<roomSchemaType>({
 		resolver: zodResolver(roomSchema),
 		defaultValues: {
 			code: '',
@@ -57,36 +44,8 @@ export function RoomForm({
 		},
 	});
 
-	const onSubmit = async function (values: z.infer<typeof roomSchema>) {
-		const { data, error } = await supabase
-			.from('rooms')
-			.insert([
-				{
-					code: values.code,
-					capacity: values.capacity,
-					price: values.price,
-					discount: values.discount,
-				},
-			])
-			.select();
-
-		if (error) {
-			toast({
-				variant: 'destructive',
-				title: '',
-				description: error.message || '',
-			});
-			return;
-		}
-		if (data) {
-			toast({
-				title: '',
-				description: '',
-			});
-			updateRooms();
-			form.reset();
-			setOpen(false);
-		}
+	const onSubmit = function (values: roomSchemaType) {
+		createRoom(values);
 	};
 
 	return (
@@ -112,7 +71,7 @@ export function RoomForm({
 											type='text'
 											placeholder='001'
 											className='col-span-3'
-											disabled={form.formState.isSubmitting}
+											disabled={isCreating}
 											{...field}
 										/>
 									</FormControl>
@@ -132,7 +91,7 @@ export function RoomForm({
 											type='number'
 											placeholder='10'
 											className='col-span-3'
-											disabled={form.formState.isSubmitting}
+											disabled={isCreating}
 											{...field}
 											onChange={(e) => field.onChange(Number(e.target.value))}
 										/>
@@ -153,7 +112,7 @@ export function RoomForm({
 											type='number'
 											placeholder='10'
 											className='col-span-3'
-											disabled={form.formState.isSubmitting}
+											disabled={isCreating}
 											{...field}
 											onChange={(e) => field.onChange(Number(e.target.value))}
 										/>
@@ -174,7 +133,7 @@ export function RoomForm({
 											type='number'
 											placeholder='10'
 											className='col-span-3'
-											disabled={form.formState.isSubmitting}
+											disabled={isCreating}
 											{...field}
 											onChange={(e) => field.onChange(Number(e.target.value))}
 										/>
@@ -189,9 +148,9 @@ export function RoomForm({
 							<Button
 								type='submit'
 								className='flex items-center mt-2'
-								disabled={form.formState.isSubmitting}
+								disabled={isCreating}
 							>
-								{form.formState.isSubmitting ? (
+								{isCreating ? (
 									<>
 										<Loader2 className='w-4 h-4 mr-2 animate-spin' />{' '}
 										Caricamento...
