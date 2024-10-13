@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const bookingSchema = z.object({
 	customer_fullname: z.string().min(2),
-	check_in: z.date(),
-	check_out: z.date(),
+	check_in: z.string(),
+	check_out: z.string(),
 	room_id: z.string().uuid(),
 	notes: z.string().optional(),
 });

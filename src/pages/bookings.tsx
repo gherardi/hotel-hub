@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookingsTable } from '@/components/bookings/bookings-table';
-import { BookingsCreationDialog } from '@/components/bookings/bookings-creation-dialog';
+import { BookingModal } from '@/components/bookings/booking-modal';
 
 export default function Bookings() {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Bookings() {
 
 			<BookingsTable />
 
-			<BookingsCreationDialog open={modalOpen} setOpen={setModalOpen} />
+			<BookingModal open={modalOpen} setOpen={setModalOpen} />
 		</main>
 	);
 }

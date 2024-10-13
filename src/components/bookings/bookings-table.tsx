@@ -36,7 +36,7 @@ export function BookingsTable() {
 		);
 
 	return (
-		<div className='relative flex-1 overflow-hidden border border-dashed rounded-lg shadow-sm'>
+		<div className='relative flex-1 border border-dashed rounded-lg shadow-sm'>
 			<div className='absolute inset-0'>
 				<ScrollArea className='w-full h-full p-5'>
 					<Table>

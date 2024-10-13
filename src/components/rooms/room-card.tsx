@@ -28,9 +28,9 @@ export function RoomCard({ room }: RoomCardProps) {
 			</CardHeader>
 			<CardContent>
 				<div className='grid grid-cols-2'>
-					<p className='font-semibold'>Prezzo/notte</p>
+					<p className='font-medium'>Prezzo/notte</p>
 					<p>{room.price}€</p>
-					<p className='font-semibold'>Sconto/notte</p>
+					<p className='font-medium'>Sconto/notte</p>
 					<p>{room.discount}€</p>
 				</div>
 			</CardContent>
