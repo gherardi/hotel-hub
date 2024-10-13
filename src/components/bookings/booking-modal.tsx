@@ -125,6 +125,7 @@ export function BookingModal({ open, setOpen }: BookingModalProps) {
 											type='date'
 											placeholder='Scegli una data'
 											disabled={isCreating}
+											min={new Date().toISOString().split('T')[0]}
 											{...field}
 										/>
 									</FormControl>
@@ -144,6 +145,7 @@ export function BookingModal({ open, setOpen }: BookingModalProps) {
 											type='date'
 											placeholder='Scegli una data'
 											disabled={isCreating}
+											// min={new Date().toISOString().split('T')[0]}
 											{...field}
 										/>
 									</FormControl>
@@ -168,11 +170,6 @@ export function BookingModal({ open, setOpen }: BookingModalProps) {
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
-											{rooms?.length === 0 && (
-												<SelectItem value=''>
-													Nessuna camera presente
-												</SelectItem>
-											)}
 											{rooms?.map((room) => (
 												<SelectItem key={room.id} value={room.id}>
 													n. {room.code} - {room.capacity} posti letto -{' '}
