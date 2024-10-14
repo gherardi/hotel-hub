@@ -2,7 +2,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ThemeButtons } from '@/components/settings/theme-buttons';
 import { UpdateProfile } from '@/components/settings/update-profile';
 
-export default function Settings() {
+export function Settings() {
 	return (
 		<main className='flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6'>
 			<div className='flex items-center'>

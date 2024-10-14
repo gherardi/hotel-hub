@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { RoomsGallery } from '@/components/rooms/rooms-gallery';
 import { RoomModal } from '@/components/rooms/room-modal';
 
-export default function Rooms() {
+export function Rooms() {
 	const [modalOpen, setModalOpen] = useState(false);
 
 	return (

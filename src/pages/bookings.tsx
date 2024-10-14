@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { BookingsTable } from '@/components/bookings/bookings-table';
 import { BookingModal } from '@/components/bookings/booking-modal';
 
-export default function Bookings() {
+export function Bookings() {
 	const [modalOpen, setModalOpen] = useState(false);
 
 	return (

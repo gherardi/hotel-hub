@@ -3,7 +3,7 @@ const ProjectsData = [
 		id: 1,
 		name: 'React',
 		description:
-			'Una libreria JavaScript per costruire interfacce utente, mantenuta da Facebook.',
+			'Una libreria JavaScript per costruire interfacce utente, mantenuta da Meta.',
 		image: 'https://i.imgur.com/90zFEvq.png',
 		imageDark: 'https://i.imgur.com/90zFEvq.png',
 		url: 'https://react.dev/',
@@ -27,7 +27,7 @@ const ProjectsData = [
 	{
 		id: 4,
 		name: 'Shadcn UI',
-		description: 'Componenti progettati con cura da Shadcn.',
+		description: 'Componenti UI open-source per React con design moderno e minimal.',
 		image: 'https://utfs.io/f/bc4c7cdb-dc42-452c-8744-0ad2c3232e7f-exyul9.png',
 		imageDark:
 			'https://utfs.io/f/f9ae4f1b-76a1-4505-afc0-dfcbea05012d-62drog.png',
@@ -43,10 +43,10 @@ const ProjectsData = [
 	},
 	{
 		id: 6,
-		name: 'Zustand',
-		description: 'Per per lo state management, alternativa a Redux.',
-		image: 'https://i.imgur.com/mM0WuU7.png',
-		url: 'https://zustand-demo.pmnd.rs/',
+		name: 'React Query',
+		description: 'State management per React con query caching e synchronization.',
+		image: 'https://images.ctfassets.net/sw4ojjqn6qvl/2QY1qFPui5ESz5kqivIaxy/0110fabb8ca776614be476970a57ca36/react-query-seeklogo.com.svg?',
+		url: 'https://tanstack.com/query/latest',
 	},
 ];
 
