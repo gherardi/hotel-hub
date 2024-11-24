@@ -6,8 +6,6 @@ Through a user-friendly interface, users can securely log in using their credent
 
 Hotel Hub was developed with the goal of simplifying the day-to-day operations of hotel management, reducing manual errors and improving operational efficiency through a modern web platform accessible from any device.
 
-[Demo](https://hotel-hub-hackersgen.vercel.app)
-
 ## Features
 
 - Light/dark/system mode toggle
